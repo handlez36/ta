@@ -1,3 +1,37 @@
-page-home {
-
+@font-face{
+    font-family: Roboto;
+    src: url('../assets/fonts/roboto.woff2') format('woff2');
 }
+
+.scroll-zoom-wrapper {
+    white-space: nowrap;
+}
+
+ion-scroll {
+    min-height: 160px; 
+    height: auto;
+
+    .scroll-content {
+        padding: 0px !important;
+    }    
+}
+
+ion-col {
+    text-align: center;
+}
+
+.menu-item {
+    cursor: pointer;
+
+    .menu-item-text {
+        font-size: 12px;
+        font-family: Roboto;
+    }    
+}
+
+.journey-description {
+    font-size: 10px;
+    vertical-align: top;
+    padding-left: 10px;
+}
+

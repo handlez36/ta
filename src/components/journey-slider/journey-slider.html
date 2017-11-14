@@ -1,0 +1,10 @@
+<span class="new-journies">Latest Journies</span>
+<br /><br />
+<ion-scroll scrollX="true" direction="x">
+  <ion-card class="latest-journies" *ngFor="let journey of journies">
+    <ion-card-header> {{ journey.title }}</ion-card-header>
+    <ion-item>
+      <ion-img width="40" height="40" src="https://scontent.fatl1-2.fna.fbcdn.net/v/t1.0-9/1743563_10101216079484127_438555586_n.jpg?oh=b5094a443daae8ffac6ba1077e7fc6b8&oe=5A6B170A"></ion-img>
+    </ion-item>
+  </ion-card>
+</ion-scroll>

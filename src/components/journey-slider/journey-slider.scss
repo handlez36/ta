@@ -1,0 +1,17 @@
+.scroll-zoom-wrapper {
+    white-space: nowrap;
+}
+
+ion-card.latest-journies {
+    width: 100px !important;
+    display: inline-block;
+}
+
+ion-scroll {
+    min-height: 160px; 
+    height: auto;
+
+    .scroll-content {
+        padding: 0px !important;
+    }    
+}
