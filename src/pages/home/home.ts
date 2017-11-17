@@ -19,7 +19,7 @@ export class HomePage {
     private journeyDataService: MockJourniesProvider)
   {
       this.journies = journeyDataService.getAll();
-      this.myJourney = this.journies[2];
+      this.myJourney = this.journies[3];
 
       console.log(this.myJourney);
   }
