@@ -14,12 +14,14 @@ export class HomePage {
   myJourney;
   // categories: any[];
 
-  constructor(public navCtrl: NavController, 
-    private journeyService: MockJourniesProvider) {
-
-      this.journies = journeyService.getAll();
-      // this.categories = categoryService.getAll();
+  constructor(
+    public navCtrl: NavController, 
+    private journeyDataService: MockJourniesProvider)
+  {
+      this.journies = journeyDataService.getAll();
       this.myJourney = this.journies[2];
+
+      console.log(this.myJourney);
   }
 
   search() {

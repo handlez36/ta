@@ -1,3 +1,6 @@
+import { User } from '../../models/user';
+import { Category } from '../../models/category';
+import { Journey } from '../../models/journey';
 import { MockDataServiceProvider } from './../mock-data-service/mock-data-service';
 import { MockCategoriesProvider } from './../mock-categories/mock-categories';
 import { DataServiceProvider } from './../data-service/data-service';
@@ -15,6 +18,7 @@ import 'rxjs/add/operator/map';
 export class MockJourniesProvider extends MockDataServiceProvider {
   
   items = [];
+  users = [];
   categories = [];
 
   constructor() {
@@ -23,34 +27,20 @@ export class MockJourniesProvider extends MockDataServiceProvider {
     this.initializeData();
   }
 
-  // constructor(public categoriesProvider: MockCategoriesProvider) {
-  //   super();
-
-  //   this.categories = categoriesProvider.getAll();
-  //   this.initializeData();
-  // }
-
   initializeData() {
+    // Initialize users
+    this.users[0] = new User(1, "user1");
+    this.users[1] = new User(2, "user2");
+
+    // Initialize categories
     for (let i=1; i<6; i++) {
-      this.categories.push(
-        { 
-          id: i, 
-          name: "Category " + i, 
-          description: "Description of category " + i 
-        }
-      )
+      this.categories.push(new Category(i, `Category ${i}`, `Description of category ${i}`))
     }
 
+    // Initialize journies
     for( let i=1; i<11; i++) {
       this.items.push(
-        {
-          id: i,
-          title: "Journey " + i,
-          description: "Description for journey " + i,
-          user: (i % 2 == 0) ? 'CamJam' : 'Devi Dev',
-          last_updated: Date.now,
-          category: this.categories[ Math.round(Math.random() * 5) ]
-        }
+        new Journey(i, (i%2==0) ? this.users[1] : this.users[0], this.categories[ Math.round(Math.random() * 5) ], `Journey ${i}`, `Description for journey ${i}`)
       )
     }
   }
