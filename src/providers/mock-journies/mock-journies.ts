@@ -24,13 +24,14 @@ export class MockJourniesProvider extends MockDataServiceProvider {
   constructor() {
     super();
 
+    console.log("About to iniatialize data");
     this.initializeData();
   }
 
   initializeData() {
     // Initialize users
-    this.users[0] = new User(1, "user1");
-    this.users[1] = new User(2, "user2");
+    this.users[0] = new User(1, "camjam");
+    this.users[1] = new User(2, "devi dev");
 
     // Initialize categories
     for (let i=1; i<6; i++) {
@@ -39,8 +40,10 @@ export class MockJourniesProvider extends MockDataServiceProvider {
 
     // Initialize journies
     for( let i=1; i<11; i++) {
+      let randomCategoryIndex = Math.round( Math.random() * 4 );
+      console.log("Random category index:: ", randomCategoryIndex);
       this.items.push(
-        new Journey(i, (i%2==0) ? this.users[1] : this.users[0], this.categories[ Math.round(Math.random() * 5) ], `Journey ${i}`, `Description for journey ${i}`)
+        new Journey(i, (i%2==0) ? this.users[1] : this.users[0], this.categories[randomCategoryIndex], `Journey ${i}`, `Description for journey ${i}`)
       )
     }
   }

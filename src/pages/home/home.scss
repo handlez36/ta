@@ -1,7 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=BenchNine|Lalezar');
 @font-face{
     font-family: Roboto;
     src: url('../assets/fonts/roboto.woff2') format('woff2');
 }
+
+page-home {
+    ion-content {
+        background-color: rgb(204, 203, 203) !important;
+    }
+
+    #featured-journey {
+        
+        ion-item {
+            min-height: 25px;
+
+            .item-inner {
+                align-items: flex-start;
+            }
+        } 
+    }
+
+    .feature-journey-title {
+        font-size: 16px;
+        font-family: 'Lalezar';
+        color: #716969;
+    }
+ }
+
+#video-container {
+    padding: 0;
+    margin: 0;
+    height: 175px;
+    width: 500px;
+    background-color: black;
+    display: block;
+    overflow: hidden;
+    position: relative;
+ }
+ 
+ video {
+    padding: 0;
+    margin: 0;
+    width: 500px;
+    position: absolute;
+    top: -50px
+ }
+
+ #featured-journey {
+    font-family: Roboto;
+    font-size: 14px;
+
+    h5 {
+        padding-left: 5px;
+        font-family: Roboto;
+    }
+
+    ion-item {
+        background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRujbw599YkZgN8MmBUcHIcSsKL71MSIh9tbblr_2earFmHwAy42A') no-repeat stretch;
+        border-top: #e9e8ea;
+    }
+ }
+
+ #feature-info {
+    font-family: Roboto !important;
+    font-size: 11px !important;
+
+    .last-updated {
+        font-size: 12px !important;
+        font-style: italic;
+        font-weight: 100;
+        color: steelblue;
+    }
+ }
 
 .scroll-zoom-wrapper {
     white-space: nowrap;

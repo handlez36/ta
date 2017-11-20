@@ -17,7 +17,15 @@ export class JourneySliderComponent {
   journies;
 
   constructor(private journeyService: MockJourniesProvider) {
-    this.journies = journeyService.getAll();
+    console.log("In constructor of journey-slider");
+  }
+
+  ngOnInit() {
+    console.log("In ionViewDidLoad method of journey-slider");
+
+    this.journies = this.journeyService.getAll();
+    
+    console.log("Journies: ", this.journies);
   }
 
 }

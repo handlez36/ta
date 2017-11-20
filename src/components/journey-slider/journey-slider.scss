@@ -1,17 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=BenchNine|Lalezar');
+
 .scroll-zoom-wrapper {
     white-space: nowrap;
 }
+journey-slider {
+    .new-journies {
+        font-family: 'Lalezar';
+        color: #716969;
+    }
 
-ion-card.latest-journies {
-    width: 100px !important;
-    display: inline-block;
-}
+    ion-badge {
+        margin-left: 5px;
+    }
 
-ion-scroll {
-    min-height: 160px; 
-    height: auto;
-
-    .scroll-content {
+    ion-card-header {
+        font-size: 10px !important;
+        text-align: right !important;
         padding: 0px !important;
-    }    
+        align-items: baseline;
+
+        ion-item {
+            padding-left: 5px !important;
+
+            ion-avatar {
+                margin-right: 0px !important;
+            }
+
+            .item-inner {
+                align-items: baseline;
+            }
+
+        }
+        .mini-journey-title {
+            font-size: 9px;
+            font-weight: 400;
+        }
+    }
+
+    ion-card.latest-journies {
+        width: 150px !important;
+        display: inline-block;
+    }
+    
+    ion-scroll {
+        min-height: 160px; 
+        height: auto;
+    
+        .scroll-content {
+            padding: 0px !important;
+        }    
+    }
+
+    #video-container {
+        padding: 0;
+        margin: 0;
+        height: 60px;
+        width: 500px;
+        background-color: black;
+        display: block;
+        overflow: hidden;
+        position: relative;
+     }
+     
+     video {
+        padding: 0;
+        margin: 0;
+        width: 500px;
+        position: absolute;
+        top: -50px
+     }
 }
+
+// ion-card.latest-journies {
+//     width: 100px !important;
+//     display: inline-block;
+// }
+
+// ion-scroll {
+//     min-height: 160px; 
+//     height: auto;
+
+//     .scroll-content {
+//         padding: 0px !important;
+//     }    
+// }
