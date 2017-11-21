@@ -17,7 +17,7 @@ export class FooterMenuComponent {
   text: string;
 
   constructor(private navCtrl: NavController) {
-    this.text = 'Hello World';
+    this.text = 'Hello World!';
   }
 
   toCategories() {

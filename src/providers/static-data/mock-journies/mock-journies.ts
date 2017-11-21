@@ -1,9 +1,10 @@
-import { User } from '../../models/user';
-import { Category } from '../../models/category';
-import { Journey } from '../../models/journey';
+import { Storage } from '@ionic/storage';
+import { User } from '../../../models/user';
+import { Category } from '../../../models/category';
+import { Journey } from '../../../models/journey';
 import { MockDataServiceProvider } from './../mock-data-service/mock-data-service';
 import { MockCategoriesProvider } from './../mock-categories/mock-categories';
-import { DataServiceProvider } from './../data-service/data-service';
+import { DataServiceProvider } from './../../data-service/data-service';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -39,11 +40,11 @@ export class MockJourniesProvider extends MockDataServiceProvider {
     }
 
     // Initialize journies
-    for( let i=1; i<11; i++) {
+    for( let j=1; j<11; j++) {
       let randomCategoryIndex = Math.round( Math.random() * 4 );
       console.log("Random category index:: ", randomCategoryIndex);
       this.items.push(
-        new Journey(i, (i%2==0) ? this.users[1] : this.users[0], this.categories[randomCategoryIndex], `Journey ${i}`, `Description for journey ${i}`)
+        new Journey(j, (j%2==0) ? this.users[1] : this.users[0], this.categories[randomCategoryIndex], `Journey ${j}`, `Description for journey ${j}`)
       )
     }
   }

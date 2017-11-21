@@ -1,20 +1,22 @@
-<span class="new-journies">Latest Journies</span><ion-badge>{{ journies.length }}</ion-badge>
-<br />
-<ion-scroll scrollX="true" direction="x">
-  <ion-card class="latest-journies" *ngFor="let journey of journies">
-    <ion-card-header>
-      <ion-item>
-        <ion-avatar item-start>
-          <ion-img width="20" height="20" src="https://scontent.fatl1-2.fna.fbcdn.net/v/t1.0-9/15037093_10101654416907064_1239463107669909469_n.jpg?oh=5a7a519626eb0de13eec62917c3c2aae&oe=5AA8DEDE"></ion-img>
-        </ion-avatar>
-        <span class="mini-journey-title" item-end>{{ journey.category.name }}</span>
-      </ion-item>
-    </ion-card-header>
-    <div id="video-container">
-      <!-- <video autoplay="autoplay"> -->
-      <video>        
-        <source id="mp4" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4" />
-      </video>
-    </div>
-  </ion-card>
-</ion-scroll>
+<span class="new-journies">Latest Journies</span><ion-badge>{{ journies && journies.length }}</ion-badge>
+<div *ngIf="journies.length > 0" class="latest-journies-scroll">
+  <br />
+  <ion-scroll scrollX="true" direction="x">
+    <ion-card class="latest-journies" *ngFor="let journey of journies">
+      <ion-card-header>
+        <ion-item>
+          <ion-avatar item-start>
+            <ion-img width="20" height="20" src="https://scontent.fatl1-2.fna.fbcdn.net/v/t1.0-9/15037093_10101654416907064_1239463107669909469_n.jpg?oh=5a7a519626eb0de13eec62917c3c2aae&oe=5AA8DEDE"></ion-img>
+          </ion-avatar>
+          <span class="mini-journey-title" item-end>{{ journey.category.name }}</span>
+        </ion-item>
+      </ion-card-header>
+      <div id="video-container">
+        <!-- <video autoplay="autoplay"> -->
+        <video>        
+          <source id="mp4" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </ion-card>
+  </ion-scroll>
+</div>

@@ -1,6 +1,5 @@
+import { JourneyDataServiceProvider } from '../../providers/journey-data-service/journey-data-service';
 import { CategoriesPage } from './../categories/categories';
-import { MockJourniesProvider } from '../../providers/mock-journies/mock-journies';
-import { MockCategoriesProvider } from '../../providers/mock-categories/mock-categories';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
@@ -10,17 +9,20 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  journies: any[];
-  myJourney;
-  // categories: any[];
+  journies = [];
+  featuredJourney;
 
   constructor(
     public navCtrl: NavController, 
-    private journeyDataService: MockJourniesProvider)
+    private journeyDataService: JourneyDataServiceProvider)
   {
-      this.journies = journeyDataService.getAll();
-      this.myJourney = this.journies[2];
-      this.myJourney.title = "Fuck this fat!!"
+      journeyDataService.getAll()
+        .then( journies => {
+          if(journies) {
+            this.journies = journies;
+            this.featuredJourney = this.journies[0];
+          }
+        })
   }
 
   search() {

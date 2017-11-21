@@ -1,4 +1,4 @@
-import { MockJourniesProvider } from './../../providers/mock-journies/mock-journies';
+import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component } from '@angular/core';
 
 /**
@@ -14,18 +14,17 @@ import { Component } from '@angular/core';
 export class JourneySliderComponent {
 
   text: string;
-  journies;
+  journies = [];
 
-  constructor(private journeyService: MockJourniesProvider) {
-    console.log("In constructor of journey-slider");
-  }
+  constructor(private journeyService: JourneyDataServiceProvider) { }
 
   ngOnInit() {
-    console.log("In ionViewDidLoad method of journey-slider");
-
-    this.journies = this.journeyService.getAll();
-    
-    console.log("Journies: ", this.journies);
+    this.journeyService.getAll()
+      .then( journies => {
+        if (journies) { 
+          this.journies = journies 
+        }
+      });
   }
 
 }

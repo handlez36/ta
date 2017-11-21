@@ -1,4 +1,5 @@
-import { DataServiceProvider } from './../data-service/data-service';
+import { Storage } from '@ionic/storage';
+import { DataServiceProvider } from './../../data-service/data-service';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -14,7 +15,7 @@ export class MockDataServiceProvider implements DataServiceProvider {
 
   public items: any[];
 
-  constructor() { }
+  constructor(private storage?: Storage) { }
 
   getAll() { 
     return this.items;

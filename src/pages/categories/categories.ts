@@ -1,5 +1,6 @@
+import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the CategoriesPage page.
@@ -15,11 +16,44 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CategoriesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  categories = [];
+  
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private categoryDataService: CategoryDataServiceProvider,
+    private modalCtrl: ModalController) 
+    { 
+      
+    }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoriesPage');
+    // Load categories
+    this.categoryDataService.getAll()
+      .then( categories => {
+        if(categories) {
+          this.categories = JSON.parse(categories);
+        }
+      });
+  }
+
+  addCategoryModal() {
+    let modal = this.modalCtrl.create('AddCategoryPage');
+
+    modal.onDidDismiss( (newCategory) => {
+      this.categories.push(newCategory);
+      this.categoryDataService.save(this.categories);
+    })
+
+    modal.present();
+  }
+
+  updateCategory() {
+
+  }
+
+  removeCategory() {
+
   }
 
 }

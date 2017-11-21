@@ -1,3 +1,6 @@
+import { AddCategoryPage } from '../pages/categories/add-category/add-category';
+import { FeaturedJourneyComponent } from '../components/featured-journey/featured-journey';
+import { IonicStorageModule } from '@ionic/storage';
 import { FooterMenuComponent } from '../components/footer-menu/footer-menu';
 import { CategoriesPage } from './../pages/categories/categories';
 import { JourneySliderComponent } from './../components/journey-slider/journey-slider';
@@ -10,9 +13,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { DataServiceProvider } from '../providers/data-service/data-service';
-import { MockJourniesProvider } from '../providers/mock-journies/mock-journies';
-import { MockCategoriesProvider } from '../providers/mock-categories/mock-categories';
-import { MockDataServiceProvider } from '../providers/mock-data-service/mock-data-service';
+import { MocSqliteDataServiceProvider } from '../providers/moc-sqlite-data-service/moc-sqlite-data-service';
+import { JourneyDataServiceProvider } from '../providers/journey-data-service/journey-data-service';
+
+import { MockJourniesProvider } from '../providers/static-data/mock-journies/mock-journies';
+import { MockCategoriesProvider } from '../providers/static-data/mock-categories/mock-categories';
+import { MockDataServiceProvider } from '../providers/static-data/mock-data-service/mock-data-service';
+import { CategoryDataServiceProvider } from '../providers/category-data-service/category-data-service';
 
 @NgModule({
   declarations: [
@@ -20,11 +27,13 @@ import { MockDataServiceProvider } from '../providers/mock-data-service/mock-dat
     HomePage,
     CategoriesPage,
     JourneySliderComponent,
+    FeaturedJourneyComponent,
     FooterMenuComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -41,7 +50,10 @@ import { MockDataServiceProvider } from '../providers/mock-data-service/mock-dat
     DataServiceProvider,
     MockJourniesProvider,
     MockCategoriesProvider,
-    MockDataServiceProvider
+    MockDataServiceProvider,
+    MocSqliteDataServiceProvider,
+    JourneyDataServiceProvider,
+    CategoryDataServiceProvider
   ]
 })
 export class AppModule {}

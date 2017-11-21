@@ -1,0 +1,23 @@
+<!--
+  Generated template for the JourneyListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>journey-list</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let journey of journies">
+      <span>{{ journey.title }}</span>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
