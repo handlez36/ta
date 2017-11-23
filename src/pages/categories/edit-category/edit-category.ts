@@ -1,5 +1,7 @@
+import { Category } from './../../../models/category';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the EditCategoryPage page.
@@ -15,11 +17,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EditCategoryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  private categoryForm: FormGroup;
+  private category;
+  private index;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EditCategoryPage');
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private formBuilder: FormBuilder,
+    private ViewCtrl: ViewController) 
+    {
+      this.category = navParams.get('category');
+
+      this.categoryForm = this.formBuilder.group({
+        categoryName: [this.category.name, Validators.compose([Validators.minLength(4), Validators.required])]
+      });
+    }
+
+  formControls() { return this.categoryForm.controls }
+
+  update() {
+     console.log("Updating...");
+     let newCategory = new Category(this.categoryForm.value.categoryName);
+
+     this.ViewCtrl.dismiss(newCategory);
   }
 
 }

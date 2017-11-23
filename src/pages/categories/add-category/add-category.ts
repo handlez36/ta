@@ -26,19 +26,23 @@ export class AddCategoryPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private formBuilder: FormBuilder,
-    private ViewCtrl: ViewController,
-    private categoryService: CategoryDataServiceProvider) 
+    private ViewCtrl: ViewController) 
     {
       this.categoryForm = this.formBuilder.group({
-        categoryName: ['', Validators.required]
+        categoryName: ['', Validators.compose([Validators.minLength(4), Validators.required])]
       });
     }
 
   ionViewDidLoad() {
+    // debugger;
+    console.log(this.formControls());
   }
 
+  formControls() { return this.categoryForm.controls }
+
   add(element) {
-    let newCategory = new Category(1, this.categoryForm.value.categoryName);
+    console.log("Adding element");
+    let newCategory = new Category(this.categoryForm.value.categoryName);
 
     this.ViewCtrl.dismiss(newCategory);
   }

@@ -8,4 +8,14 @@ page-categories {
         color: #716969;
         padding-left: 10px;
     }
+
+    .save {
+        display: flex;
+
+        button {
+            padding: 0 !important;
+            margin: 0 !important;
+            flex-grow: 1;
+        }
+    }
 }

@@ -15,18 +15,18 @@
 
 <ion-content>
   <div class="categories-present" *ngIf="categories.length > 0">
-    <ion-list>
+    <ion-list #categoryList>
       <ion-item-sliding *ngFor="let category of categories">  
         <ion-item>
-          {{ category.name }}
+          {{ (category && category.name) || None }}
         </ion-item>
         <ion-item-options side="right">
           <button ion-button color="primary">
-            <ion-icon name="hammer" (click)="categoryEditModal()"></ion-icon>
+            <ion-icon name="hammer" (click)="editCategoryModal(category)"></ion-icon>
             Edit
           </button>
-          <button ion-button color="primary">
-            <ion-icon name="trash" (click)="categoryDeleteModal()"></ion-icon>
+          <button ion-button color="danger">
+            <ion-icon name="trash" (click)="removeCategory(category)"></ion-icon>
             Delete
           </button>
         </ion-item-options>
@@ -39,9 +39,11 @@
   </div>
 
   <ion-footer>
-    <button ion-button (click)="addCategoryModal()">
-      <ion-icon name="add"></ion-icon>
-      Add
-    </button>
+    <div class="save">
+      <button ion-button (click)="addCategoryModal()">
+        <ion-icon name="add"></ion-icon>
+        Add
+      </button>
+    </div>
   </ion-footer>
 </ion-content>

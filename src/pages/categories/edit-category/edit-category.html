@@ -12,7 +12,27 @@
 
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <form [formGroup]="categoryForm" (ngSubmit)="update()">
+    <ion-item>
+      <ion-label>Category Name</ion-label>
+      <ion-input type="text" formControlName="categoryName" name="categoryName"></ion-input>
+    </ion-item>
+    <ion-item no-lines>
+      <div item-start class="validation-error" *ngIf="formControls().categoryName.touched && !formControls().categoryName.valid">
+        <div *ngIf="formControls().categoryName.errors.required">Required</div>
+        <div *ngIf="formControls().categoryName.errors.minlength">At least 4 characters</div>
+      </div>
+    </ion-item>
+  </form>
+  <ion-footer>
+    <div class="save-and-cancel">
+      <button color="secondary" [disabled]="categoryForm.invalid" ion-button (click)="update()">
+        Update
+      </button>
+      <button color="danger" ion-button (click)="ViewCtrl.dismiss()">
+        Cancel
+      </button>
+    </div>
+  </ion-footer>
 </ion-content>

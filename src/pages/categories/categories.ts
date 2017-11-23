@@ -1,6 +1,6 @@
 import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
-import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, IonicPage, ModalController, NavController, NavParams, List } from 'ionic-angular';
 
 /**
  * Generated class for the CategoriesPage page.
@@ -17,12 +17,14 @@ import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angu
 export class CategoriesPage {
 
   categories = [];
+  @ViewChild(List) list: List;
   
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private categoryDataService: CategoryDataServiceProvider,
-    private modalCtrl: ModalController) 
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController) 
     { 
       
     }
@@ -40,20 +42,56 @@ export class CategoriesPage {
   addCategoryModal() {
     let modal = this.modalCtrl.create('AddCategoryPage');
 
+    modal.present();
+
     modal.onDidDismiss( (newCategory) => {
-      this.categories.push(newCategory);
-      this.categoryDataService.save(this.categories);
+      if(newCategory) {
+        this.categories.push(newCategory);
+        this.categoryDataService.save(this.categories);
+      }
     })
+  }
+
+  editCategoryModal(category) {
+    let modal = this.modalCtrl.create('EditCategoryPage', { category: category});
+    let index = this.categories.indexOf(category);
 
     modal.present();
+
+    modal.onDidDismiss( (updatedCategory) => {
+      if(updatedCategory) {
+        this.categories.splice(index,1, updatedCategory);
+        this.categoryDataService.save(this.categories);
+      } else {
+        this.list.closeSlidingItems();
+      }
+    })
   }
 
-  updateCategory() {
+  removeCategory(category) {
+    let index = this.categories.indexOf(category);
 
-  }
+    let alert = this.alertCtrl.create({
+      title: "Confirm",
+      message: `Are you sure you want to remove the ${(category && category.name)} category?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => { this.list.closeSlidingItems() }
+        },
+        {
+          text: 'Remove',
+          role: 'remove',
+          handler: () => { 
+            this.categories.splice(index,1);
+            this.categoryDataService.save(this.categories);
+          }
+        }
+      ]
+    });
 
-  removeCategory() {
-
+    alert.present();
   }
 
 }

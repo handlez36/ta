@@ -36,7 +36,7 @@ export class MockJourniesProvider extends MockDataServiceProvider {
 
     // Initialize categories
     for (let i=1; i<6; i++) {
-      this.categories.push(new Category(i, `Category ${i}`, `Description of category ${i}`))
+      this.categories.push(new Category(`Category ${i}`))
     }
 
     // Initialize journies

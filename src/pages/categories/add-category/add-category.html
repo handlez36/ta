@@ -17,11 +17,23 @@
   <form [formGroup]="categoryForm" (ngSubmit)="add()">
     <ion-item>
       <ion-label>Category Name</ion-label>
-      <ion-input type="text" formControlName="categoryName" name="categoryName"></ion-input>
+      <ion-input #categoryName type="text" formControlName="categoryName" name="categoryName"></ion-input>
     </ion-item>
-    <button ion-button type="submit">
-      <ion-icon name="add"></ion-icon>
-      Add Category
-    </button>
+    <ion-item no-lines>
+        <div item-start class="validation-error" *ngIf="formControls().categoryName.touched && !formControls().categoryName.valid">
+          <div *ngIf="formControls().categoryName.errors.required">Required</div>
+          <div *ngIf="formControls().categoryName.errors.minlength">At least 4 characters</div>
+        </div>
+    </ion-item>
   </form>
+  <ion-footer>
+    <div class="save-and-cancel">
+      <button color="secondary" [disabled]="categoryForm.invalid" ion-button (click)="add()">
+        Add
+      </button>
+      <button color="danger" ion-button (click)="ViewCtrl.dismiss()">
+        Cancel
+      </button>
+    </div>
+  </ion-footer>
 </ion-content>
