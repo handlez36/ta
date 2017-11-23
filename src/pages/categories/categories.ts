@@ -37,14 +37,27 @@ export class CategoriesPage {
 
   ionViewDidLoad() {
     // Load categories
-    this.categoryDataService.getAll()
-      .then( categories => {
-        if(categories) {
-          this.categories = JSON.parse(categories);
+    // this.categoryDataService.getAll()
+    //   .then( categories => {
+    //     if(categories) {
+    //       let loadedCategores = JSON.parse(categories);
+    //       // this.categories = JSON.parse(categories);
 
-          // Set up listener for category changes
-        }
-      });
+    //       // this.categoryList = new CategoryList(this.categories);
+    //       // this.categoryList.getCategoryUpdates()
+    //       //   .subscribe( categories => {
+    //       //     this.categories = categories;
+    //       //     this.save();
+    //       //   })
+    //       // // Set up listener for category changes
+    //     }
+    //   });
+    this.categoryDataService.getAll().then( categories => this.categories = JSON.parse(categories) );
+    this.categoryListener = this.categoryDataService.getUpdates()
+      .subscribe(updatedCategories => this.categories = updatedCategories);
+
+    // Load journies
+    this.journeyDataService.getAll();
   }
 
   journeyCountPerCategory(category) {

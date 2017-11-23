@@ -1,4 +1,15 @@
 page-add-journey {
+    .validation-error {
+        
+        width: 175px;
+
+        div {
+            color: red;
+            font-size: 12px;
+            font-style: italic;
+            margin-left: 15px;
+        }
+    }
 
     .save-and-cancel {
         display: flex;
@@ -6,6 +17,7 @@ page-add-journey {
         button {
             padding: 0 !important;
             margin: 0 !important;
+            width: 50%;
             flex-grow: 1;
         }
     }

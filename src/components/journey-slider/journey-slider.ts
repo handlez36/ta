@@ -1,4 +1,5 @@
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
+import { Observable } from 'rxjs/Observable'; 
 import { Component } from '@angular/core';
 
 /**
@@ -15,16 +16,14 @@ export class JourneySliderComponent {
 
   text: string;
   journies = [];
+  journeyListener;
 
   constructor(private journeyService: JourneyDataServiceProvider) { }
 
   ngOnInit() {
-    this.journeyService.getAll()
-      .then( journies => {
-        if (journies) { 
-          this.journies = JSON.parse(journies);
-        }
-      });
+    this.journies = this.journeyService.getAll()
+    this.journeyListener = this.journeyService.getUpdates()
+      .subscribe( updatedJournies => this.journies = updatedJournies );
   }
 
 }

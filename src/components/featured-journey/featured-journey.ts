@@ -15,14 +15,9 @@ export class FeaturedJourneyComponent {
 
   journey;
 
-  constructor(private journies: JourneyDataServiceProvider) {
-    this.journies.getAll()
-      .then( journies => {
-        if(journies) {
-          this.journey = journies[0];
-        }
-      })
-    
+  constructor(private journiesDataService: JourneyDataServiceProvider) {
+    let journies = this.journiesDataService.getAll();
+    this.journey = journies[0];
   }
 
 }

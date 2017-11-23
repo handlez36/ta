@@ -29,11 +29,10 @@ export class JourneyListPage {
   ionViewDidLoad() {
     // Load journies from SQLite storage
     this.journeyDataService.getAll()
-      .then( journies => {
-        if(journies) {
-          this.journies = JSON.parse(journies);
-        }
-       });
+      .then( journies => this.journies = JSON.parse(journies) );
+
+    this.journeyListener = this.journeyDataService.getUpdates()
+      .subscribe( updatedJourneyList => this.journies = updatedJourneyList);
   }
 
   add() {
@@ -43,8 +42,7 @@ export class JourneyListPage {
 
     modal.onDidDismiss( newJourney => {
       if(newJourney) {
-        this.journies.push(newJourney);
-        this.journeyDataService.save(this.journies);
+        this.journeyDataService.add(newJourney);
       }
     })
   }

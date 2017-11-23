@@ -17,18 +17,23 @@ export class MocSqliteDataServiceProvider {
 
   itemObserver;
   itemListObservable;
+  promise;
 
   constructor(private storage: Storage, private key: string) {
-    storage.get(key)
-      .then( items => {
-        if (items) {
-          this.items = JSON.parse(items);
-        }
-      })
+    this.promise = storage.get(key);
+    this.promise.then( items => {
+      if (items) {
+        this.items = JSON.parse(items);
+      }
+    });
+
+    this.itemListObservable = Observable.create( observer => this.itemObserver = observer);
   }
 
-  getAll(): Promise<any> { 
-    return this.storage.get(this.key);
+  getAll() { 
+    return this.promise;
+    // return this.storage.get(this.key);
+    // return this.items;
   }
 
   save(data): void {
@@ -38,6 +43,25 @@ export class MocSqliteDataServiceProvider {
 
     let jsonedData = JSON.stringify(data);
     this.storage.set(this.key, jsonedData);
+  }
+
+  getUpdates(): Observable<any> {
+    return this.itemListObservable;
+  }
+
+  add(newItem) {
+    this.items.push(newItem);
+    this.itemObserver.next(this.items);
+  }
+
+  update(index, updatedItem) {
+      this.items.splice(index, 1, updatedItem);
+      this.itemObserver.next(this.items);
+  }
+
+  delete(index) {
+      this.items.splice(index,1);
+      this.itemObserver.next(this.items);
   }
 
 }

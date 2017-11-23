@@ -15,6 +15,11 @@ import { CategoriesPage } from './../categories/categories';
   selector: 'page-base-category',
   template: 
   `
+  <ion-header>
+    <ion-navbar>
+      <ion-title>Search</ion-title>
+    </ion-navbar>
+  </ion-header>
   <ion-tabs tabsPlacement="top" tabsHighlight="true">
     <ion-tab tabIcon="heart" tabTitle="Categories" [root]="tab1"></ion-tab>
     <ion-tab tabIcon="star" tabTitle="Journies" [root]="tab2">Journies</ion-tab>

@@ -29,19 +29,14 @@ export class AddJourneyPage {
     private categoryDataService: CategoryDataServiceProvider) 
     {
       this.journeyForm = formBuilder.group({
-        title: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+        title: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
         description: [''],
         category: ['', Validators.required]
       })
     }
 
   ionViewDidLoad() {
-    this.categoryDataService.getAll()
-      .then( categories => {
-        if(categories) {
-          this.categories = JSON.parse(categories);
-        }
-      })
+    this.categories = this.categoryDataService.getAll();
   }
 
   formControls() { return this.journeyForm.controls }

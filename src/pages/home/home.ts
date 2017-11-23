@@ -2,7 +2,7 @@ import { CategoryDataServiceProvider } from '../../providers/category-data-servi
 import { JourneyDataServiceProvider } from '../../providers/journey-data-service/journey-data-service';
 import { CategoriesPage } from './../categories/categories';
 import { Component } from '@angular/core';
-import { NavController, Events} from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -17,17 +17,36 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private categoryDataService: CategoryDataServiceProvider,
-    private journeyDataService: JourneyDataServiceProvider,
-    private events: Events)
+    private journeyDataService: JourneyDataServiceProvider)
   {
-      journeyDataService.getAll()
-        .then( journies => {
-          if(journies) {
-            this.journies = JSON.parse(journies);
-            console.log("Journies", this.journies);
-            this.featuredJourney = this.journies[0];
-          }
-        });
+      // journeyDataService.getAll()
+      //   .then( journies => this.journies = JSON.parse(journies) );
+      
+      // categoryDataService.getAll()
+      //   .then( categories => this.categories = JSON.parse(categories) );
+
+
+      // if (this.journies.length > 0) {
+      //   this.featuredJourney = this.journies[0];
+      // }
+  }
+
+  ionViewDidLoad() {
+    this.journeyDataService.getAll()
+    .then( journies => {
+      this.journies = JSON.parse(journies)
+      console.log("Journies after load:", this.journies);
+    });
+  
+    this.categoryDataService.getAll()
+      .then( categories => this.categories = JSON.parse(categories) );
+
+
+    if (this.journies.length > 0) {
+      this.featuredJourney = this.journies[0];
+    }
+    console.log("View Loaded");
+    console.log("Journies",this.journies);
   }
 
   search() {
@@ -35,7 +54,8 @@ export class HomePage {
   }
 
   toCategories() {
-    this.navCtrl.push( CategoriesPage )
+    // this.navCtrl.push( CategoriesPage )
+    // this.navCtrl.push('JourneyListPage');
   }
 
 }

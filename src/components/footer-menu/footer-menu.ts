@@ -1,7 +1,7 @@
-import { BaseCategoryPage } from '../../pages/base-category/base-category';
-import { CategoriesPage } from '../../pages/categories/categories';
-import { NavController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { BaseCategoryPage } from './../../pages/base-category/base-category';
+import { HomePage } from './../../pages/home/home';
+import { App, NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
 
 /**
  * Generated class for the FooterMenuComponent component.
@@ -17,13 +17,16 @@ export class FooterMenuComponent {
 
   text: string;
 
-  constructor(private navCtrl: NavController) {
-    this.text = 'Hello World!';
+  constructor(private navCtrl: NavController, private app: App) { }
+
+  toHome() {
+    this.app.getRootNav().setRoot(HomePage);
   }
 
   toCategories() {
     // this.navCtrl.push( CategoriesPage );
-    this.navCtrl.push(BaseCategoryPage);
+    // this.navCtrl.push(BaseCategoryPage);
+    this.app.getRootNav().setRoot(BaseCategoryPage);
   }
 
 }
