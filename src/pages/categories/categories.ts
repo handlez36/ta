@@ -1,6 +1,9 @@
+import { CategoryList } from '../../models/category-list';
+import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonicPage, ModalController, NavController, NavParams, List } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the CategoriesPage page.
@@ -17,12 +20,15 @@ import { AlertController, IonicPage, ModalController, NavController, NavParams, 
 export class CategoriesPage {
 
   categories = [];
+  private categoryListener;
+  journies = [];
   @ViewChild(List) list: List;
   
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private categoryDataService: CategoryDataServiceProvider,
+    private journeyDataService: JourneyDataServiceProvider,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController) 
     { 
@@ -35,8 +41,14 @@ export class CategoriesPage {
       .then( categories => {
         if(categories) {
           this.categories = JSON.parse(categories);
+
+          // Set up listener for category changes
         }
       });
+  }
+
+  journeyCountPerCategory(category) {
+
   }
 
   addCategoryModal() {
@@ -92,6 +104,10 @@ export class CategoriesPage {
     });
 
     alert.present();
+  }
+
+  save() {
+    this.categoryDataService.save(this.categories);
   }
 
 }

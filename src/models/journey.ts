@@ -6,10 +6,10 @@ export class Journey {
     // posts: Post[];
 
     constructor(
-        public id: number,
-        public user: User,
-        public category: Category,
         public title: string,
+        public category: Category,
+        public id?: number,
+        public user?: User,
         public description?: string,
         public duration?: number,
         public update_schedule?: string,

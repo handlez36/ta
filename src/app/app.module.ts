@@ -1,3 +1,5 @@
+import { JourneyListPage } from './../pages/journey-list/journey-list';
+import { BaseCategoryPage } from '../pages/base-category/base-category';
 import { AddCategoryPage } from '../pages/categories/add-category/add-category';
 import { FeaturedJourneyComponent } from '../components/featured-journey/featured-journey';
 import { IonicStorageModule } from '@ionic/storage';
@@ -25,8 +27,10 @@ import { CategoryDataServiceProvider } from '../providers/category-data-service/
   declarations: [
     MyApp,
     HomePage,
+    BaseCategoryPage,
     CategoriesPage,
     JourneySliderComponent,
+    JourneyListPage,
     FeaturedJourneyComponent,
     FooterMenuComponent
   ],
@@ -39,7 +43,9 @@ import { CategoryDataServiceProvider } from '../providers/category-data-service/
   entryComponents: [
     MyApp,
     HomePage,
+    BaseCategoryPage,
     CategoriesPage,
+    JourneyListPage,
     JourneySliderComponent,
     FooterMenuComponent
   ],

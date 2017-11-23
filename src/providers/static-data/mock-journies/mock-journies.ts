@@ -44,7 +44,7 @@ export class MockJourniesProvider extends MockDataServiceProvider {
       let randomCategoryIndex = Math.round( Math.random() * 4 );
       console.log("Random category index:: ", randomCategoryIndex);
       this.items.push(
-        new Journey(j, (j%2==0) ? this.users[1] : this.users[0], this.categories[randomCategoryIndex], `Journey ${j}`, `Description for journey ${j}`)
+        // new Journey(j, (j%2==0) ? this.users[1] : this.users[0], this.categories[randomCategoryIndex], `Journey ${j}`, `Description for journey ${j}`)
       )
     }
   }

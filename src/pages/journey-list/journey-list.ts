@@ -1,6 +1,6 @@
-// import { MocSqliteDataServiceProvider } from './../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
+import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
 /**
  * Generated class for the JourneyListPage page.
@@ -16,17 +16,45 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class JourneyListPage {
 
-  journies;
+  journies = [];
+  journeyListener;
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private modalCtrl: ModalController,
+    private journeyDataService: JourneyDataServiceProvider) {
   }
 
   ionViewDidLoad() {
     // Load journies from SQLite storage
-    // this.journies = this.dataService.getAll()
-    //   .then( journies => this.journies = journies )
+    this.journeyDataService.getAll()
+      .then( journies => {
+        if(journies) {
+          this.journies = JSON.parse(journies);
+        }
+       });
+  }
+
+  add() {
+    let modal = this.modalCtrl.create('AddJourneyPage');
+
+    modal.present();
+
+    modal.onDidDismiss( newJourney => {
+      if(newJourney) {
+        this.journies.push(newJourney);
+        this.journeyDataService.save(this.journies);
+      }
+    })
+  }
+
+  update() {
+
+  }
+
+  delete() {
+
   }
 
 }

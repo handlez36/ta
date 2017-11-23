@@ -1,3 +1,4 @@
+import { BaseCategoryPage } from '../../pages/base-category/base-category';
 import { CategoriesPage } from '../../pages/categories/categories';
 import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -21,7 +22,8 @@ export class FooterMenuComponent {
   }
 
   toCategories() {
-    this.navCtrl.push( CategoriesPage );
+    // this.navCtrl.push( CategoriesPage );
+    this.navCtrl.push(BaseCategoryPage);
   }
 
 }

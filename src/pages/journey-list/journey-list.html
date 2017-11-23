@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>journey-list</ion-title>
+    <ion-title>By journey</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,5 +19,12 @@
       <span>{{ journey.title }}</span>
     </ion-item>
   </ion-list>
-
+  <ion-footer>
+    <div class="add-button">
+      <button ion-button (click)="add()">
+        <ion-icon name="add"></ion-icon>
+        Add
+      </button>
+    </div>
+  </ion-footer>
 </ion-content>

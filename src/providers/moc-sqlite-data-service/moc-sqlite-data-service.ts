@@ -1,6 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 /*
@@ -14,11 +15,14 @@ export class MocSqliteDataServiceProvider {
 
   items = [];
 
+  itemObserver;
+  itemListObservable;
+
   constructor(private storage: Storage, private key: string) {
     storage.get(key)
       .then( items => {
         if (items) {
-          this.items = items;
+          this.items = JSON.parse(items);
         }
       })
   }

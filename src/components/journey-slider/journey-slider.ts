@@ -22,7 +22,7 @@ export class JourneySliderComponent {
     this.journeyService.getAll()
       .then( journies => {
         if (journies) { 
-          this.journies = journies 
+          this.journies = JSON.parse(journies);
         }
       });
   }
