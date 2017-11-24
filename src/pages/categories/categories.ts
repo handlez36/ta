@@ -25,6 +25,8 @@ export class CategoriesPage {
   journies = [];
   private journeyCount = {};
   @ViewChild(List) list: List;
+
+  private data: Observable<any>;
   
   constructor(
     public navCtrl: NavController, 
@@ -51,8 +53,7 @@ export class CategoriesPage {
     this.categoryListener = this.categoryDataService.getUpdates()
       .subscribe(updatedCategories => {
         console.log("Categories.ts received category update");
-        this.categories = updatedCategories
-        
+        this.categories = updatedCategories;
       });
   }
 

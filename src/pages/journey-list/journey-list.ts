@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, List } from 'ionic-angular';
@@ -19,6 +20,10 @@ export class JourneyListPage {
   journies = [];
   journeyListener;
   @ViewChild(List) list: List;
+
+  public testObserver;
+  public testObservable: Observable<any>;
+  public testList = [];
 
   constructor(
     public navCtrl: NavController, 
