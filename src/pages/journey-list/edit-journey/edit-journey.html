@@ -39,7 +39,7 @@
     </form>
     <ion-footer>
       <div class="save-and-cancel">
-        <button color="secondary" [disabled]="journeyForm.invalid" ion-button (click)="update()">
+        <button color="secondary" [disabled]="journeyForm.invalid" ion-button (click)="update(journey)">
           Update
         </button>
         <button color="danger" ion-button (click)="ViewCtrl.dismiss()">

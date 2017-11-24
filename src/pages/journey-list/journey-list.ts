@@ -27,24 +27,23 @@ export class JourneyListPage {
     private journeyDataService: JourneyDataServiceProvider) {
   }
 
-  ionViewDidLoad() {
-    // Load journies from SQLite storage
-    this.journeyDataService.getAll()
-      .then( journies => this.journies = JSON.parse(journies) );
-
-    // this.journeyListener = this.journeyDataService.getUpdates()
-    //   .subscribe( updatedJourneyList => {
-    //     console.log("Journey List got the subscription update!");
-    //     this.journies = updatedJourneyList;
-    //   }); 
+  ionViewWillEnter() {
+    this.loadJournies();
   }
 
-  ionViewWillEnter() {
+  loadJournies() {
+    this.journeyDataService.getAll()
+      .then(journies => {
+        if(journies) {
+          this.journies = JSON.parse(journies);
+        }
+      });
+
     this.journeyListener = this.journeyDataService.getUpdates()
-      .subscribe( updatedJourneyList => {
-        console.log("Journey List got the subscription update!");
-        this.journies = updatedJourneyList;
-      }); 
+      .subscribe( updatedJournies => {
+        console.log("Journey-list.ts received journey update");
+        this.journies = updatedJournies;
+      });
   }
 
   add() {

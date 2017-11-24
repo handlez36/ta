@@ -1,3 +1,4 @@
+import { Journey } from './../../../models/journey';
 import { Category } from './../../../models/category';
 import { CategoryDataServiceProvider } from './../../../providers/category-data-service/category-data-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -57,6 +58,16 @@ export class EditJourneyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditJourneyPage');
+  }
+
+  update(journey) {
+    let updatedJourney = new Journey(
+      this.formControls().title.value, 
+      new Category(this.formControls().category.value.name),
+      this.formControls().description.value
+    );
+
+    this.ViewCtrl.dismiss(updatedJourney);
   }
 
 }

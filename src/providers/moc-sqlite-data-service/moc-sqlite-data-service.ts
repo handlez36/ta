@@ -36,13 +36,13 @@ export class MocSqliteDataServiceProvider {
     // return this.items;
   }
 
-  save(data): void {
+  save(data): Promise<any> {
     // TEMPORARY
     // This will need to be expanded to separate add, update, delete
     // methods when we have a backend setup
 
     let jsonedData = JSON.stringify(data);
-    this.storage.set(this.key, jsonedData);
+    return this.storage.set(this.key, jsonedData);
   }
 
   getUpdates(): Observable<any> {

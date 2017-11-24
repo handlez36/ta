@@ -77,24 +77,10 @@ export class CategoriesPage {
 
     this.loadCategories();
     this.loadJournies();
-
-    console.log("ionViewWillEnter -- Journey count", this.journeyCount);
   }
 
   ionViewDidEnter() {
     console.log("ionViewDidEnter for Categories.ts");
-  }
-
-  ionViewWillLeave() {
-    console.log("ionViewWillLeave for Categories.ts");
-  }
-
-  ionViewDidLeave() {
-    console.log("ionViewDidLeave for Categories.ts");
-  }
-
-  ionViewWillUnload() {
-    console.log("ionViewWillUnload for Categories.ts");
   }
 
   updateJourneyCountPerCategory() {

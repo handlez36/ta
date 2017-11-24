@@ -21,8 +21,8 @@ import { CategoriesPage } from './../categories/categories';
     </ion-navbar>
   </ion-header>
   <ion-tabs tabsPlacement="top" tabsHighlight="true">
-    <ion-tab tabIcon="heart" tabTitle="Categories" [root]="tab1"></ion-tab>
-    <ion-tab tabIcon="star" tabTitle="Journies" [root]="tab2">Journies</ion-tab>
+    <ion-tab tabIcon="apps" tabTitle="Categories" [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="briefcase" tabTitle="Journies" [root]="tab2">Journies</ion-tab>
   </ion-tabs>
   `
 })
