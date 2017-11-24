@@ -21,7 +21,9 @@ export class CategoriesPage {
 
   categories = [];
   private categoryListener;
+  private journeyListener;
   journies = [];
+  private journeyCount = {};
   @ViewChild(List) list: List;
   
   constructor(
@@ -36,32 +38,84 @@ export class CategoriesPage {
     }
 
   ionViewDidLoad() {
-    // Load categories
-    // this.categoryDataService.getAll()
-    //   .then( categories => {
-    //     if(categories) {
-    //       let loadedCategores = JSON.parse(categories);
-    //       // this.categories = JSON.parse(categories);
+    console.log("ionViewDidLoad for Categories.ts")
 
-    //       // this.categoryList = new CategoryList(this.categories);
-    //       // this.categoryList.getCategoryUpdates()
-    //       //   .subscribe( categories => {
-    //       //     this.categories = categories;
-    //       //     this.save();
-    //       //   })
-    //       // // Set up listener for category changes
-    //     }
-    //   });
+    // Load categories and setup listener for changes
     this.categoryDataService.getAll().then( categories => this.categories = JSON.parse(categories) );
     this.categoryListener = this.categoryDataService.getUpdates()
       .subscribe(updatedCategories => this.categories = updatedCategories);
 
-    // Load journies
-    this.journeyDataService.getAll();
+    // Load journies and setup listener for changes
+    this.journeyDataService.getAll()
+      .then( journies => {
+        this.journies = JSON.parse(journies);
+       });
+    // this.journeyListener = this.journeyDataService.getUpdates()
+    //   .subscribe( updatedJournies => {
+    //     console.log("Categories.ts received journey update");
+    //     this.journies = updatedJournies
+    //   });
+
+  }
+
+  loadCategories() {
+    // Load categories and setup listener for changes
+    this.categoryDataService.getAll().then( categories => this.categories = JSON.parse(categories) );
+    
+    this.categoryListener = this.categoryDataService.getUpdates()
+      .subscribe(updatedCategories => this.categories = updatedCategories);
+  }
+
+  loadJournies() {
+    this.journeyDataService.getAll()
+    .then( journies => {
+      this.journies = JSON.parse(journies);
+     });
+
+    this.journeyListener = this.journeyDataService.getUpdates()
+      .subscribe( updatedJournies => {
+        console.log("Categories.ts received journey update");
+        this.journies = updatedJournies
+      });
+  }
+
+  ionViewWillEnter() {
+    console.log("ionViewWillEnter for Categories.ts");
+    console.log("Categories", this.categories);
+
+    this.journeyListener = this.journeyDataService.getUpdates()
+      .subscribe( updatedJournies => {
+        console.log("Categories.ts received journey update");
+        this.journies = updatedJournies
+      });
+
+    this.categories.forEach( category => {
+      console.log("In Will Enter -- Category name:", category.name);
+      this.journeyCount[`${category.name}`] = this.journeyCountPerCategory(category);
+    })
+    console.log("In Will Enter -- Journey count", this.journeyCount);
+  }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter for Categories.ts");
+  }
+
+  ionViewWillLeave() {
+    console.log("ionViewWillLeave for Categories.ts");
+  }
+
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave for Categories.ts");
+  }
+
+  ionViewWillUnload() {
+    console.log("ionViewWillUnload for Categories.ts");
   }
 
   journeyCountPerCategory(category) {
-
+    let filteredJournies = this.journies.filter( journey => journey.category.name === category.name );
+    
+    return filteredJournies.length;
   }
 
   addCategoryModal() {

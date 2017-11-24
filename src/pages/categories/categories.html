@@ -14,11 +14,12 @@
 
 
 <ion-content>
-  <div class="categories-present" *ngIf="categories.length > 0">
+  <div class="categories-present" *ngIf="categories && categories.length > 0">
     <ion-list #categoryList>
       <ion-item-sliding *ngFor="let category of categories">  
         <ion-item>
           {{ (category && category.name) || None }}
+          <ion-badge item-end>{{ journeyCountPerCategory(category) }}</ion-badge>
         </ion-item>
         <ion-item-options side="right">
           <button ion-button color="primary">
@@ -34,7 +35,7 @@
     </ion-list>
   </div>
 
-  <div class="no-categories-present" *ngIf="categories.length == 0">
+  <div class="no-categories-present" *ngIf="categories && categories.length == 0">
     <span class="no-categories-text">No Categories</span>
   </div>
 

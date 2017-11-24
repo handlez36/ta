@@ -31,8 +31,8 @@ export class MocSqliteDataServiceProvider {
   }
 
   getAll() { 
-    return this.promise;
-    // return this.storage.get(this.key);
+    // return this.promise;
+    return this.storage.get(this.key);
     // return this.items;
   }
 
@@ -51,16 +51,19 @@ export class MocSqliteDataServiceProvider {
 
   add(newItem) {
     this.items.push(newItem);
+    this.save(this.items);
     this.itemObserver.next(this.items);
   }
 
   update(index, updatedItem) {
       this.items.splice(index, 1, updatedItem);
+      this.save(this.items);
       this.itemObserver.next(this.items);
   }
 
   delete(index) {
       this.items.splice(index,1);
+      this.save(this.items);
       this.itemObserver.next(this.items);
   }
 

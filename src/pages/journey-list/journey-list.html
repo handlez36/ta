@@ -15,13 +15,25 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let journey of journies">
-      <span>{{ journey.title }}</span>
-    </ion-item>
+    <ion-item-sliding *ngFor="let journey of journies">
+      <ion-item>
+        <span>{{ journey.title }}</span>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="hammer" (click)="editJourneyModal(journey)"></ion-icon>
+          Edit
+        </button>
+        <button ion-button color="danger">
+          <ion-icon name="trash" (click)="removeJourney(journey)"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
   <ion-footer>
     <div class="add-button">
-      <button ion-button (click)="add()">
+      <button ion-button color="secondary" (click)="add()">
         <ion-icon name="add"></ion-icon>
         Add
       </button>

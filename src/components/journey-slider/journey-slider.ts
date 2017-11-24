@@ -21,9 +21,14 @@ export class JourneySliderComponent {
   constructor(private journeyService: JourneyDataServiceProvider) { }
 
   ngOnInit() {
-    this.journies = this.journeyService.getAll()
-    this.journeyListener = this.journeyService.getUpdates()
-      .subscribe( updatedJournies => this.journies = updatedJournies );
+    this.journeyService.getAll()
+      .then( journies => this.journies = JSON.parse(journies));
+
+    // this.journeyListener = this.journeyService.getUpdates()
+    //   .subscribe( updatedJournies => {
+    //     // console.log("Journey being updated...", updatedJournies);
+    //     // this.journies = updatedJournies;
+    //    });
   }
 
 }

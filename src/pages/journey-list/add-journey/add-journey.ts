@@ -19,7 +19,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 export class AddJourneyPage {
 
   private journeyForm: FormGroup;
-  categories: any = [];
+  categories;
 
   constructor(
     public navCtrl: NavController, 
@@ -36,7 +36,8 @@ export class AddJourneyPage {
     }
 
   ionViewDidLoad() {
-    this.categories = this.categoryDataService.getAll();
+    this.categoryDataService.getAll()
+      .then( categories => this.categories = JSON.parse(categories) );
   }
 
   formControls() { return this.journeyForm.controls }
@@ -45,8 +46,8 @@ export class AddJourneyPage {
     // let newCategory = new Category(this.categoryForm.value.categoryName);
     let newJourney = new Journey(
       this.formControls().title.value,
-      this.formControls().description.value,
-      this.formControls().category.value
+      this.formControls().category.value,
+      this.formControls().description.value
     )
     
     this.ViewCtrl.dismiss(newJourney);

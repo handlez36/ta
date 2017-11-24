@@ -1,6 +1,6 @@
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, List } from 'ionic-angular';
 
 /**
  * Generated class for the JourneyListPage page.
@@ -18,6 +18,7 @@ export class JourneyListPage {
 
   journies = [];
   journeyListener;
+  @ViewChild(List) list: List;
 
   constructor(
     public navCtrl: NavController, 
@@ -31,8 +32,19 @@ export class JourneyListPage {
     this.journeyDataService.getAll()
       .then( journies => this.journies = JSON.parse(journies) );
 
+    // this.journeyListener = this.journeyDataService.getUpdates()
+    //   .subscribe( updatedJourneyList => {
+    //     console.log("Journey List got the subscription update!");
+    //     this.journies = updatedJourneyList;
+    //   }); 
+  }
+
+  ionViewWillEnter() {
     this.journeyListener = this.journeyDataService.getUpdates()
-      .subscribe( updatedJourneyList => this.journies = updatedJourneyList);
+      .subscribe( updatedJourneyList => {
+        console.log("Journey List got the subscription update!");
+        this.journies = updatedJourneyList;
+      }); 
   }
 
   add() {
@@ -42,17 +54,32 @@ export class JourneyListPage {
 
     modal.onDidDismiss( newJourney => {
       if(newJourney) {
+        console.log("Adding journey to service");
         this.journeyDataService.add(newJourney);
       }
     })
   }
 
-  update() {
+  editJourneyModal(journey) {
+    let modal = this.modalCtrl.create('EditJourneyPage', { journey: journey} );
+    let index = this.journies.indexOf(journey);
 
+    modal.present();
+
+    modal.onDidDismiss( updatedJourney => {
+      if(updatedJourney) {
+        this.journeyDataService.update(index, updatedJourney);
+      } else {
+        this.list.closeSlidingItems();
+      }
+    })
   }
 
-  delete() {
-
+  removeJourney(journey) {
+    let index = this.journies.indexOf(journey);
+    if (index > 0) {
+      this.journeyDataService.delete(index);
+    }
   }
 
 }

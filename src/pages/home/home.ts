@@ -20,33 +20,17 @@ export class HomePage {
     private journeyDataService: JourneyDataServiceProvider)
   {
       // journeyDataService.getAll()
-      //   .then( journies => this.journies = JSON.parse(journies) );
+      //   .then( journies => {
+      //     this.journies = JSON.parse(journies);
+
+      //     if (this.journies.length > 0) {
+      //       console.log("Setting featured journey");
+      //       this.featuredJourney = this.journies[0];
+      //     }
+      //   });
       
       // categoryDataService.getAll()
       //   .then( categories => this.categories = JSON.parse(categories) );
-
-
-      // if (this.journies.length > 0) {
-      //   this.featuredJourney = this.journies[0];
-      // }
-  }
-
-  ionViewDidLoad() {
-    this.journeyDataService.getAll()
-    .then( journies => {
-      this.journies = JSON.parse(journies)
-      console.log("Journies after load:", this.journies);
-    });
-  
-    this.categoryDataService.getAll()
-      .then( categories => this.categories = JSON.parse(categories) );
-
-
-    if (this.journies.length > 0) {
-      this.featuredJourney = this.journies[0];
-    }
-    console.log("View Loaded");
-    console.log("Journies",this.journies);
   }
 
   search() {

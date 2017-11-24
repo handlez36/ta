@@ -37,7 +37,7 @@ export class BaseCategoryPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BaseCategoryPage');
+    console.log('ionViewDidLoad for BaseCategoryPage');
   }
 
 }

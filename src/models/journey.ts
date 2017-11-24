@@ -8,9 +8,9 @@ export class Journey {
     constructor(
         public title: string,
         public category: Category,
+        public description?: string,
         public id?: number,
         public user?: User,
-        public description?: string,
         public duration?: number,
         public update_schedule?: string,
         public active?: boolean)

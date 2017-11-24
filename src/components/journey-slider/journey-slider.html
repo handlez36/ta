@@ -1,5 +1,5 @@
-<span class="new-journies">Latest Journies</span><ion-badge>{{ journies && journies.length }}</ion-badge>
-<div *ngIf="journies.length > 0" class="latest-journies-scroll">
+<span class="new-journies">Latest Journies</span><ion-badge>{{ (journies && journies.length) || 0 }}</ion-badge>
+<div *ngIf="journies && journies.length > 0" class="latest-journies-scroll">
   <br />
   <ion-scroll scrollX="true" direction="x">
     <ion-card class="latest-journies" *ngFor="let journey of journies">
