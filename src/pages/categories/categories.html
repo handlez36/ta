@@ -19,7 +19,7 @@
       <ion-item-sliding *ngFor="let category of categories">  
         <ion-item>
           {{ (category && category.name) || None }}
-          <ion-badge item-end>{{ journeyCountPerCategory(category) }}</ion-badge>
+          <ion-badge item-end>{{ journeyCount[""+category.name] || 0 }}</ion-badge>
         </ion-item>
         <ion-item-options side="right">
           <button ion-button color="primary">
