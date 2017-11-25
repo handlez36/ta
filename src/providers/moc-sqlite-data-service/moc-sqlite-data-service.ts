@@ -18,8 +18,9 @@ export class MocSqliteDataServiceProvider {
   itemObserver;
   itemListObservable;
   promise;
+  url_prefix;
 
-  constructor(private storage: Storage, private key: string) {
+  constructor(private http: Http, private storage: Storage, private key: string) {
     this.promise = storage.get(key);
     this.promise.then( items => {
       if (items) {
@@ -28,6 +29,7 @@ export class MocSqliteDataServiceProvider {
     });
 
     this.itemListObservable = Observable.create( observer => this.itemObserver = observer);
+    this.url_prefix = "http://localhost:3000/"
   }
 
   getAll() { 

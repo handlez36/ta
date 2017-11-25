@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { JourneyListPage } from './../pages/journey-list/journey-list';
 import { BaseCategoryPage } from '../pages/base-category/base-category';
 import { AddCategoryPage } from '../pages/categories/add-category/add-category';
@@ -36,6 +37,7 @@ import { CategoryDataServiceProvider } from '../providers/category-data-service/
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],

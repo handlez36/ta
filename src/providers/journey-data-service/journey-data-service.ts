@@ -1,3 +1,4 @@
+import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { MocSqliteDataServiceProvider } from './../moc-sqlite-data-service/moc-sqlite-data-service';
 import { Injectable } from '@angular/core';
@@ -12,8 +13,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class JourneyDataServiceProvider extends MocSqliteDataServiceProvider {
 
-  constructor(private st: Storage) {
-    super(st, "journies");
+  constructor(private h: Http, private st: Storage) {
+    super(h, st, "journies");
   }
 
 }

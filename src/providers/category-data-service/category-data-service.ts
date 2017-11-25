@@ -13,8 +13,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CategoryDataServiceProvider extends MocSqliteDataServiceProvider{
 
-  constructor(private st: Storage) {
-    super(st, "categories");
+  constructor(private h: Http, private st: Storage) {
+    super(h, st, "categories");
   }
 
 }
