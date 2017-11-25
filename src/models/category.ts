@@ -7,4 +7,15 @@ export class Category {
     {
 
     }
+
+    parameterize(): {} {
+        let params = 
+        {
+            'category':
+            {
+                'name': this.name
+            }
+        };
+        return params;
+    }
 }

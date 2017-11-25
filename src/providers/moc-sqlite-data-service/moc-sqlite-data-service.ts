@@ -1,6 +1,6 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Headers, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -19,23 +19,50 @@ export class MocSqliteDataServiceProvider {
   itemListObservable;
   promise;
   url_prefix;
+  headers;
+  options;
 
   constructor(private http: Http, private storage: Storage, private key: string) {
-    this.promise = storage.get(key);
-    this.promise.then( items => {
-      if (items) {
-        this.items = JSON.parse(items);
-      }
-    });
+    this.setHttpConfigurations();
+  }
 
-    this.itemListObservable = Observable.create( observer => this.itemObserver = observer);
+  setHttpConfigurations() {
     this.url_prefix = "http://localhost:3000/"
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.options = new RequestOptions({headers: this.headers});
   }
 
   getAll() { 
     return this.http.get(this.url_prefix + this.key)
       .map( data => data.json() )
-    // return this.storage.get(this.key);
+  }
+
+  getUpdates(): Observable<any> {
+    return this.itemListObservable;
+  }
+
+  add(newItem, params): Observable<any> {
+    return this.http.post(this.url_prefix + this.key, JSON.stringify(params), this.options)
+      .map( data => data.json() );
+  }
+
+  update(index, updatedItem): Observable<any> {
+      let updatedParams = updatedItem.parameterize();
+
+      return this.http.put(
+        this.url_prefix + this.key + "/" + updatedItem.id, 
+        JSON.stringify(updatedParams), 
+        this.options
+      )
+        .map( data => data.json() );
+  }
+
+  delete(index, removedItem) {
+      return this.http.delete(
+        this.url_prefix + this.key + "/" + removedItem.id,
+        this.options)
+          .map( data => data.json() );
   }
 
   save(data): Promise<any> {
@@ -45,28 +72,6 @@ export class MocSqliteDataServiceProvider {
 
     let jsonedData = JSON.stringify(data);
     return this.storage.set(this.key, jsonedData);
-  }
-
-  getUpdates(): Observable<any> {
-    return this.itemListObservable;
-  }
-
-  add(newItem) {
-    this.items.push(newItem);
-    this.save(this.items);
-    this.itemObserver.next(this.items);
-  }
-
-  update(index, updatedItem) {
-      this.items.splice(index, 1, updatedItem);
-      this.save(this.items);
-      this.itemObserver.next(this.items);
-  }
-
-  delete(index) {
-      this.items.splice(index,1);
-      this.save(this.items);
-      this.itemObserver.next(this.items);
   }
 
 }

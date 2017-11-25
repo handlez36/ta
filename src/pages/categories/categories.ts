@@ -19,13 +19,10 @@ import { Observable } from 'rxjs/Observable';
 })
 export class CategoriesPage {
 
-  private categoryListener;
-  private journeyListener;
   categories = [];
   journies = [];
   private journeyCount = {};
   @ViewChild(List) list: List;
-
   private data: Observable<any>;
   
   constructor(
@@ -43,18 +40,11 @@ export class CategoriesPage {
   }
 
   loadCategories() {
-    // Load categories and setup listener for changes
     this.categoryDataService.getAll().subscribe( categories => {
       if(categories) {
         this.categories = categories;
       }
     });
-    
-    this.categoryListener = this.categoryDataService.getUpdates()
-      .subscribe(updatedCategories => {
-        console.log("Categories.ts received category update");
-        this.categories = updatedCategories;
-      });
   }
 
   loadJournies() {
@@ -63,12 +53,6 @@ export class CategoriesPage {
         if(journies) {
           this.updateJourneyCountPerCategory();
         }
-      });
-
-    this.journeyListener = this.journeyDataService.getUpdates()
-      .subscribe( updatedJournies => {
-        console.log("Categories.ts received journey update");
-        this.journies = updatedJournies;
       });
   }
 
@@ -98,8 +82,17 @@ export class CategoriesPage {
 
     modal.onDidDismiss( (newCategory) => {
       if(newCategory) {
+        // Optimistically add new category
         this.categories.push(newCategory);
-        this.categoryDataService.save(this.categories);
+
+        this.categoryDataService.add(newCategory, newCategory.parameterize())
+          // Add id of category as added by API
+          // Remove optimistically loaded category if API raised error
+          .subscribe( 
+            data => newCategory.id = data.id,
+            error => this.categories.pop(),
+            () => {}
+          );
       }
     })
   }
@@ -112,8 +105,16 @@ export class CategoriesPage {
 
     modal.onDidDismiss( (updatedCategory) => {
       if(updatedCategory) {
-        this.categories.splice(index,1, updatedCategory);
-        this.categoryDataService.save(this.categories);
+        // Optimistically edit category, but keep the old category just in case
+        let oldCategory = this.categories.splice(index,1, updatedCategory)[0];
+
+        // Revert optimistically replaced category if API raised error
+        this.categoryDataService.update(index, updatedCategory)
+          .subscribe(
+            data => {},
+            error => this.categories.splice(index, 1, oldCategory),
+            () => {}
+          )
       } else {
         this.list.closeSlidingItems();
       }
@@ -136,8 +137,13 @@ export class CategoriesPage {
           text: 'Remove',
           role: 'remove',
           handler: () => { 
-            this.categories.splice(index,1);
-            this.categoryDataService.save(this.categories);
+            let removedCategory = this.categories.splice(index,1)[0];
+            this.categoryDataService.delete(index, removedCategory)
+              .subscribe(
+                data => {},
+                error => this.categories.splice(index, 0, removedCategory),
+                () => {}
+              )
           }
         }
       ]

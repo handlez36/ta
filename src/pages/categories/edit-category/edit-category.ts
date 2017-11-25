@@ -37,8 +37,7 @@ export class EditCategoryPage {
   formControls() { return this.categoryForm.controls }
 
   update() {
-     console.log("Updating...");
-     let newCategory = new Category(this.categoryForm.value.categoryName);
+     let newCategory = new Category(this.categoryForm.value.categoryName, this.category.id);
 
      this.ViewCtrl.dismiss(newCategory);
   }
