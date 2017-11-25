@@ -38,9 +38,9 @@ export class JourneyListPage {
 
   loadJournies() {
     this.journeyDataService.getAll()
-      .then(journies => {
+      .subscribe(journies => {
         if(journies) {
-          this.journies = JSON.parse(journies);
+          this.journies = journies;
         }
       });
 

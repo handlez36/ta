@@ -37,9 +37,9 @@ export class EditJourneyPage {
       }
 
       this.categoryDataService.getAll()
-        .then( categories => {
+        .subscribe( categories => {
           if(categories) {
-            this.categories = JSON.parse(categories);
+            this.categories = categories;
           }
         })
 

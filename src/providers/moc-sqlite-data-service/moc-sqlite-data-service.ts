@@ -33,9 +33,9 @@ export class MocSqliteDataServiceProvider {
   }
 
   getAll() { 
-    // return this.promise;
-    return this.storage.get(this.key);
-    // return this.items;
+    return this.http.get(this.url_prefix + this.key)
+      .map( data => data.json() )
+    // return this.storage.get(this.key);
   }
 
   save(data): Promise<any> {

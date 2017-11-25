@@ -17,11 +17,10 @@ export class FeaturedJourneyComponent {
 
   constructor(private journiesDataService: JourneyDataServiceProvider) {
     let journies = this.journiesDataService.getAll()
-      .then( journies => {
+      .subscribe( journies => {
         if (journies) {
-          let journeyList = JSON.parse(journies);
-          if(journeyList.length > 0) {
-            this.journey = journeyList[0];
+          if(journies.length > 0) {
+            this.journey = journies[0];
           }
         }
       })

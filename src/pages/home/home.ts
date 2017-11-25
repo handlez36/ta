@@ -19,18 +19,6 @@ export class HomePage {
     private categoryDataService: CategoryDataServiceProvider,
     private journeyDataService: JourneyDataServiceProvider)
   {
-      // journeyDataService.getAll()
-      //   .then( journies => {
-      //     this.journies = JSON.parse(journies);
-
-      //     if (this.journies.length > 0) {
-      //       console.log("Setting featured journey");
-      //       this.featuredJourney = this.journies[0];
-      //     }
-      //   });
-      
-      // categoryDataService.getAll()
-      //   .then( categories => this.categories = JSON.parse(categories) );
   }
 
   search() {
@@ -38,8 +26,6 @@ export class HomePage {
   }
 
   toCategories() {
-    // this.navCtrl.push( CategoriesPage )
-    // this.navCtrl.push('JourneyListPage');
   }
 
 }

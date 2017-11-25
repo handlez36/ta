@@ -44,9 +44,9 @@ export class CategoriesPage {
 
   loadCategories() {
     // Load categories and setup listener for changes
-    this.categoryDataService.getAll().then( categories => {
+    this.categoryDataService.getAll().subscribe( categories => {
       if(categories) {
-        this.categories = JSON.parse(categories) ;
+        this.categories = categories;
       }
     });
     
@@ -59,9 +59,8 @@ export class CategoriesPage {
 
   loadJournies() {
     this.journeyDataService.getAll()
-      .then(journies => {
+      .subscribe(journies => {
         if(journies) {
-          this.journies = JSON.parse(journies);
           this.updateJourneyCountPerCategory();
         }
       });

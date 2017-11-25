@@ -37,7 +37,7 @@ export class AddJourneyPage {
 
   ionViewDidLoad() {
     this.categoryDataService.getAll()
-      .then( categories => this.categories = JSON.parse(categories) );
+      .subscribe( categories => this.categories = categories );
   }
 
   formControls() { return this.journeyForm.controls }

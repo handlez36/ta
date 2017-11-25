@@ -22,13 +22,7 @@ export class JourneySliderComponent {
 
   ngOnInit() {
     this.journeyService.getAll()
-      .then( journies => this.journies = JSON.parse(journies));
-
-    // this.journeyListener = this.journeyService.getUpdates()
-    //   .subscribe( updatedJournies => {
-    //     // console.log("Journey being updated...", updatedJournies);
-    //     // this.journies = updatedJournies;
-    //    });
+      .subscribe( journies => this.journies = journies);
   }
 
 }
