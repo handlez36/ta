@@ -62,9 +62,10 @@ export class EditJourneyPage {
 
   update(journey) {
     let updatedJourney = new Journey(
-      this.formControls().title.value, 
-      new Category(this.formControls().category.value.name),
-      this.formControls().description.value
+      this.formControls().title.value,
+      this.formControls().category.value,
+      this.formControls().description.value,
+      this.journey.id
     );
 
     this.ViewCtrl.dismiss(updatedJourney);

@@ -1,3 +1,5 @@
+import { Journey } from './../../models/journey';
+import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component } from '@angular/core';
 
@@ -14,17 +16,24 @@ import { Component } from '@angular/core';
 export class FeaturedJourneyComponent {
 
   journey;
+  categories = []
 
-  constructor(private journiesDataService: JourneyDataServiceProvider) {
-    let journies = this.journiesDataService.getAll()
-      .subscribe( journies => {
-        if (journies) {
-          if(journies.length > 0) {
-            this.journey = journies[0];
-          }
-        }
+  constructor(
+    private journiesDataService: JourneyDataServiceProvider,
+    private categoryDataService: CategoryDataServiceProvider
+  ) 
+  {
+    this.categoryDataService.getAll()
+      .subscribe( categories => {
+        if(categories)
+          this.categories = categories;
       })
-    this.journey = journies[0];
+
+    this.journiesDataService.getAll()
+      .subscribe( journies => {
+        if(journies && journies.length > 0)
+          this.journey = Journey.createSingleJourney(journies[0]);
+      });
   }
 
 }

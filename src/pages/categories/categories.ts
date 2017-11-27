@@ -1,4 +1,3 @@
-import { CategoryList } from '../../models/category-list';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { Component, ViewChild } from '@angular/core';
@@ -23,7 +22,6 @@ export class CategoriesPage {
   journies = [];
   private journeyCount = {};
   @ViewChild(List) list: List;
-  private data: Observable<any>;
   
   constructor(
     public navCtrl: NavController, 
@@ -51,6 +49,7 @@ export class CategoriesPage {
     this.journeyDataService.getAll()
       .subscribe(journies => {
         if(journies) {
+          this.journies = journies;
           this.updateJourneyCountPerCategory();
         }
       });
@@ -70,7 +69,7 @@ export class CategoriesPage {
   updateJourneyCountPerCategory() {
     this.categories.forEach( category => {
       this.journeyCount[`${category.name}`] = this.journies.filter( 
-        journey => journey.category.name === category.name 
+        journey => journey.category_id === category.id
       ).length;
     })
   }
@@ -85,7 +84,7 @@ export class CategoriesPage {
         // Optimistically add new category
         this.categories.push(newCategory);
 
-        this.categoryDataService.add(newCategory, newCategory.parameterize())
+        this.categoryDataService.add(newCategory)
           // Add id of category as added by API
           // Remove optimistically loaded category if API raised error
           .subscribe( 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 
 /*
   Generated class for the MocSqliteDataServiceProvider provider.
@@ -24,6 +25,10 @@ export class MocSqliteDataServiceProvider {
 
   constructor(private http: Http, private storage: Storage, private key: string) {
     this.setHttpConfigurations();
+
+    // Maintain an in memory list
+    // this.getAll()
+    //   .subscribe( data => this.items = data )
   }
 
   setHttpConfigurations() {
@@ -33,7 +38,17 @@ export class MocSqliteDataServiceProvider {
     this.options = new RequestOptions({headers: this.headers});
   }
 
-  getAll() { 
+  getAll(refreshFromServer: boolean = false) {
+    if(refreshFromServer) {
+      return this.getAllFromServer()
+    }
+
+    return (this.items.length > 0) ?
+      Observable.of(this.items) :
+      this.getAllFromServer()
+  }
+
+  getAllFromServer(): Observable<any> {
     return this.http.get(this.url_prefix + this.key)
       .map( data => data.json() )
   }
@@ -42,7 +57,9 @@ export class MocSqliteDataServiceProvider {
     return this.itemListObservable;
   }
 
-  add(newItem, params): Observable<any> {
+  add(newItem): Observable<any> {
+    let params = newItem.parameterize();
+
     return this.http.post(this.url_prefix + this.key, JSON.stringify(params), this.options)
       .map( data => data.json() );
   }

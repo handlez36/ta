@@ -1,7 +1,8 @@
+import { Journey } from './../../models/journey';
 import { Observable } from 'rxjs/Observable';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, List } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, List, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the JourneyListPage page.
@@ -29,26 +30,25 @@ export class JourneyListPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private journeyDataService: JourneyDataServiceProvider) {
   }
 
   ionViewWillEnter() {
+    console.log("ionViewWillEnter");
     this.loadJournies();
   }
 
   loadJournies() {
+    this.journies = [];
+
     this.journeyDataService.getAll()
       .subscribe(journies => {
         if(journies) {
-          this.journies = journies;
+          journies.forEach( j => this.journies.push(Journey.createSingleJourney(j)) )
         }
       });
 
-    this.journeyListener = this.journeyDataService.getUpdates()
-      .subscribe( updatedJournies => {
-        console.log("Journey-list.ts received journey update");
-        this.journies = updatedJournies;
-      });
   }
 
   add() {
@@ -58,8 +58,17 @@ export class JourneyListPage {
 
     modal.onDidDismiss( newJourney => {
       if(newJourney) {
-        console.log("Adding journey to service");
-        this.journeyDataService.add(newJourney);
+        // Optimistically add new journey
+        this.journies.push(newJourney);
+
+        this.journeyDataService.add(newJourney)
+          // Add id of journey as added by API
+          // Remove optimistically loaded journey if API raised error
+          .subscribe(
+            (data) => newJourney.id = data.id,
+            (error) => this.journies.pop(),
+            () => {}
+          )
       }
     })
   }
@@ -72,7 +81,16 @@ export class JourneyListPage {
 
     modal.onDidDismiss( updatedJourney => {
       if(updatedJourney) {
-        this.journeyDataService.update(index, updatedJourney);
+        // Optimistically edit journey, but keep the old journey just in case
+        let oldJourney = this.journies.splice(index,1, updatedJourney)[0];
+
+        // Revert optimistically replaced journey if API raised error
+        this.journeyDataService.update(index, updatedJourney)
+          .subscribe(
+            data => {},
+            error => this.journies.splice(index, 1, oldJourney),
+            () => {}
+          )
       } else {
         this.list.closeSlidingItems();
       }
@@ -81,9 +99,35 @@ export class JourneyListPage {
 
   removeJourney(journey) {
     let index = this.journies.indexOf(journey);
-    if (index > 0) {
-      this.journeyDataService.delete(index);
-    }
+    
+    let alert = this.alertCtrl.create({
+      title: "Confirm",
+      message: `Are you sure you want to remove the ${(journey && journey.name)} journey?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => { this.list.closeSlidingItems() }
+        },
+        {
+          text: 'Remove',
+          role: 'remove',
+          handler: () => { 
+            let removedJourney = this.journies.splice(index,1)[0];
+            this.journeyDataService.delete(index, removedJourney)
+              .subscribe(
+                data => {},
+                error => this.journies.splice(index, 0, removedJourney),
+                () => {}
+              )
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
+
+  printJourney(journey) { console.log(journey) }
 
 }

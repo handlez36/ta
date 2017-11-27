@@ -33,7 +33,7 @@
     <ion-item>
       <ion-label>Category</ion-label>
       <ion-select formControlName="category" name="category">
-        <ion-option *ngFor="let category of categories" [value]="category">{{ category.name }}</ion-option>
+        <ion-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ion-option>
       </ion-select>
     </ion-item>
   </form>
