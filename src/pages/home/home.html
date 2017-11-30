@@ -4,12 +4,13 @@
       <ion-item>
         Tag Along
         <div item-end>
-          <button ion-button (click)="testButton()">Test</button>
-          <button ion-button *ngIf="!profile" (click)="login()">Login</button>
-          <ion-avatar *ngIf="profile">
-            <img width="40" height="40" [src]="profile.picture" />
-          </ion-avatar>
-          <button ion-button *ngIf="profile" (click)="logout()">Logout</button>
+          <ion-item>
+            <button item-start ion-button *ngIf="!profile" (click)="login()">Login</button>
+            <ion-avatar *ngIf="profile" item-start>
+              <img width="40" height="40" [src]="profile.picture" />
+            </ion-avatar>
+            <button ion-button item-end *ngIf="profile" (click)="logout()">Logout</button>
+          </ion-item>
         </div>
       </ion-item>
     </ion-title>

@@ -24,7 +24,7 @@ export class AuthLockProvider {
 
   public storeUserCredentials(authResults?, authProfile?) {
     let profile = authProfile || null;
-    let token = authResults.accessToken || null;
+    let token = authResults ? authResults.accessToken : null;
     let expiresAt = (authResults) ?
       (authResults.expiresIn * 1000) + new Date().getTime() :
       null;
