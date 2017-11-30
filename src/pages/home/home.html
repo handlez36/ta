@@ -1,12 +1,23 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Tag Along
+      <ion-item>
+        Tag Along
+        <div item-end>
+          <button ion-button (click)="testButton()">Test</button>
+          <button ion-button *ngIf="!profile" (click)="login()">Login</button>
+          <ion-avatar *ngIf="profile">
+            <img width="40" height="40" [src]="profile.picture" />
+          </ion-avatar>
+          <button ion-button *ngIf="profile" (click)="logout()">Logout</button>
+        </div>
+      </ion-item>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  Profile: {{ profile }}
   <br />
   <ion-searchbar 
     placeholder="Find your next journey" (ionInput)="search($event)">

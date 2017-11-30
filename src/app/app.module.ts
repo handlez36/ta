@@ -23,6 +23,8 @@ import { MockJourniesProvider } from '../providers/static-data/mock-journies/moc
 import { MockCategoriesProvider } from '../providers/static-data/mock-categories/mock-categories';
 import { MockDataServiceProvider } from '../providers/static-data/mock-data-service/mock-data-service';
 import { CategoryDataServiceProvider } from '../providers/category-data-service/category-data-service';
+import { AuthProvider } from '../providers/auth/auth';
+import { AuthLockProvider } from '../providers/auth-lock/auth-lock';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { CategoryDataServiceProvider } from '../providers/category-data-service/
     MockDataServiceProvider,
     MocSqliteDataServiceProvider,
     JourneyDataServiceProvider,
-    CategoryDataServiceProvider
+    CategoryDataServiceProvider,
+    AuthProvider,
+    AuthLockProvider
   ]
 })
 export class AppModule {}
