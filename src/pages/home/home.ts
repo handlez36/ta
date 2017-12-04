@@ -1,3 +1,5 @@
+import { User } from './../../models/user';
+import { UserProvider } from './../../providers/user/user';
 import { AuthLockProvider } from './../../providers/auth-lock/auth-lock';
 import { CategoryDataServiceProvider } from '../../providers/category-data-service/category-data-service';
 import { JourneyDataServiceProvider } from '../../providers/journey-data-service/journey-data-service';
@@ -33,6 +35,7 @@ export class HomePage {
 
   journies = [];
   categories = [];
+  users = [];
   featuredJourney;
 
   authResult;
@@ -45,7 +48,8 @@ export class HomePage {
     private categoryDataService: CategoryDataServiceProvider,
     private journeyDataService: JourneyDataServiceProvider,
     private zone: NgZone,
-    private authService: AuthLockProvider)
+    private authService: AuthLockProvider,
+    private userService: UserProvider)
   {
     this.token = null;
     this.profile = null;
@@ -68,6 +72,19 @@ export class HomePage {
         });
       });
     });
+
+    // Pull all users
+    // TODO: Only pull
+    this.userService.getAll( {email: ["handlez36@gmail.com", "handlez36@hotmail.com"]} )
+      .subscribe(users => {
+        if(users) {
+          console.log("Users: ", users);
+          users.forEach( user => {
+            this.users.push( new User(user.user_id, user.email, user.picture) )
+            this.userService.save(this.users);
+          });
+        }
+      })
   }
 
   setProfile(profile) {
@@ -88,7 +105,7 @@ export class HomePage {
 
   logout() {
     // Nullify local storage's user credentials and logout
-    this.authService.storeUserCredentials(null, null);
+    this.authService.removeUserCredentials();
 
     authLock.logout({ 
       returnTo: 'http://localhost:8100/',

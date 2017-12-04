@@ -25,6 +25,7 @@ import { MockDataServiceProvider } from '../providers/static-data/mock-data-serv
 import { CategoryDataServiceProvider } from '../providers/category-data-service/category-data-service';
 import { AuthProvider } from '../providers/auth/auth';
 import { AuthLockProvider } from '../providers/auth-lock/auth-lock';
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { AuthLockProvider } from '../providers/auth-lock/auth-lock';
     JourneyDataServiceProvider,
     CategoryDataServiceProvider,
     AuthProvider,
-    AuthLockProvider
+    AuthLockProvider,
+    UserProvider
   ]
 })
 export class AppModule {}

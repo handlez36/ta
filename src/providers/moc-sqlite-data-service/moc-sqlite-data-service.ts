@@ -27,8 +27,8 @@ export class MocSqliteDataServiceProvider {
     this.setHttpConfigurations();
 
     // Maintain an in memory list
-    // this.getAll()
-    //   .subscribe( data => this.items = data )
+    this.getAll()
+      .subscribe( data => this.items = data )
   }
 
   setHttpConfigurations() {
@@ -38,7 +38,7 @@ export class MocSqliteDataServiceProvider {
     this.options = new RequestOptions({headers: this.headers});
   }
 
-  getAll(refreshFromServer: boolean = false) {
+  getAll(refreshFromServer: boolean = true) {
     if(refreshFromServer) {
       return this.getAllFromServer()
     }
@@ -82,13 +82,10 @@ export class MocSqliteDataServiceProvider {
           .map( data => data.json() );
   }
 
-  save(data): Promise<any> {
-    // TEMPORARY
-    // This will need to be expanded to separate add, update, delete
-    // methods when we have a backend setup
-
-    let jsonedData = JSON.stringify(data);
-    return this.storage.set(this.key, jsonedData);
+  save(data) {
+    // Cache latest list
+    this.items = data;
+    localStorage.setItem(this.key, JSON.stringify(data));
   }
 
 }

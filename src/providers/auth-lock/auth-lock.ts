@@ -34,6 +34,10 @@ export class AuthLockProvider {
     this.setExpiration(expiresAt)
   }
 
+  public removeUserCredentials() {
+    this.storeUserCredentials(null, null);
+  }
+
   private getStorageVariable(name) {
     return JSON.parse(localStorage.getItem(name));
   }
