@@ -2,6 +2,7 @@ import { Journey } from './../../models/journey';
 import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component } from '@angular/core';
+import { Input } from '@angular/core';
 
 /**
  * Generated class for the FeaturedJourneyComponent component.
@@ -14,6 +15,9 @@ import { Component } from '@angular/core';
   templateUrl: 'featured-journey.html'
 })
 export class FeaturedJourneyComponent {
+
+  @Input() featuredJourney;
+  @Input() featuredUser;
 
   journey;
   categories = []
@@ -29,11 +33,18 @@ export class FeaturedJourneyComponent {
           this.categories = categories;
       })
 
-    this.journiesDataService.getAll()
-      .subscribe( journies => {
-        if(journies && journies.length > 0)
-          this.journey = Journey.createSingleJourney(journies[0]);
-      });
+    this.journey = this.featuredJourney;
+    console.log("Featured Journey : constructor");
+
+    // this.journiesDataService.getAll()
+    //   .subscribe( journies => {
+    //     if(journies && journies.length > 0)
+    //       this.journey = Journey.createSingleJourney(journies[0]);
+    //   });
+  }
+
+  ngOnInit() {
+    this.journey = this.featuredJourney;
   }
 
 }

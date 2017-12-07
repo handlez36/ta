@@ -22,8 +22,9 @@
     placeholder="Find your next journey" (ionInput)="search($event)">
   </ion-searchbar>
   <br />
-  <div id="featured-journey">
-    <featured-journey></featured-journey>
+
+  <div *ngIf="loadedFlag" id="featured-journey">
+    <featured-journey [featuredJourney]="featuredJourney"></featured-journey>
   </div>
   <br /><br />
   <ion-item>

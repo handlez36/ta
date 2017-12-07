@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 
 /*
   Generated class for the UserProvider provider.
@@ -16,6 +17,7 @@ export class UserProvider {
   options;
   access_token;
   users;
+  currentUser;
 
   constructor(public http: Http) {
     this.setHttpConfigurations();
@@ -30,31 +32,60 @@ export class UserProvider {
     this.options = new RequestOptions({headers: this.headers});
   }
 
-  getAll(params = null): Observable<any> {
+  getAll(params = null, refreshFromServer = true) {
+    if(refreshFromServer)
+      return this.getUsersFromServer(params);
+    
+    return (this.users.length > 0) ?
+      Observable.of(this.users) :
+      this.getUsersFromServer(params)
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
+  }
+
+  getUsersFromServer(params = null): Observable<any> {
     let queryStringParams = "";
 
-    if(params) {
-      queryStringParams += "?q=";
-      Object.keys(params).forEach( (key,index) => {
-        if (index > 0) { queryStringParams += " AND "}
-        
-        queryStringParams += `${key}:(`;
-        params[key].forEach( (p,pIndex) => {
-          if (pIndex > 0) { queryStringParams += " OR "}
-          queryStringParams += `"${p}"`
-        })
-        queryStringParams += ")"
-      })
-    }
+    if(params) { queryStringParams = this.formUrl(queryStringParams, params) }
 
     console.log("Url: ", this.url_prefix + queryStringParams);
     return this.http.get(this.url_prefix + queryStringParams, this.options)
       .map( data => data.json() );
   }
 
+  saveCurrentUser(user) {
+    if(user) {
+      this.currentUser = user;
+      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    }
+  }
+
   save(users) {
-    if(users)
+    if(users) {
       this.users = users;
+      localStorage.setItem('users', JSON.stringify(this.users));
+    }
+  }
+
+  private formUrl(queryStringParams, params) {
+    if(params) {
+      queryStringParams += "?q=";
+      Object.keys(params).forEach( (key,index) => {
+        if (index > 0) { queryStringParams += " AND " }
+        
+        queryStringParams += `${key}:(`;
+        params[key].forEach( (p,pIndex) => {
+          if (pIndex > 0) { queryStringParams += " OR " }
+          
+          queryStringParams += `"${p}"`
+        });
+        queryStringParams += ")"
+      });
+    }
+
+    return queryStringParams;
   }
 
 }

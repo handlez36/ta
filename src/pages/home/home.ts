@@ -1,3 +1,4 @@
+import { Journey } from './../../models/journey';
 import { User } from './../../models/user';
 import { UserProvider } from './../../providers/user/user';
 import { AuthLockProvider } from './../../providers/auth-lock/auth-lock';
@@ -37,6 +38,7 @@ export class HomePage {
   categories = [];
   users = [];
   featuredJourney;
+  loadedFlag;
 
   authResult;
   token;
@@ -55,9 +57,22 @@ export class HomePage {
     this.profile = null;
 
     zone = new NgZone({ enableLongStackTrace: false });
+
+    this.loadedFlag = false;
   }
 
   ionViewDidLoad() {
+    // Get journies...
+    this.journeyDataService.getAll()
+      .subscribe( journies => {
+        if(journies && journies.length > 0) {
+          this.zone.run( () => { 
+            this.featuredJourney = Journey.createSingleJourney(journies[0]) 
+            this.loadedFlag = true;
+          })
+        }
+      });
+
     // Listen for login event...
     authLock.on("authenticated", (authResult) => {
       this.token = authResult.accessToken;
@@ -75,10 +90,9 @@ export class HomePage {
 
     // Pull all users
     // TODO: Only pull
-    this.userService.getAll( {email: ["handlez36@gmail.com", "handlez36@hotmail.com"]} )
+    this.userService.getAll()
       .subscribe(users => {
         if(users) {
-          console.log("Users: ", users);
           users.forEach( user => {
             this.users.push( new User(user.user_id, user.email, user.picture) )
             this.userService.save(this.users);
