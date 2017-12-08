@@ -32,7 +32,7 @@
     </ion-item-sliding>
   </ion-list>
   <ion-footer>
-    <div class="add-button">
+    <div *ngIf="isLoggedIn" class="add-button">
       <button ion-button color="secondary" (click)="add()">
         <ion-icon name="add"></ion-icon>
         Add

@@ -25,6 +25,22 @@ page-home {
         font-family: 'Lalezar';
         color: #716969;
     }
+
+    .toolbar-title, .toolbar-content {
+        padding: 0px;
+
+        ion-item {
+            padding: 0px;
+
+            div {
+                padding: 0px;
+
+                div {
+                    margin-right: 2px;
+                }
+            }
+        }
+    }
  }
 
 #video-container {

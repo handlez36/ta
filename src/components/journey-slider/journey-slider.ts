@@ -1,3 +1,5 @@
+import { UserProvider } from './../../providers/user/user';
+import { Input } from '@angular/core';
 import { Journey } from './../../models/journey';
 import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
@@ -16,37 +18,44 @@ import { Component } from '@angular/core';
 })
 export class JourneySliderComponent {
 
-  text: string;
+  @Input() latestJournies;
+
   journies = [];
   categories = [];
-  journeyListener;
+  users = [];
 
   constructor(
     private journeyDataService: JourneyDataServiceProvider,
-    private categoryDataService: CategoryDataServiceProvider) { }
+    private categoryDataService: CategoryDataServiceProvider,
+    private userDataService: UserProvider) { }
 
   ngOnInit() {
+    this.journies = this.latestJournies;
+    console.log("Journies", this.journies);
+
     this.categoryDataService.getAll()
       .subscribe( categories => {
         if(categories)
-          this.categories = categories 
-          // this.categories = Category.createBulkCategories(categories);
+          this.categories = categories; 
+      });
+
+    let user_ids = this.journies.map( journey => journey.user_id )
+    this.userDataService.getAll({ user_id: user_ids })
+      .subscribe( users => {
+        this.users = users;
+        console.log("Users loaded:", this.users);
       });
     
-    this.journeyDataService.getAll()
-      .subscribe( journies => {
-        if(journies)
-          this.journies = Journey.createBulkJournies(journies) 
-      });
   }
 
   getCategoryName(category_id) {
-    // console.log(this.categories);
-    // console.log(this.categories.find( cat => cat.id === category_id ).name);
-
-    // return "Test";
     let category = this.categories.find( cat => cat.id === category_id );
     return category ? category.name : "??";
+  }
+
+  getAvatarImage(user_id) {
+    let user = this.users.find( user => user.user_id === user_id );
+    return user ? user.picture : "";
   }
 
 }

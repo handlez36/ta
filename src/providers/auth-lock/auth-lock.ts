@@ -61,9 +61,22 @@ export class AuthLockProvider {
     this.setStorageVariable('expiration', expiration);
   }
 
+  public getCurrentUser() {
+    if (this.isAuthenticated()) {
+      return this.userProfile;
+    } else {
+      return null;
+    }
+  }
+
   public isAuthenticated() {
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return Date.now() < expiresAt && this.userProfile && this.accessToken;
+    const expiresAt = JSON.parse(localStorage.getItem('expiration'));
+
+    if(expiresAt && this.userProfile) {
+      return Date.now() < expiresAt && this.userProfile && this.accessToken;
+    } else {
+      return false;
+    }
   }
 
 }

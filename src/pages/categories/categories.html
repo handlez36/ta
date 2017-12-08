@@ -40,7 +40,7 @@
   </div>
 
   <ion-footer>
-    <div class="save">
+    <div *ngIf="isLoggedIn" class="save">
       <button ion-button (click)="addCategoryModal()">
         <ion-icon name="add"></ion-icon>
         Add

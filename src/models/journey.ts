@@ -1,21 +1,25 @@
+import { CategoryDataServiceProvider } from './../providers/category-data-service/category-data-service';
+import { Http } from '@angular/http';
 import { Category } from './category';
 import { User } from './user';
+import { Inject, Injectable } from '@angular/core';
+import { ReflectiveInjector } from '@angular/core';
+import { ConnectionBackend } from '@angular/http/src/interfaces';
 
+@Injectable()
 export class Journey {
 
     // posts: Post[];
+
+    categoryService;
 
     constructor(
         public title: string,
         public category: number,
         public description?: string,
-        public id?: number,
-        public user?: User,
-        public duration?: number,
-        public update_schedule?: string,
-        public active?: boolean)
+        public user_id?: number,
+        public id?: number)
     {
-        
     }
 
     static createBulkJournies(journies) {
@@ -31,6 +35,7 @@ export class Journey {
             journey.title,
             journey.category_id,
             journey.description,
+            journey.user_id,
             journey.id
         )
 
@@ -45,10 +50,7 @@ export class Journey {
                 'title': this.title,
                 'category_id': this.category,
                 'description': this.description || null,
-                'user': this.user || null,
-                'duration': this.duration || null,
-                'update_schedule': this.update_schedule || null,
-                'active': this.active || null
+                'user_id': this.user_id || null
             }    
         }
 

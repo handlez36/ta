@@ -3,6 +3,7 @@ import { CategoryDataServiceProvider } from './../../providers/category-data-ser
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonicPage, ModalController, NavController, NavParams, List } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 
 /**
  * Generated class for the CategoriesPage page.
@@ -21,6 +22,7 @@ export class CategoriesPage {
   categories = [];
   journies = [];
   private journeyCount = {};
+  private isLoggedIn;
   @ViewChild(List) list: List;
   
   constructor(
@@ -29,12 +31,15 @@ export class CategoriesPage {
     private categoryDataService: CategoryDataServiceProvider,
     private journeyDataService: JourneyDataServiceProvider,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController) 
+    private alertCtrl: AlertController,
+    private authService: AuthLockProvider) 
     { 
     }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad for Categories.ts")
+
+    this.isLoggedIn = this.authService.isAuthenticated();
   }
 
   loadCategories() {

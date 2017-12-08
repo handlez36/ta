@@ -4,6 +4,7 @@ import { CategoryDataServiceProvider } from './../../../providers/category-data-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { AuthLockProvider } from '../../../providers/auth-lock/auth-lock';
 
 /**
  * Generated class for the EditJourneyPage page.
@@ -22,13 +23,15 @@ export class EditJourneyPage {
   journeyForm: FormGroup;
   journey;
   categories = [];
+  private currentUser;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     private ViewCtrl: ViewController,
-    private categoryDataService: CategoryDataServiceProvider) 
+    private categoryDataService: CategoryDataServiceProvider,
+    private authService: AuthLockProvider) 
     {
       let param = navParams.get('journey');
       if (param) {
@@ -58,6 +61,8 @@ export class EditJourneyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditJourneyPage');
+
+    this.currentUser = this.authService.getCurrentUser();
   }
 
   update(journey) {
@@ -65,6 +70,7 @@ export class EditJourneyPage {
       this.formControls().title.value,
       this.formControls().category.value,
       this.formControls().description.value,
+      this.currentUser.sub,
       this.journey.id
     );
 

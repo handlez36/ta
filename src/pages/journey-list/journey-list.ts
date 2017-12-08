@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, List, AlertController } from 'ionic-angular';
+import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 
 /**
  * Generated class for the JourneyListPage page.
@@ -21,6 +22,7 @@ export class JourneyListPage {
   journies = [];
   journeyListener;
   @ViewChild(List) list: List;
+  private isLoggedIn;
 
   public testObserver;
   public testObservable: Observable<any>;
@@ -31,12 +33,15 @@ export class JourneyListPage {
     public navParams: NavParams,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private journeyDataService: JourneyDataServiceProvider) {
+    private journeyDataService: JourneyDataServiceProvider,
+    private authService: AuthLockProvider) {
   }
 
   ionViewWillEnter() {
     console.log("ionViewWillEnter");
+    
     this.loadJournies();
+    this.isLoggedIn = this.authService.isAuthenticated();
   }
 
   loadJournies() {
@@ -81,6 +86,7 @@ export class JourneyListPage {
 
     modal.onDidDismiss( updatedJourney => {
       if(updatedJourney) {
+        console.log("Updated Journey before sending it to ROR:", updatedJourney);
         // Optimistically edit journey, but keep the old journey just in case
         let oldJourney = this.journies.splice(index,1, updatedJourney)[0];
 

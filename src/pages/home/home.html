@@ -1,10 +1,10 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <ion-item>
+      <ion-item no-lines>
         Tag Along
         <div item-end>
-          <ion-item>
+          <ion-item no-lines>
             <button item-start ion-button *ngIf="!profile" (click)="login()">Login</button>
             <ion-avatar *ngIf="profile" item-start>
               <img width="40" height="40" [src]="profile.picture" />
@@ -23,12 +23,21 @@
   </ion-searchbar>
   <br />
 
-  <div *ngIf="loadedFlag" id="featured-journey">
+  <div *ngIf="false">
+    Loaded Flag: {{ loadedFlag }}<br />
+    Featured Jourey: {{ featuredJourney }}<br />
+    My Featured Journey: {{ myFeaturedJourney }}<br />
+    Latest Journies: {{ latestJournies }}
+  </div>
+  <div *ngIf="myFeaturedJourney" id="featured-journey">
+    <featured-journey [featuredJourney]="myFeaturedJourney"></featured-journey>
+  </div>
+  <div *ngIf="featuredJourney && (loadedFlag && !myFeaturedJourney)" id="featured-journey">
     <featured-journey [featuredJourney]="featuredJourney"></featured-journey>
   </div>
   <br /><br />
-  <ion-item>
-    <journey-slider></journey-slider>
+  <ion-item *ngIf="latestJournies">
+    <journey-slider [latestJournies]="latestJournies"></journey-slider>
   </ion-item>
   <br /><br />
   <ion-fab right bottom>

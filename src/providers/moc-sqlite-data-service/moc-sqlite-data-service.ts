@@ -23,7 +23,7 @@ export class MocSqliteDataServiceProvider {
   headers;
   options;
 
-  constructor(private http: Http, private storage: Storage, private key: string) {
+  constructor(protected http: Http, private storage: Storage, private key: string) {
     this.setHttpConfigurations();
 
     // Maintain an in memory list
@@ -35,7 +35,7 @@ export class MocSqliteDataServiceProvider {
     this.url_prefix = "http://localhost:3000/"
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
-    this.options = new RequestOptions({headers: this.headers});
+    // this.options = new RequestOptions({headers: this.headers});
   }
 
   getAll(refreshFromServer: boolean = true) {
@@ -51,6 +51,12 @@ export class MocSqliteDataServiceProvider {
   getAllFromServer(): Observable<any> {
     return this.http.get(this.url_prefix + this.key)
       .map( data => data.json() )
+  }
+
+  getItemWithParams(key, id) {
+    let param = `?${key}=${id}`
+    return this.http.get(this.url_prefix + this.key + param)
+      .map( data => data.json() );
   }
 
   getUpdates(): Observable<any> {

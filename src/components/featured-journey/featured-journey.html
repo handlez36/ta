@@ -1,25 +1,28 @@
 <div *ngIf="journey">
-<ion-item no-lines>
-  <ion-avatar item-start>
-    <ion-img width="40" height="40" src="https://scontent.fatl1-2.fna.fbcdn.net/v/t1.0-9/1743563_10101216079484127_438555586_n.jpg?oh=b5094a443daae8ffac6ba1077e7fc6b8&oe=5A6B170A"></ion-img>
-  </ion-avatar>
-  <div id="feature-info" item-start>
-    {{ "Placeholder" }}
-    <p>
-      <span class="last-updated">2 days ago</span>
-    </p>
+  <ion-item class="feature-journey-title" no-lines>
+    <span class="new-journies">
+      {{ authService.isAuthenticated() ? "Your Journey" : "Featured Journey" }}
+    </span>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-avatar item-start>
+      <!-- <ion-img width="40" height="40" [src]="user_picture || ''"></ion-img> -->
+      <ion-img width="40" height="40" src="{{ user_picture || '' }}"></ion-img>
+    </ion-avatar>
+    <div id="feature-info" item-start>
+      {{ user_alias || "" }}
+      <p>
+        <span class="last-updated">2 days ago</span>
+      </p>
+    </div>
+    <span class="feature-journey-title" item-end>{{ journey && journey.title }}<br />{{ category || "" }}</span>
+  </ion-item>
+  <div id="video-container">
+  <!-- <video autoplay="autoplay"> -->
+    <video>        
+      <source id="mp4" src="http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4" type="video/mp4" />
+    </video>
   </div>
-  <span class="feature-journey-title" item-end>{{ journey && journey.title }}</span>
-</ion-item>
-<div id="video-container">
-<!-- <video autoplay="autoplay"> -->
-  <video>        
-    <source id="mp4" src="http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4" type="video/mp4" />
-  </video>
-</div>
-<ion-item>
-
-</ion-item>
 </div>
 
 <div class="no-journies" *ngIf="!journey">
