@@ -57,11 +57,30 @@ export class Journey {
         return params;
     }
 
-    addPost() {
-
+    static mapperOptions(ds = null) {
+        return {
+            endpoint: 'journies',
+            schema: {
+                type: 'object',
+                properties: {
+                    id: { type: 'number' },
+                    title: { type: 'string' },
+                    description: { type: 'string' }
+                }
+            },
+            relations: {
+                belongsTo: {
+                    category: {
+                        foreignKey: 'category_id',
+                        localField: 'category'
+                    },
+                    user: {
+                        foreignKey: 'user_id',
+                        localField: 'user'
+                    }
+                }
+            }
+        }
     }
 
-    removePost() {
-
-    }
 }

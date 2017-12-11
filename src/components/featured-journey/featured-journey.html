@@ -7,15 +7,15 @@
   <ion-item no-lines>
     <ion-avatar item-start>
       <!-- <ion-img width="40" height="40" [src]="user_picture || ''"></ion-img> -->
-      <ion-img width="40" height="40" src="{{ user_picture || '' }}"></ion-img>
+      <ion-img width="40" height="40" src="{{ journey && journey.user.picture || '' }}"></ion-img>
     </ion-avatar>
     <div id="feature-info" item-start>
-      {{ user_alias || "" }}
+      {{ journey && journey.user.nickname || "" }}
       <p>
         <span class="last-updated">2 days ago</span>
       </p>
     </div>
-    <span class="feature-journey-title" item-end>{{ journey && journey.title }}<br />{{ category || "" }}</span>
+    <span class="feature-journey-title" item-end>{{ journey && journey.title }}</span>
   </ion-item>
   <div id="video-container">
   <!-- <video autoplay="autoplay"> -->

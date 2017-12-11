@@ -6,8 +6,13 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/fromPromise';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Journey } from '../../models/journey';
+
+import { Mapper, version, DataStore } from 'js-data';
+import { HttpAdapter } from 'js-data-http';
+import { Schema } from 'js-data';
 
 /*
   Generated class for the JourneyDataServiceProvider provider.
@@ -22,32 +27,48 @@ export class JourneyDataServiceProvider extends MocSqliteDataServiceProvider {
   private myJournies: any[];
   private myHeaders;
 
+  private httpAdatper;
+  private schema;
+  private mapper;
+
   constructor(
     private myHttp: Http, 
     private st: Storage,
     private categoryService: CategoryDataServiceProvider) 
   {
-    super(myHttp, st, "journies");
+    super(myHttp, st);
     
-    this.setConfigurations();
+    this.setCustomConfigurations();
     this.urlSuffix = "journies";
   }
   
-  setConfigurations() {
+  setCustomConfigurations() {
+    // this.addMapper('journey', this.mapperOptions());
+
     this.myHeaders = new Headers();
     this.myHeaders.append('Content-Type', 'application/json');
-    // this.options = new RequestOptions({ headers: this.myHeaders });
   }
 
   geyMyJournies(userId, refreshFromServer: boolean = true) {
-    if(refreshFromServer) {
-      return this.geyMyJourniesFromServer(userId)
-    }
+    console.log("Getting my journies");
+    let jPromise: Promise<any> = this.store.findAll('journey', { user_id: userId});
 
-    return (this.myJournies.length > 0) ?
-      Observable.of(this.myJournies) :
-      this.geyMyJourniesFromServer(userId)
+    jPromise
+      .then( journies => console.log("Journies from js-data: ", journies));
+
+    return Observable.fromPromise(jPromise);
   }
+
+  // Using Ionic http method...
+  // geyMyJournies(userId, refreshFromServer: boolean = true) {
+  //   if(refreshFromServer) {
+  //     return this.geyMyJourniesFromServer(userId)
+  //   }
+
+  //   return (this.myJournies.length > 0) ?
+  //     Observable.of(this.myJournies) :
+  //     this.geyMyJourniesFromServer(userId)
+  // }
 
   geyMyJourniesFromServer(userId): Observable<any> {
     let params = new URLSearchParams();
@@ -60,6 +81,28 @@ export class JourneyDataServiceProvider extends MocSqliteDataServiceProvider {
 
     return this.http.get(this.url_prefix + this.urlSuffix + `?user_id=${userId}`)
       .map( data => data.json() )
+  }
+
+  mapperOptions() {
+    return {
+      endpoint: 'journies',
+      schema: {
+        type: 'object',
+        properties: {
+          id: { type: 'number' },
+          title: { type: 'string' },
+          description: { type: 'string' }
+        },
+        relations: {
+          belongsTo: {
+            category: {
+              foreignKey: 'category_id',
+              localField: 'category'
+            }
+          }
+        }
+      }
+    }
   }
 
   save(myJournies) {

@@ -6,6 +6,7 @@ import { Component, NgZone } from '@angular/core';
 import { Input } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
+import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 
 /**
  * Generated class for the FeaturedJourneyComponent component.
@@ -19,18 +20,10 @@ import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 })
 export class FeaturedJourneyComponent {
 
-  @Input() featuredJourney;
-  @Input() featuredUser;
-
   journey;
-  category;
-  user;
-  user_alias;
-  user_picture;
 
   constructor(
-    private journiesDataService: JourneyDataServiceProvider,
-    private categoryDataService: CategoryDataServiceProvider,
+    private dataService: MocSqliteDataServiceProvider,
     private userService: UserProvider,
     private authService: AuthLockProvider,
     private ngZone: NgZone
@@ -38,26 +31,17 @@ export class FeaturedJourneyComponent {
   {
   }
 
-  ngOnInit() {
-    // this.ngZone.run( () => {
-      this.journey = this.featuredJourney;
-      
-      // Get category...
-      if(this.journey) {
-        this.categoryDataService.getItemWithParams('category_id', this.journey.category)
-          .subscribe( categories => {
-            this.category = categories[0].name;
-          })
+  ngOnInit() {  
+    this.loadJourney();
+  }
 
-        this.userService.getAll({ user_id: [this.journey.user_id] })
-          .subscribe( users => {
-            this.user = users[0];
-            this.user_alias = this.user.nickname;
-            this.user_picture = this.user.picture;
-            // this.user_picture = 'https://lh5.googleusercontent.com/-ACM19C-PmuQ/AAAAAAAAAAI/AAAAAAAAAIo/QvWGj7kva4U/photo.jpg';
-          })
-      }
-    // })
+  loadJourney() {
+    this.dataService.getAll('journey', null, { with: ['category', 'user'] })
+      .subscribe( journies => {
+        if(journies && journies.length > 0) {
+            this.journey = journies[0];
+        }
+      });
   }
 
 }

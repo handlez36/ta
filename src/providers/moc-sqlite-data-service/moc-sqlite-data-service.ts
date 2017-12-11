@@ -2,8 +2,16 @@ import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Category } from './../../models/category';
+import { Journey } from './../../models/journey';
+import { User } from './../../models/user';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/fromPromise';
+
+import { Mapper, version, DataStore } from 'js-data';
+import { HttpAdapter } from 'js-data-http';
+import { Schema } from 'js-data';
 
 /*
   Generated class for the MocSqliteDataServiceProvider provider.
@@ -16,58 +24,57 @@ export class MocSqliteDataServiceProvider {
 
   items = [];
 
-  itemObserver;
-  itemListObservable;
-  promise;
   url_prefix;
   headers;
   options;
+  store;
+  adapter;
+  auth0adapter;
+  key = "test";
 
-  constructor(protected http: Http, private storage: Storage, private key: string) {
+  constructor(protected http: Http, private storage: Storage) {
     this.setHttpConfigurations();
-
-    // Maintain an in memory list
-    this.getAll()
-      .subscribe( data => this.items = data )
+    this.addMappers();
   }
 
   setHttpConfigurations() {
-    this.url_prefix = "http://localhost:3000/"
-    this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
-    // this.options = new RequestOptions({headers: this.headers});
+    this.store = new DataStore();
+    this.adapter = new HttpAdapter({
+      basePath: "http://localhost:3000/"
+    });
+
+    this.auth0adapter = new HttpAdapter({
+      basePath: "https://tag-along.auth0.com/api/v2/",
+      beforeHTTP: function(config, opts) {
+        config.headers || (config.headers = {});
+        config.headers.authorization = `Bearer ${User.access_key()}`;
+
+        return HttpAdapter.prototype.beforeHTTP.call(this, config, opts);
+      }
+    });
+
+    this.store.registerAdapter('http', this.adapter, { default: true });
+    this.store.registerAdapter('auth0', this.auth0adapter);
   }
 
-  getAll(refreshFromServer: boolean = true) {
+  addMappers() {
+    this.store.defineMapper( 'journey', Journey.mapperOptions(this.store) );
+    this.store.defineMapper( 'category', Category.mapperOptions() );
+    this.store.defineMapper( 'user', User.mapperOptions() );
+  }
+
+  getAll(resource, query_params = null, options = null, refreshFromServer: boolean = true) {
     if(refreshFromServer) {
-      return this.getAllFromServer()
+      return Observable.fromPromise( this.store.findAll(resource, query_params, options) )
+    } else {
+      return ( this.store.get(resource) ) ?
+        Observable.of(this.store.get(resource)) :
+        Observable.fromPromise( this.store.findAll(resource, query_params, options) )
     }
-
-    return (this.items.length > 0) ?
-      Observable.of(this.items) :
-      this.getAllFromServer()
   }
 
-  getAllFromServer(): Observable<any> {
-    return this.http.get(this.url_prefix + this.key)
-      .map( data => data.json() )
-  }
-
-  getItemWithParams(key, id) {
-    let param = `?${key}=${id}`
-    return this.http.get(this.url_prefix + this.key + param)
-      .map( data => data.json() );
-  }
-
-  getUpdates(): Observable<any> {
-    return this.itemListObservable;
-  }
-
-  add(newItem): Observable<any> {
-    let params = newItem.parameterize();
-
-    return this.http.post(this.url_prefix + this.key, JSON.stringify(params), this.options)
-      .map( data => data.json() );
+  add(resource, params): Observable<any> {
+    return Observable.fromPromise(this.store.create(resource, JSON.stringify(params), { noValidate: true}));
   }
 
   update(index, updatedItem): Observable<any> {

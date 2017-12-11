@@ -18,4 +18,26 @@ export class Category {
         };
         return params;
     }
+
+    static mapperOptions() {
+        return {
+          endpoint: 'categories',
+          schema: {
+            type: 'object',
+            properties: {
+              id: { type: 'number' },
+              name: { type: 'string' },
+              description: { type: 'string' }
+            }
+          },
+          relations: {
+            hasMany: {
+              journey: {
+                foreignKey: 'category_id',
+                localField: 'journies'
+              }
+            }
+          }
+        }
+      }
 }

@@ -31,19 +31,17 @@ export class JourneySliderComponent {
 
   ngOnInit() {
     this.journies = this.latestJournies;
-    console.log("Journies", this.journies);
 
-    this.categoryDataService.getAll()
-      .subscribe( categories => {
-        if(categories)
-          this.categories = categories; 
-      });
+    // this.categoryDataService.getAll()
+    //   .subscribe( categories => {
+    //     if(categories)
+    //       this.categories = categories; 
+    //   });
 
     let user_ids = this.journies.map( journey => journey.user_id )
     this.userDataService.getAll({ user_id: user_ids })
       .subscribe( users => {
         this.users = users;
-        console.log("Users loaded:", this.users);
       });
     
   }

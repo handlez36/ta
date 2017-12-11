@@ -42,29 +42,29 @@ export class CategoriesPage {
     this.isLoggedIn = this.authService.isAuthenticated();
   }
 
-  loadCategories() {
-    this.categoryDataService.getAll().subscribe( categories => {
-      if(categories) {
-        this.categories = categories;
-      }
-    });
-  }
+  // loadCategories() {
+  //   this.categoryDataService.getAll().subscribe( categories => {
+  //     if(categories) {
+  //       this.categories = categories;
+  //     }
+  //   });
+  // }
 
-  loadJournies() {
-    this.journeyDataService.getAll()
-      .subscribe(journies => {
-        if(journies) {
-          this.journies = journies;
-          this.updateJourneyCountPerCategory();
-        }
-      });
-  }
+  // loadJournies() {
+  //   this.journeyDataService.getAll()
+  //     .subscribe(journies => {
+  //       if(journies) {
+  //         this.journies = journies;
+  //         this.updateJourneyCountPerCategory();
+  //       }
+  //     });
+  // }
 
   ionViewWillEnter() {
     console.log("ionViewWillEnter for Categories.ts");
 
-    this.loadCategories();
-    this.loadJournies();
+    // this.loadCategories();
+    // this.loadJournies();
   }
 
   ionViewDidEnter() {
@@ -84,21 +84,21 @@ export class CategoriesPage {
 
     modal.present();
 
-    modal.onDidDismiss( (newCategory) => {
-      if(newCategory) {
-        // Optimistically add new category
-        this.categories.push(newCategory);
+    // modal.onDidDismiss( (newCategory) => {
+    //   if(newCategory) {
+    //     // Optimistically add new category
+    //     this.categories.push(newCategory);
 
-        this.categoryDataService.add(newCategory)
-          // Add id of category as added by API
-          // Remove optimistically loaded category if API raised error
-          .subscribe( 
-            data => newCategory.id = data.id,
-            error => this.categories.pop(),
-            () => {}
-          );
-      }
-    })
+    //     this.categoryDataService.add(newCategory)
+    //       // Add id of category as added by API
+    //       // Remove optimistically loaded category if API raised error
+    //       .subscribe( 
+    //         data => newCategory.id = data.id,
+    //         error => this.categories.pop(),
+    //         () => {}
+    //       );
+    //   }
+    // })
   }
 
   editCategoryModal(category) {

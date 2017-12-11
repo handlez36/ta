@@ -65,6 +65,7 @@ export class HomePage {
     // Temporarily putting this here to clear out localStorage's user credentials when
     // starting the application. This will be handled by signing out of the application.
     // this.authService.removeUserCredentials();
+
   }
 
   ionViewDidLoad() {
@@ -74,18 +75,18 @@ export class HomePage {
     }
 
     // Get latest 25 journies...
-    this.journeyDataService.getAll()
-      .subscribe( journies => {
-        if(journies && journies.length > 0) {
-          // Pass this to the 'journey-list' component...
-          // this.latestJournies = journies.map( journey => Journey.createSingleJourney(journey));
+    // this.journeyDataService.getAll()
+    //   .subscribe( journies => {
+    //     if(journies && journies.length > 0) {
+    //       // Pass this to the 'journey-list' component...
+    //       // this.latestJournies = journies.map( journey => Journey.createSingleJourney(journey));
 
-          this.zone.run( () => { 
-            this.latestJournies = journies.map( journey => Journey.createSingleJourney(journey));
-            this.featuredJourney = this.latestJournies[1];
-          })
-        }
-      });
+    //       this.zone.run( () => { 
+    //         this.latestJournies = journies.map( journey => Journey.createSingleJourney(journey));
+    //         this.featuredJourney = this.latestJournies[1];
+    //       })
+    //     }
+    //   });
 
     // Listen for login event...
     authLock.on("authenticated", (authResult) => {
@@ -98,12 +99,12 @@ export class HomePage {
           
           this.profile = profile;
           this.authService.storeUserCredentials(this.authResult, profile);
-          this.getCurrentUserJournies();
+          // this.getCurrentUserJournies();
         });
       });
     });
 
-    this.getCurrentUserJournies();
+    // this.getCurrentUserJournies();
 
     // Pull all users
     // TODO: Only pull users for the current journey list
@@ -118,27 +119,25 @@ export class HomePage {
       })
   }
 
-  getCurrentUserJournies() {
-    if(this.profile) {
-      console.log("Profile sub: ", this.profile.sub);
-      this.journeyDataService.geyMyJournies(this.profile.sub)
-        .subscribe( journies => {
-          this.loadedFlag = true;
+  // getCurrentUserJournies() {
+  //   if(this.profile) {
+  //     this.journeyDataService.geyMyJournies(this.profile.sub)
+  //       .subscribe( journies => {
+  //         this.loadedFlag = true;
 
-          if(journies && journies.length > 0) {
-            this.myJournies = journies.map( journey => Journey.createSingleJourney(journey));
+  //         if(journies && journies.length > 0) {
+  //           this.myJournies = journies.map( journey => Journey.createSingleJourney(journey));
 
-            console.log("My Journies: ", this.myJournies);
-            this.zone.run( () => { 
-              this.loadedFlag = true;
-              this.myFeaturedJourney = this.myJournies[0]; 
-            })
-          }
-        });
-    } else { 
-      this.loadedFlag = true 
-    }
-  }
+  //           this.zone.run( () => { 
+  //             this.loadedFlag = true;
+  //             this.myFeaturedJourney = this.myJournies[0]; 
+  //           })
+  //         }
+  //       });
+  //   } else { 
+  //     this.loadedFlag = true 
+  //   }
+  // }
 
   setProfile(profile) {
     this.profile = profile;

@@ -1,3 +1,4 @@
+import { MocSqliteDataServiceProvider } from '../../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 import { AuthLockProvider } from './../../../providers/auth-lock/auth-lock';
 import { Journey } from './../../../models/journey';
 import { CategoryDataServiceProvider } from '../../../providers/category-data-service/category-data-service';
@@ -28,7 +29,7 @@ export class AddJourneyPage {
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     private ViewCtrl: ViewController,
-    private categoryDataService: CategoryDataServiceProvider,
+    private dataService: MocSqliteDataServiceProvider,
     private authService: AuthLockProvider) 
     {
       this.journeyForm = formBuilder.group({
@@ -39,11 +40,11 @@ export class AddJourneyPage {
     }
 
   ionViewDidLoad() {
-    this.categoryDataService.getAll()
+    this.dataService.getAll('category')
       .subscribe( categories => {
         if(categories)
-          this.categories = categories
-       });
+          this.categories = categories;
+      });
 
     this.currentUser = this.authService.getCurrentUser();
   }
@@ -51,13 +52,16 @@ export class AddJourneyPage {
   formControls() { return this.journeyForm.controls }
 
   add() {
-    // let newCategory = new Category(this.categoryForm.value.categoryName);
-    let newJourney = new Journey(
-      this.formControls().title.value,
-      this.formControls().category.value,
-      this.formControls().description.value,
-      this.currentUser.sub
-    )
+    let newJourney = 
+    {
+      "journey": 
+      {
+        "title": this.formControls().title.value,
+        "category_id": this.formControls().category.value,
+        "description": this.formControls().description.value,
+        "user_id": this.currentUser.sub
+      }
+    }
     
     this.ViewCtrl.dismiss(newJourney);
   }

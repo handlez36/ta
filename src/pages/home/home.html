@@ -29,16 +29,19 @@
     My Featured Journey: {{ myFeaturedJourney }}<br />
     Latest Journies: {{ latestJournies }}
   </div>
-  <div *ngIf="myFeaturedJourney" id="featured-journey">
+  <div id="featured-journey">
+    <featured-journey></featured-journey>
+  </div>
+  <!-- <div *ngIf="myFeaturedJourney" id="featured-journey">
     <featured-journey [featuredJourney]="myFeaturedJourney"></featured-journey>
   </div>
   <div *ngIf="featuredJourney && (loadedFlag && !myFeaturedJourney)" id="featured-journey">
     <featured-journey [featuredJourney]="featuredJourney"></featured-journey>
-  </div>
+  </div> -->
   <br /><br />
-  <ion-item *ngIf="latestJournies">
+  <!-- <ion-item *ngIf="latestJournies">
     <journey-slider [latestJournies]="latestJournies"></journey-slider>
-  </ion-item>
+  </ion-item> -->
   <br /><br />
   <ion-fab right bottom>
     <button ion-fab mini>

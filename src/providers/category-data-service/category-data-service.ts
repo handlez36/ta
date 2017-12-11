@@ -14,7 +14,35 @@ import 'rxjs/add/operator/map';
 export class CategoryDataServiceProvider extends MocSqliteDataServiceProvider{
 
   constructor(private h: Http, private st: Storage) {
-    super(h, st, "categories");
+    super(h, st);
+
+    this.setCustomConfigurations();
+  }
+
+  setCustomConfigurations() {
+    // this.addMapper('category', this.mapperOptions());
+  }
+
+  mapperOptions() {
+    return {
+      endpoint: 'categories',
+      schema: {
+        type: 'object',
+        properties: {
+          id: { type: 'number' },
+          name: { type: 'string' },
+          description: { type: 'string' }
+        },
+        relations: {
+          hasMany: {
+            journey: {
+              foreignKey: 'category_id',
+              localField: 'journies'
+            }
+          }
+        }
+      }
+    }
   }
 
 }
