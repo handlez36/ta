@@ -65,7 +65,9 @@ export class Journey {
                 properties: {
                     id: { type: 'number' },
                     title: { type: 'string' },
-                    description: { type: 'string' }
+                    description: { type: 'string' },
+                    category_id: { type: 'number' },
+                    user_id: { type: 'string' }
                 }
             },
             relations: {
