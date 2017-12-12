@@ -22,41 +22,6 @@ export class Journey {
     {
     }
 
-    static createBulkJournies(journies) {
-        let journeyList = [];
-
-        journies.forEach( journey => journeyList.push(Journey.createSingleJourney(journey)) );
-
-        return journeyList;
-    }
-
-    static createSingleJourney(journey) {
-        let newJourney = new Journey(
-            journey.title,
-            journey.category_id,
-            journey.description,
-            journey.user_id,
-            journey.id
-        )
-
-        return newJourney;
-    }
-
-    parameterize() {
-        let params = 
-        {
-            'journey':
-            {
-                'title': this.title,
-                'category_id': this.category,
-                'description': this.description || null,
-                'user_id': this.user_id || null
-            }    
-        }
-
-        return params;
-    }
-
     static mapperOptions(ds = null) {
         return {
             endpoint: 'journies',

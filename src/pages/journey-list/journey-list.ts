@@ -64,30 +64,11 @@ export class JourneyListPage {
 
     modal.onDidDismiss( newJourney => {
       if(newJourney) {
-        // Optimistically add new journey
-        // this.journies.push(newJourney);
-
-        const jSchema = new Schema({
-          type: 'object',
-          properties: {
-              id: { type: 'number' },
-              title: { type: 'string' },
-              description: { type: 'string' }
-          }
-        });
-
-        console.log("Validation (random): ", jSchema.validate(123));
-        console.log("Validation (random): ", jSchema.validate({name: "Brandon"}));
-        console.log("Validation (new journey): ", jSchema.validate(newJourney));
-        console.log("Validation (new journey-journey: ", jSchema.validate(newJourney["journey"]));
-
         this.dataService.add('journey', newJourney)
-          // Add id of journey as added by API
-          // Remove optimistically loaded journey if API raised error
           .subscribe(
-            (data) => console.log("Journies (with data): ", this.journies),
-            (error) => { debugger; console.log("Error: ", error) },
-            () => console.log("Journies (complete): ", this.journies)
+            (data) => {},
+            (error) => console.log("Error: ", error),
+            () => this.journies = this.dataService.getFromCache('journey') 
           )
       }
     })
@@ -95,58 +76,55 @@ export class JourneyListPage {
 
   editJourneyModal(journey) {
     let modal = this.modalCtrl.create('EditJourneyPage', { journey: journey} );
-    let index = this.journies.indexOf(journey);
 
     modal.present();
 
-    // modal.onDidDismiss( updatedJourney => {
-    //   if(updatedJourney) {
-    //     console.log("Updated Journey before sending it to ROR:", updatedJourney);
-    //     // Optimistically edit journey, but keep the old journey just in case
-    //     let oldJourney = this.journies.splice(index,1, updatedJourney)[0];
-
-    //     // Revert optimistically replaced journey if API raised error
-    //     this.journeyDataService.update(index, updatedJourney)
-    //       .subscribe(
-    //         data => {},
-    //         error => this.journies.splice(index, 1, oldJourney),
-    //         () => {}
-    //       )
-    //   } else {
-    //     this.list.closeSlidingItems();
-    //   }
-    // })
+    modal.onDidDismiss( updatedJourney => {
+      if(updatedJourney) {
+        this.dataService.update(updatedJourney)
+          .subscribe(
+            data => console.log("Returned data: ", data),
+            error => console.log("Error updating journey: ", error),
+            () => { 
+              this.journies = this.dataService.getFromCache('journey'); 
+              this.list.closeSlidingItems(); 
+            }
+          )
+      } else {
+        this.list.closeSlidingItems();
+      }
+    })
   }
 
-  removeJourney(journey) {
-    let index = this.journies.indexOf(journey);
-    
-    // let alert = this.alertCtrl.create({
-    //   title: "Confirm",
-    //   message: `Are you sure you want to remove the ${(journey && journey.name)} journey?`,
-    //   buttons: [
-    //     {
-    //       text: 'Cancel',
-    //       role: 'cancel',
-    //       handler: () => { this.list.closeSlidingItems() }
-    //     },
-    //     {
-    //       text: 'Remove',
-    //       role: 'remove',
-    //       handler: () => { 
-    //         let removedJourney = this.journies.splice(index,1)[0];
-    //         this.journeyDataService.delete(index, removedJourney)
-    //           .subscribe(
-    //             data => {},
-    //             error => this.journies.splice(index, 0, removedJourney),
-    //             () => {}
-    //           )
-    //       }
-    //     }
-    //   ]
-    // });
+  removeJourney(journey) {  
+    let alert = this.alertCtrl.create({
+      title: "Confirm",
+      message: `Are you sure you want to remove the ${(journey && journey.name)} journey?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => this.list.closeSlidingItems()
+        },
+        {
+          text: 'Remove',
+          role: 'remove',
+          handler: () => { 
+            this.dataService.delete(journey)
+              .subscribe(
+                data => {},
+                error => console.log("Error: ", error),
+                () => {
+                  this.journies = this.dataService.getFromCache('journey'); 
+                  this.list.closeSlidingItems(); 
+                }
+              )
+          }
+        }
+      ]
+    });
 
-    // alert.present();
+    alert.present();
   }
 
   printJourney(journey) { console.log(journey) }

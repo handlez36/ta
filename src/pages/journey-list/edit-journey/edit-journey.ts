@@ -1,8 +1,8 @@
 import { Journey } from './../../../models/journey';
 import { Category } from './../../../models/category';
-import { CategoryDataServiceProvider } from './../../../providers/category-data-service/category-data-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
+import { MocSqliteDataServiceProvider } from '../../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AuthLockProvider } from '../../../providers/auth-lock/auth-lock';
 
@@ -30,16 +30,14 @@ export class EditJourneyPage {
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     private ViewCtrl: ViewController,
-    private categoryDataService: CategoryDataServiceProvider,
+    private dataService: MocSqliteDataServiceProvider,
     private authService: AuthLockProvider) 
     {
       let param = navParams.get('journey');
-      if (param) {
+      if (param)
         this.journey = param;
-        console.log("Journey is ", this.journey);
-      }
 
-      this.categoryDataService.getAll()
+      this.dataService.getAll('category')
         .subscribe( categories => {
           if(categories) {
             this.categories = categories;
@@ -66,15 +64,11 @@ export class EditJourneyPage {
   }
 
   update(journey) {
-    let updatedJourney = new Journey(
-      this.formControls().title.value,
-      this.formControls().category.value,
-      this.formControls().description.value,
-      this.currentUser.sub,
-      this.journey.id
-    );
+    this.journey.title = this.formControls().title.value;
+    this.journey.description = this.formControls().description.value;
+    this.journey.category_id = this.formControls().category.value.id;
 
-    this.ViewCtrl.dismiss(updatedJourney);
+    this.ViewCtrl.dismiss(this.journey);
   }
 
 }

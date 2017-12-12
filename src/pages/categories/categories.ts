@@ -107,22 +107,22 @@ export class CategoriesPage {
 
     modal.present();
 
-    modal.onDidDismiss( (updatedCategory) => {
-      if(updatedCategory) {
-        // Optimistically edit category, but keep the old category just in case
-        let oldCategory = this.categories.splice(index,1, updatedCategory)[0];
+    // modal.onDidDismiss( (updatedCategory) => {
+    //   if(updatedCategory) {
+    //     // Optimistically edit category, but keep the old category just in case
+    //     let oldCategory = this.categories.splice(index,1, updatedCategory)[0];
 
-        // Revert optimistically replaced category if API raised error
-        this.categoryDataService.update(index, updatedCategory)
-          .subscribe(
-            data => {},
-            error => this.categories.splice(index, 1, oldCategory),
-            () => {}
-          )
-      } else {
-        this.list.closeSlidingItems();
-      }
-    })
+    //     // Revert optimistically replaced category if API raised error
+    //     this.categoryDataService.update(index, updatedCategory)
+    //       .subscribe(
+    //         data => {},
+    //         error => this.categories.splice(index, 1, oldCategory),
+    //         () => {}
+    //       )
+    //   } else {
+    //     this.list.closeSlidingItems();
+    //   }
+    // })
   }
 
   removeCategory(category) {

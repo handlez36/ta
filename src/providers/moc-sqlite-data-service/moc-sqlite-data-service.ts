@@ -63,36 +63,30 @@ export class MocSqliteDataServiceProvider {
     this.store.defineMapper( 'user', User.mapperOptions() );
   }
 
-  getAll(resource, query_params = null, options = null, refreshFromServer: boolean = true) {
+  getAll(resource, query_params = null, options = null, refreshFromServer: boolean = true): Observable<any> {
     if(refreshFromServer) {
       return Observable.fromPromise( this.store.findAll(resource, query_params, options) )
     } else {
       return ( this.store.get(resource) ) ?
-        Observable.of(this.store.get(resource)) :
+        Observable.of(this.getFromCache(resource, query_params)) :
         Observable.fromPromise( this.store.findAll(resource, query_params, options) )
     }
   }
 
+  getFromCache(resource, query_params = {}) : any[] {
+    return this.store.getAll(resource, query_params);
+  }
+
   add(resource, params): Observable<any> {
-    return Observable.fromPromise(this.store.create(resource, JSON.stringify(params), { noValidate: true}));
+    return Observable.fromPromise( this.store.create(resource, params));
   }
 
-  update(index, updatedItem): Observable<any> {
-      let updatedParams = updatedItem.parameterize();
-
-      return this.http.put(
-        this.url_prefix + this.key + "/" + updatedItem.id, 
-        JSON.stringify(updatedParams), 
-        this.options
-      )
-        .map( data => data.json() );
+  update(updatedItem): Observable<any> {
+    return Observable.fromPromise( updatedItem.save() );
   }
 
-  delete(index, removedItem) {
-      return this.http.delete(
-        this.url_prefix + this.key + "/" + removedItem.id,
-        this.options)
-          .map( data => data.json() );
+  delete(removedItem) {
+      return Observable.fromPromise( removedItem.destroy() );
   }
 
   save(data) {

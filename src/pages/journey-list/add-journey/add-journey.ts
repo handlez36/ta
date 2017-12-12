@@ -54,13 +54,10 @@ export class AddJourneyPage {
   add() {
     let newJourney = 
     {
-      "journey": 
-      {
-        "title": this.formControls().title.value,
-        "category_id": this.formControls().category.value,
-        "description": this.formControls().description.value,
-        "user_id": this.currentUser.sub
-      }
+      title: this.formControls().title.value,
+      category_id: this.formControls().category.value,
+      description: this.formControls().description.value,
+      user_id: this.currentUser.sub 
     }
     
     this.ViewCtrl.dismiss(newJourney);
