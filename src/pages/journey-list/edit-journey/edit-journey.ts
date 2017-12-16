@@ -33,16 +33,7 @@ export class EditJourneyPage {
     private dataService: MocSqliteDataServiceProvider,
     private authService: AuthLockProvider) 
     {
-      let param = navParams.get('journey');
-      if (param)
-        this.journey = param;
-
-      this.dataService.getAll('category')
-        .subscribe( categories => {
-          if(categories) {
-            this.categories = categories;
-          }
-        })
+      this.journey = this.navParams.get('journey') || null;
 
       this.journeyForm = formBuilder.group({
         title: [this.journey.title, Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -51,16 +42,20 @@ export class EditJourneyPage {
       })
     }
 
+  ionViewWillEnter() {
+    this.loadCategories();
+    this.currentUser = this.authService.getCurrentUser();
+  }
+
+  loadCategories() {
+    this.dataService.getAll('category')
+      .subscribe( categories => this.categories = categories || [] );
+  }
+
   formControls() { return this.journeyForm.controls }
 
   compareFn(c1: Category, c2: Category) {
     return c1 && c2 ? c1.name === c2.name : c1 === c2;
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EditJourneyPage');
-
-    this.currentUser = this.authService.getCurrentUser();
   }
 
   update(journey) {

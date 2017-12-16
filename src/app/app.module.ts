@@ -1,7 +1,10 @@
+import { JourneyDetailPageModule } from './../pages/journey-detail/journey-detail.module';
 import { HttpModule } from '@angular/http';
 import { JourneyListPage } from './../pages/journey-list/journey-list';
 import { BaseCategoryPage } from '../pages/base-category/base-category';
+import { BaseCategoryPageModule } from './../pages/base-category/base-category.module';
 import { AddCategoryPage } from '../pages/categories/add-category/add-category';
+import { JourneyDetailPage } from './../pages/journey-detail/journey-detail';
 import { FeaturedJourneyComponent } from '../components/featured-journey/featured-journey';
 import { IonicStorageModule } from '@ionic/storage';
 import { FooterMenuComponent } from '../components/footer-menu/footer-menu';
@@ -31,16 +34,18 @@ import { UserProvider } from '../providers/user/user';
   declarations: [
     MyApp,
     HomePage,
-    BaseCategoryPage,
+    // BaseCategoryPage,
     CategoriesPage,
-    JourneySliderComponent,
     JourneyListPage,
+    JourneySliderComponent,
     FeaturedJourneyComponent,
     FooterMenuComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    JourneyDetailPageModule,
+    BaseCategoryPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -52,6 +57,7 @@ import { UserProvider } from '../providers/user/user';
     CategoriesPage,
     JourneyListPage,
     JourneySliderComponent,
+    JourneyDetailPage,
     FooterMenuComponent
   ],
   providers: [

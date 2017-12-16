@@ -16,7 +16,7 @@
 <ion-content>
   <ion-list>
     <ion-item-sliding *ngFor="let journey of journies">
-      <ion-item (click)="printJourney(journey)">
+      <ion-item (click)="goToJourneyDetail(journey)">
         <span>{{ journey.title }}</span>
       </ion-item>
       <ion-item-options side="right">

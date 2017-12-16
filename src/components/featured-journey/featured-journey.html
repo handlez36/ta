@@ -7,10 +7,10 @@
   <ion-item no-lines>
     <ion-avatar item-start>
       <!-- <ion-img width="40" height="40" [src]="user_picture || ''"></ion-img> -->
-      <ion-img width="40" height="40" src="{{ journey && journey.user.picture || '' }}"></ion-img>
+      <ion-img width="40" height="40" src="{{ journey && journey.user && journey.user.picture || '' }}"></ion-img>
     </ion-avatar>
     <div id="feature-info" item-start>
-      {{ journey && journey.user.nickname || "" }}
+      {{ journey && journey.user && journey.user.nickname || "" }}
       <p>
         <span class="last-updated">2 days ago</span>
       </p>

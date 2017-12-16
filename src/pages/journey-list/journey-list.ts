@@ -4,8 +4,9 @@ import { Journey } from './../../models/journey';
 import { Observable } from 'rxjs/Observable';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, List, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, List, AlertController, App } from 'ionic-angular';
 import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
+import { JourneyDetailPage } from './../../pages/journey-detail/journey-detail';
 
 /**
  * Generated class for the JourneyListPage page.
@@ -33,6 +34,7 @@ export class JourneyListPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    private app: App,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private dataService: MocSqliteDataServiceProvider,
@@ -47,14 +49,8 @@ export class JourneyListPage {
   }
 
   loadJournies() {
-    this.journies = [];
-
-    this.dataService.getAll('journey', null, { with: ['category', 'user'] })
-      .subscribe( journies => {
-        console.log("Returned journies: ", journies);
-        if(journies && journies.length > 0)
-            this.journies = journies;
-      });
+    this.dataService.getAll('journey', {}, { force: true, with: ['category', 'user'] })
+      .subscribe( journies => this.journies = journies || [] )
   }
 
   add() {
@@ -127,6 +123,9 @@ export class JourneyListPage {
     alert.present();
   }
 
-  printJourney(journey) { console.log(journey) }
+  goToJourneyDetail(journey) {
+    // this.navCtrl.push('JourneyDetailPage', { id: journey.id} );JourneyDetailPage
+    this.app.getRootNav().setRoot(JourneyDetailPage, { id: journey.id} );
+  }
 
 }

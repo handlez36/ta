@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Category } from './../../models/category';
 import { Journey } from './../../models/journey';
 import { User } from './../../models/user';
+import { Post } from './../../models/post';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/fromPromise';
@@ -43,34 +44,22 @@ export class MocSqliteDataServiceProvider {
       basePath: "http://localhost:3000/"
     });
 
-    this.auth0adapter = new HttpAdapter({
-      basePath: "https://tag-along.auth0.com/api/v2/",
-      beforeHTTP: function(config, opts) {
-        config.headers || (config.headers = {});
-        config.headers.authorization = `Bearer ${User.access_key()}`;
-
-        return HttpAdapter.prototype.beforeHTTP.call(this, config, opts);
-      }
-    });
-
     this.store.registerAdapter('http', this.adapter, { default: true });
-    this.store.registerAdapter('auth0', this.auth0adapter);
   }
 
   addMappers() {
     this.store.defineMapper( 'journey', Journey.mapperOptions(this.store) );
     this.store.defineMapper( 'category', Category.mapperOptions() );
     this.store.defineMapper( 'user', User.mapperOptions() );
+    this.store.defineMapper( 'post', Post.mapperOptions() );
   }
 
-  getAll(resource, query_params = null, options = null, refreshFromServer: boolean = true): Observable<any> {
-    if(refreshFromServer) {
-      return Observable.fromPromise( this.store.findAll(resource, query_params, options) )
-    } else {
-      return ( this.store.get(resource) ) ?
-        Observable.of(this.getFromCache(resource, query_params)) :
-        Observable.fromPromise( this.store.findAll(resource, query_params, options) )
-    }
+  getAll(resource, query_params = {}, options = {}): Observable<any> {
+    return Observable.fromPromise( this.store.findAll(resource, query_params, options) );
+  }
+
+  get(resource, id, options = {}): Observable<any> {
+    return Observable.fromPromise( this.store.find(resource, id, options) );
   }
 
   getFromCache(resource, query_params = {}) : any[] {

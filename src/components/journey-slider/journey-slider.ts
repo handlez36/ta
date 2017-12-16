@@ -1,3 +1,4 @@
+import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 import { UserProvider } from './../../providers/user/user';
 import { Input } from '@angular/core';
 import { Journey } from './../../models/journey';
@@ -18,42 +19,19 @@ import { Component } from '@angular/core';
 })
 export class JourneySliderComponent {
 
-  @Input() latestJournies;
-
   journies = [];
   categories = [];
   users = [];
 
   constructor(
-    private journeyDataService: JourneyDataServiceProvider,
-    private categoryDataService: CategoryDataServiceProvider,
+    private dataService: MocSqliteDataServiceProvider,
     private userDataService: UserProvider) { }
 
   ngOnInit() {
-    this.journies = this.latestJournies;
-
-    // this.categoryDataService.getAll()
-    //   .subscribe( categories => {
-    //     if(categories)
-    //       this.categories = categories; 
-    //   });
-
-    let user_ids = this.journies.map( journey => journey.user_id )
-    this.userDataService.getAll({ user_id: user_ids })
-      .subscribe( users => {
-        this.users = users;
-      });
+    console.log("Journey slider: ngOnInit");
     
-  }
-
-  getCategoryName(category_id) {
-    let category = this.categories.find( cat => cat.id === category_id );
-    return category ? category.name : "??";
-  }
-
-  getAvatarImage(user_id) {
-    let user = this.users.find( user => user.user_id === user_id );
-    return user ? user.picture : "";
+    this.dataService.getAll('journey', {}, { force: true, with: ['category', 'user'] })
+      .subscribe( journies => {console.log("Journies: ", journies); this.journies = journies || []} )
   }
 
 }

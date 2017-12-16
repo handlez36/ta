@@ -41,9 +41,11 @@ export class AddCategoryPage {
   formControls() { return this.categoryForm.controls }
 
   add(element) {
-    console.log("Adding element");
-    let newCategory = new Category(this.categoryForm.value.categoryName);
-
+    let newCategory = 
+    {
+      name: this.formControls().categoryName.value
+    }
+    
     this.ViewCtrl.dismiss(newCategory);
   }
 

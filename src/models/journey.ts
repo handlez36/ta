@@ -6,7 +6,6 @@ import { Inject, Injectable } from '@angular/core';
 import { ReflectiveInjector } from '@angular/core';
 import { ConnectionBackend } from '@angular/http/src/interfaces';
 
-@Injectable()
 export class Journey {
 
     // posts: Post[];
@@ -44,6 +43,12 @@ export class Journey {
                     user: {
                         foreignKey: 'user_id',
                         localField: 'user'
+                    }
+                },
+                hasMany: {
+                    post: {
+                        foreignKey: 'journy_id',
+                        localField: 'posts'
                     }
                 }
             }

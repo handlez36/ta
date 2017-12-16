@@ -6,12 +6,10 @@
       <ion-card-header>
         <ion-item>
           <ion-avatar item-start>
-            <!-- <ion-img width="20" height="20" src="https://scontent.fatl1-2.fna.fbcdn.net/v/t1.0-9/15037093_10101654416907064_1239463107669909469_n.jpg?oh=5a7a519626eb0de13eec62917c3c2aae&oe=5AA8DEDE"></ion-img> -->
-            <ion-img width="40" height="40" [src]="getAvatarImage(journey.user_id)"></ion-img>
-            <!-- <ion-img width="20" height="20" [src]="users && users.find(user => user.userId === user_id)[0].picture"></ion-img> -->
+            <ion-img width="40" height="40" [src]="journey.user && journey.user.picture"></ion-img>
           </ion-avatar>
           <span class="mini-journey-title" item-end>
-            {{ getCategoryName(journey.category)  }}
+            {{ journey.category.name }}
           </span>
         </ion-item>
       </ion-card-header>

@@ -27,7 +27,7 @@ export class EditCategoryPage {
     private formBuilder: FormBuilder,
     private ViewCtrl: ViewController) 
     {
-      this.category = navParams.get('category');
+      this.category = this.navParams.get('category') || null;
 
       this.categoryForm = this.formBuilder.group({
         categoryName: [this.category.name, Validators.compose([Validators.minLength(4), Validators.required])]
@@ -37,9 +37,9 @@ export class EditCategoryPage {
   formControls() { return this.categoryForm.controls }
 
   update() {
-     let newCategory = new Category(this.categoryForm.value.categoryName, this.category.id);
-
-     this.ViewCtrl.dismiss(newCategory);
+    this.category.name = this.formControls().categoryName.value;
+    
+    this.ViewCtrl.dismiss(this.category);
   }
 
 }

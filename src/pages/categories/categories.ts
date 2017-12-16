@@ -1,3 +1,4 @@
+import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { Component, ViewChild } from '@angular/core';
@@ -28,55 +29,28 @@ export class CategoriesPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private categoryDataService: CategoryDataServiceProvider,
-    private journeyDataService: JourneyDataServiceProvider,
+    private dataService: MocSqliteDataServiceProvider,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private authService: AuthLockProvider) 
     { 
     }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad for Categories.ts")
+  loadCategories() {
+    console.log("Loading categories");
 
-    this.isLoggedIn = this.authService.isAuthenticated();
+    this.dataService.getAll('category', null, { bypassCache: true, with: ['journey'] })
+      .subscribe( categories => {
+        console.log("Categories: ", categories);
+        this.categories = categories || [];
+      });
   }
-
-  // loadCategories() {
-  //   this.categoryDataService.getAll().subscribe( categories => {
-  //     if(categories) {
-  //       this.categories = categories;
-  //     }
-  //   });
-  // }
-
-  // loadJournies() {
-  //   this.journeyDataService.getAll()
-  //     .subscribe(journies => {
-  //       if(journies) {
-  //         this.journies = journies;
-  //         this.updateJourneyCountPerCategory();
-  //       }
-  //     });
-  // }
 
   ionViewWillEnter() {
     console.log("ionViewWillEnter for Categories.ts");
 
-    // this.loadCategories();
-    // this.loadJournies();
-  }
-
-  ionViewDidEnter() {
-    console.log("ionViewDidEnter for Categories.ts");
-  }
-
-  updateJourneyCountPerCategory() {
-    this.categories.forEach( category => {
-      this.journeyCount[`${category.name}`] = this.journies.filter( 
-        journey => journey.category_id === category.id
-      ).length;
-    })
+    this.loadCategories();
+    this.isLoggedIn = this.authService.isAuthenticated();
   }
 
   addCategoryModal() {
@@ -84,50 +58,43 @@ export class CategoriesPage {
 
     modal.present();
 
-    // modal.onDidDismiss( (newCategory) => {
-    //   if(newCategory) {
-    //     // Optimistically add new category
-    //     this.categories.push(newCategory);
+    modal.onDidDismiss( (newCategory) => {
+      console.log("New Category: ", newCategory);
 
-    //     this.categoryDataService.add(newCategory)
-    //       // Add id of category as added by API
-    //       // Remove optimistically loaded category if API raised error
-    //       .subscribe( 
-    //         data => newCategory.id = data.id,
-    //         error => this.categories.pop(),
-    //         () => {}
-    //       );
-    //   }
-    // })
+      if(newCategory) {
+        this.dataService.add('category', newCategory)
+          .subscribe( 
+            data => {},
+            error => console.log("Error: ", error),
+            () => this.categories = this.dataService.getFromCache('category')
+          );
+      }
+    })
   }
 
   editCategoryModal(category) {
     let modal = this.modalCtrl.create('EditCategoryPage', { category: category});
-    let index = this.categories.indexOf(category);
 
     modal.present();
 
-    // modal.onDidDismiss( (updatedCategory) => {
-    //   if(updatedCategory) {
-    //     // Optimistically edit category, but keep the old category just in case
-    //     let oldCategory = this.categories.splice(index,1, updatedCategory)[0];
-
-    //     // Revert optimistically replaced category if API raised error
-    //     this.categoryDataService.update(index, updatedCategory)
-    //       .subscribe(
-    //         data => {},
-    //         error => this.categories.splice(index, 1, oldCategory),
-    //         () => {}
-    //       )
-    //   } else {
-    //     this.list.closeSlidingItems();
-    //   }
-    // })
+    modal.onDidDismiss( updatedCategory => {
+      if(updatedCategory) {
+        this.dataService.update(updatedCategory)
+          .subscribe(
+            data => {},
+            error => console.log("Error: ", error),
+            () => {
+              this.categories = this.dataService.getFromCache('category')
+              this.list.closeSlidingItems();
+            }
+          )
+      } else {
+        this.list.closeSlidingItems();
+      }
+    })
   }
 
   removeCategory(category) {
-    let index = this.categories.indexOf(category);
-
     let alert = this.alertCtrl.create({
       title: "Confirm",
       message: `Are you sure you want to remove the ${(category && category.name)} category?`,
@@ -141,12 +108,14 @@ export class CategoriesPage {
           text: 'Remove',
           role: 'remove',
           handler: () => { 
-            let removedCategory = this.categories.splice(index,1)[0];
-            this.categoryDataService.delete(index, removedCategory)
+            this.dataService.delete(category)
               .subscribe(
                 data => {},
-                error => this.categories.splice(index, 0, removedCategory),
-                () => {}
+                error => console.log("Error: ", error),
+                () => {
+                  this.categories = this.dataService.getFromCache('category');
+                  this.list.closeSlidingItems();
+                }
               )
           }
         }
@@ -154,10 +123,6 @@ export class CategoriesPage {
     });
 
     alert.present();
-  }
-
-  save() {
-    this.categoryDataService.save(this.categories);
   }
 
 }

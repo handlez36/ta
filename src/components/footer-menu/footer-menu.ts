@@ -29,4 +29,8 @@ export class FooterMenuComponent {
     this.app.getRootNav().setRoot(BaseCategoryPage);
   }
 
+  toJourney() {
+    this.navCtrl.push('JourneyDetailPage', { id: 24})
+  }
+
 }
