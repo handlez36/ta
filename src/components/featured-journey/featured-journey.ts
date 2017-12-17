@@ -36,7 +36,7 @@ export class FeaturedJourneyComponent {
   }
 
   loadJourney() {
-    this.dataService.getAll('journey', null, { with: ['category', 'user'] })
+    this.dataService.getAll('journey', null, { with: ['category', 'user', 'post'] })
       .subscribe( journies => {
         if(journies && journies.length > 0) {
             this.journey = journies[0];

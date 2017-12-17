@@ -47,7 +47,7 @@ export class MocSqliteDataServiceProvider {
         console.log("Error: ", args);
       },
       afterFindAll: function(mapper, query, opts, response) {
-        
+          
       }
     });
 
