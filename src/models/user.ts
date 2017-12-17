@@ -17,6 +17,8 @@ export class User {
     static mapperOptions() {
         return {
             endpoint: 'users',
+            idAttribute: 'user_id',
+            validateOnSet: false,
             schema: {
                 type: 'object',
                 properties: {
@@ -31,14 +33,9 @@ export class User {
                 hasMany: {
                     journey: {
                         foreignKey: 'user_id',
-                        localKey: 'user_id',
                         localField: 'journies'
                     }
                 }
-            },
-            deserialize: function(mapper, response, opts) {
-                response.data.forEach( user => user.id = user.user_id );
-                return response.data;
             }
         }
     }

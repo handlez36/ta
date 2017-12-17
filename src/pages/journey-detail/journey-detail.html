@@ -9,7 +9,7 @@
   <ion-navbar>
     <ion-title>
       <ion-item>
-        <button ion-button icon-only (click)="toJournies()"><ion-icon name="arrow-round-back"></ion-icon></button>
+        <ion-icon (click)="toJournies()" name="arrow-round-back"></ion-icon>
         {{ journey && journey.title }}
       </ion-item>
     </ion-title>
@@ -19,5 +19,15 @@
 
 
 <ion-content padding>
-
+  <div id="journey-title">Title: {{ journey && journey.title }}</div>
+  <div id="journey-content">Description: {{ journey && journey.description }}</div>
+  <div id="journey-category">Category {{ journey && journey.category.name }}</div>
+  JOURNEY: {{ journey && journey.posts}}
+  <div *ngIf="journey && journey.posts" id="journey-posts">
+    <ion-list>
+      <ion-item *ngFor="let post of journey.posts">
+        {{ post.title }} {{ post.content }}
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

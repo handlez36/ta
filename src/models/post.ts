@@ -8,6 +8,8 @@ export class Post {
     static mapperOptions() {
         return {
             endpoint: 'posts',
+            cacheResponse: true,
+            debug: true,
             schema: {
                 type: 'object',
                 properties: {

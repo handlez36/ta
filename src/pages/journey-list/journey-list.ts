@@ -50,7 +50,7 @@ export class JourneyListPage {
 
   loadJournies() {
     this.dataService.getAll('journey', {}, { force: true, with: ['category', 'user'] })
-      .subscribe( journies => this.journies = journies || [] )
+      .subscribe( journies => {this.journies = journies || []; console.log("Journies: ", this.journies) } )
   }
 
   add() {

@@ -39,9 +39,16 @@ export class MocSqliteDataServiceProvider {
   }
 
   setHttpConfigurations() {
-    this.store = new DataStore();
+    this.store = new DataStore({ dbg: true});
     this.adapter = new HttpAdapter({
-      basePath: "http://localhost:3000/"
+      basePath: "http://localhost:3000/",
+      err: function(args) {
+        debugger;
+        console.log("Error: ", args);
+      },
+      afterFindAll: function(mapper, query, opts, response) {
+        
+      }
     });
 
     this.store.registerAdapter('http', this.adapter, { default: true });

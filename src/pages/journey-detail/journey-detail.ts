@@ -30,10 +30,23 @@ export class JourneyDetailPage {
   }
 
   ionViewDidLoad() {
-    console.log("Journey: ", this.journeyId);
+    // console.log("Journey: ", this.journeyId);
 
-    this.dataService.get('journey', this.journeyId)
-      .subscribe( journey => { this.journey = journey} )
+    this.dataService.get('journey', this.journeyId, { force: true, with: ['category', 'user', 'post'] })
+      .subscribe( journey => {
+        this.journey = journey
+        console.log("Journey: ", this.journey);
+      })
+  }
+
+  ionViewWillEnter() {
+    console.log("Journey: ", this.journeyId);
+    
+    // this.dataService.get('journey', this.journeyId, { force: true, with: ['category', 'user', 'post'] })
+    //   .subscribe( journey => {this.journey = journey} )
+
+    // this.dataService.getAll('post', { force: true} )
+    //   .subscribe( posts => { console.log("Posts: ", posts) }) 
   }
 
   toJournies() {
