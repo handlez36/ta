@@ -1,14 +1,4 @@
-import { CategoryDataServiceProvider } from './../providers/category-data-service/category-data-service';
-import { Http } from '@angular/http';
-import { Category } from './category';
-import { User } from './user';
-import { Inject, Injectable } from '@angular/core';
-import { ReflectiveInjector } from '@angular/core';
-import { ConnectionBackend } from '@angular/http/src/interfaces';
-
 export class Journey {
-
-    // posts: Post[];
 
     categoryService;
 

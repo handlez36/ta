@@ -1,5 +1,3 @@
-import { HttpAdapter } from 'js-data-http';
-
 export class Post {
 
     constructor() {

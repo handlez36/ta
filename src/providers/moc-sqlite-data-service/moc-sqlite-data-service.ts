@@ -1,6 +1,6 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Category } from './../../models/category';
 import { Journey } from './../../models/journey';
@@ -10,9 +10,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/fromPromise';
 
-import { Mapper, version, DataStore } from 'js-data';
+import { DataStore } from 'js-data';
 import { HttpAdapter } from 'js-data-http';
-import { Schema } from 'js-data';
 
 /*
   Generated class for the MocSqliteDataServiceProvider provider.
@@ -33,7 +32,7 @@ export class MocSqliteDataServiceProvider {
   auth0adapter;
   key = "test";
 
-  constructor(protected http: Http, private storage: Storage) {
+  constructor(protected http: Http) {
     this.setHttpConfigurations();
     this.addMappers();
   }

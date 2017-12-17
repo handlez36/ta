@@ -1,6 +1,4 @@
-import { Auth0 } from 'auth0-js';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
@@ -17,7 +15,7 @@ export class AuthLockProvider {
   accessToken: string;
   expiration;
 
-  constructor(private storage: Storage) {
+  constructor() {
     this.userProfile = this.getStorageVariable('userProfile');
     this.accessToken = this.getStorageVariable('accessToken');    
   }

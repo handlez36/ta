@@ -1,5 +1,3 @@
-import { CategoryDataServiceProvider } from '../category-data-service/category-data-service';
-import { Storage } from '@ionic/storage';
 import { MocSqliteDataServiceProvider } from './../moc-sqlite-data-service/moc-sqlite-data-service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -8,11 +6,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/fromPromise';
 import { Headers, Http, RequestOptions } from '@angular/http';
-import { Journey } from '../../models/journey';
-
-import { Mapper, version, DataStore } from 'js-data';
-import { HttpAdapter } from 'js-data-http';
-import { Schema } from 'js-data';
 
 /*
   Generated class for the JourneyDataServiceProvider provider.
@@ -27,16 +20,9 @@ export class JourneyDataServiceProvider extends MocSqliteDataServiceProvider {
   private myJournies: any[];
   private myHeaders;
 
-  private httpAdatper;
-  private schema;
-  private mapper;
-
-  constructor(
-    private myHttp: Http, 
-    private st: Storage,
-    private categoryService: CategoryDataServiceProvider) 
+  constructor(private myHttp: Http) 
   {
-    super(myHttp, st);
+    super(myHttp);
     
     this.setCustomConfigurations();
     this.urlSuffix = "journies";
