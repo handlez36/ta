@@ -14,7 +14,7 @@ import 'rxjs/add/operator/map';
 export class CategoryDataServiceProvider extends MocSqliteDataServiceProvider{
 
   constructor(private h: Http, private st: Storage) {
-    super(h, st);
+    super(h);
 
     this.setCustomConfigurations();
   }

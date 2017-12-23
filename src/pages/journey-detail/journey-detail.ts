@@ -32,6 +32,9 @@ export class JourneyDetailPage {
   ionViewDidLoad() {
     this.dataService.get('journey', this.journeyId, { force: true, with: ['category', 'user', 'post'] })
       .subscribe( journey => this.journey = journey )
+
+    // this.dataService.getAll('journey', { force: true, with: ['category', 'user', 'post'] })
+    //   .subscribe( journies => { console.log("Returned journies: ", journies) })
   }
 
   toJournies() {

@@ -45,8 +45,18 @@ export class MocSqliteDataServiceProvider {
         debugger;
         console.log("Error: ", args);
       },
-      afterFindAll: function(mapper, query, opts, response) {
-          
+      beforeFindAll: function(mapper, query, opts, response) {
+        let extraParams = {};
+
+        if(query.where) {
+          for( let key in query.where) {
+            for (let innerKey in query.where[`${key}`]) {
+              extraParams[`${key}`] = query.where[`${key}`][`${innerKey}`]
+            }
+          }
+        }
+
+        Object.assign(opts.params, extraParams);
       }
     });
 
