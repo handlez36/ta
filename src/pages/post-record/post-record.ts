@@ -31,8 +31,8 @@ export class PostRecordPage {
   }
 
   takePicture() {
-    // this.takeCameraPicture();
-    this.takeCameraVideo();
+    this.takeCameraPicture();
+    // this.takeCameraVideo();
     // let options: CaptureImageOptions = { limit: 3 };
     // let i = 2;
     // this.mediaCapture.captureImage(options)
@@ -59,10 +59,21 @@ export class PostRecordPage {
     });
   }
 
-  takeCameraVideo() {
+  takePhotoFromMediaCapture() {
+    let options: CaptureImageOptions = { limit: 3 };
+    let i = 2;
+
+    this.mediaCapture.captureImage(options)
+      .then(
+        (data: MediaFile[]) => console.log(data),
+        (err: CaptureError) => console.error(err.code)        
+      )    
+  }
+
+  takeVideoFromMediaCapture() {
     // let options: CaptureImageOptions = { limit: 3 };
     // let i = 2;
-    this.mediaCapture.captureImage({})
+    this.mediaCapture.captureVideo({limit: 3})
       .then(
         (data: MediaFile[]) => console.log(data),
         (err: CaptureError) => console.error(err.code)        
