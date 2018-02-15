@@ -1,6 +1,6 @@
 {
   "name": "test-bed",
-  "app_id": "",
+  "app_id": "cb3692c5",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

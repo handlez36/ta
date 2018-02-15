@@ -10,27 +10,28 @@ import { CategoriesPage } from './../categories/categories';
 import { Component, NgZone } from '@angular/core';
 import { NavController, App, ModalController } from 'ionic-angular';
 
-// import Auth0Lock from '@auth0/cordova';
-import Auth0Lock from 'auth0-lock';
+// PUT BACK
+// import Auth0Lock from 'auth0-lock';
 import { JourneySetupStartPage } from '../journey-setup-start/journey-setup-start';
 import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 
-var options = {
-  oidcConformant: true,
-  auth: {
-    params: {
-      scope: 'openid email profile user_metadata app_metadata'
-    },
-    audience: 'https://tag-along.auth0.com/userinfo',
-  }
-}
+// PUT BACK
+// var options = {
+//   oidcConformant: true,
+//   auth: {
+//     params: {
+//       scope: 'openid email profile user_metadata app_metadata'
+//     },
+//     audience: 'https://tag-along.auth0.com/userinfo',
+//   }
+// }
 
-// Initializing our Auth0Lock
-const authLock = new Auth0Lock(
-  '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF',
-  'tag-along.auth0.com',
-  options
-);
+// // Initializing our Auth0Lock
+// const authLock = new Auth0Lock(
+//   '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF',
+//   'tag-along.auth0.com',
+//   options
+// );
 
 @Component({
   selector: 'page-home',
@@ -98,22 +99,23 @@ export class HomePage {
     //     }
     //   });
 
-    // Listen for login event...
-    authLock.on("authenticated", (authResult) => {
-      this.token = authResult.accessToken;
-      this.authResult = authResult;
+    // PUT BACK
+    // // Listen for login event...
+    // authLock.on("authenticated", (authResult) => {
+    //   this.token = authResult.accessToken;
+    //   this.authResult = authResult;
 
-      authLock.getUserInfo(authResult.accessToken, (err, profile) => {
-        this.zone.run( () => {
-          if(err) { console.log("Error: ", err) }
+    //   authLock.getUserInfo(authResult.accessToken, (err, profile) => {
+    //     this.zone.run( () => {
+    //       if(err) { console.log("Error: ", err) }
           
-          this.profile = profile;
-          this.authService.storeUserCredentials(this.authResult, profile);
+    //       this.profile = profile;
+    //       this.authService.storeUserCredentials(this.authResult, profile);
 
-          this.setBackendProfile(this.profile);
-        });
-      });
-    });
+    //       this.setBackendProfile(this.profile);
+    //     });
+    //   });
+    // });
 
     // this.getCurrentUserJournies();
 
@@ -186,19 +188,21 @@ export class HomePage {
     })
   }
 
+  // PUT BACK
   login() {
     // Show Auth0 login screen
-    authLock.show();
+    // authLock.show();
   }
 
+// PUT BACK  
   logout() {
     // Nullify local storage's user credentials and logout
     this.authService.removeUserCredentials();
 
-    authLock.logout({ 
-      returnTo: 'http://localhost:8100/',
-      clientID: '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF'
-    });
+    // authLock.logout({ 
+    //   returnTo: 'http://localhost:8100/',
+    //   clientID: '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF'
+    // });
   }
 
 
