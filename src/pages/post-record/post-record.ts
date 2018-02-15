@@ -79,8 +79,7 @@ export class PostRecordPage {
   }
 
   takeVideoFromMediaCapture() {
-    // let options: CaptureImageOptions = { limit: 3 };
-    // let i = 2;
+    alert(this.mediaCapture.supportedVideoModes);
     this.mediaCapture.captureVideo({limit: 3})
       .then(
         (data: MediaFile[]) => console.log(data),
