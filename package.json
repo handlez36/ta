@@ -23,6 +23,8 @@
     "@auth0/cordova": "^0.2.0",
     "@ionic-native/camera": "^4.5.3",
     "@ionic-native/core": "^4.3.2",
+    "@ionic-native/device": "^4.5.3",
+    "@ionic-native/media": "^4.5.3",
     "@ionic-native/media-capture": "^4.5.3",
     "@ionic-native/splash-screen": "4.3.2",
     "@ionic-native/status-bar": "4.3.2",
@@ -35,6 +37,7 @@
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-media": "^5.0.2",
     "cordova-plugin-media-capture": "^3.0.1",
     "cordova-plugin-safariviewcontroller": "^1.5.0",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -70,7 +73,10 @@
         "ANDROID_PATHPREFIX": "/cordova/{io.ionic.starter}/callback"
       },
       "cordova-plugin-media-capture": {},
-      "cordova-plugin-camera": {}
+      "cordova-plugin-camera": {},
+      "cordova-plugin-media": {
+        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
+      }
     },
     "platforms": [
       "android",

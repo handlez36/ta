@@ -4,7 +4,7 @@ import { MyJourneyPage } from './my-journey';
 
 @NgModule({
   declarations: [
-    MyJourneyPage,
+    // MyJourneyPage,
   ],
   imports: [
     IonicPageModule.forChild(MyJourneyPage),

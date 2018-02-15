@@ -4,7 +4,7 @@ import { JourneySetupStartPage } from './journey-setup-start';
 
 @NgModule({
   declarations: [
-    JourneySetupStartPage,
+    // JourneySetupStartPage,
   ],
   imports: [
     IonicPageModule.forChild(JourneySetupStartPage),

@@ -5,8 +5,8 @@ import { JourneyDetailPage } from '../journey-detail/journey-detail';
 
 @NgModule({
   declarations: [
-    JourneyListPage,
-    JourneyDetailPage
+    // JourneyListPage,
+    // JourneyDetailPage
   ],
   imports: [
     IonicPageModule.forChild(JourneyListPage),

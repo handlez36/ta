@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
+import { Device } from '@ionic-native/device';
 
 /**
 * Generated class for the PostRecordPage page.
@@ -31,15 +32,21 @@ export class PostRecordPage {
   }
 
   takePicture() {
-    this.takeCameraPicture();
-    // this.takeCameraVideo();
-    // let options: CaptureImageOptions = { limit: 3 };
-    // let i = 2;
-    // this.mediaCapture.captureImage(options)
-    //   .then(
-    //     (data: MediaFile[]) => console.log(data),
-    //     (err: CaptureError) => console.error(err.code)        
-    //   )
+    // this.takeCameraPicture();
+    
+    // navigator.device.capture.captureVideo(
+    //   (result) => {
+    //     console.log('videoCaptureSuccess, result: ', JSON.stringify(result, null, 2));
+    //     // this.createThumbnail(result[0].fullPath);
+    //   },
+    //   (err) => {
+    //     console.log('videoCaptureFail, err: ', err);
+    //   },
+    //   {
+    //       limit: 1,
+    //       duration: 15
+    //   }
+    // );
   }
 
   takeCameraPicture() {
@@ -49,6 +56,7 @@ export class PostRecordPage {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
+
     this.camera.getPicture(options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
@@ -61,12 +69,12 @@ export class PostRecordPage {
 
   takePhotoFromMediaCapture() {
     let options: CaptureImageOptions = { limit: 3 };
-    let i = 2;
+    // let i = 2;
 
     this.mediaCapture.captureImage(options)
       .then(
         (data: MediaFile[]) => console.log(data),
-        (err: CaptureError) => console.error(err.code)        
+        (err: CaptureError) => alert("Error capturing photo: " + err.code)
       )    
   }
 
@@ -76,7 +84,7 @@ export class PostRecordPage {
     this.mediaCapture.captureVideo({limit: 3})
       .then(
         (data: MediaFile[]) => console.log(data),
-        (err: CaptureError) => console.error(err.code)        
+        (err: CaptureError) => alert("Error capturing video: " + err.code)        
       )    
   }
 
