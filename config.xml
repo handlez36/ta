@@ -82,9 +82,9 @@
         <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
             <string>need microphone access to record sounds</string>
         </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-            <string>need to photo library access to get pictures from there</string>
-        </edit-config>
+        <config-file mode="replace" parent="NSPhotoLibraryUsageDescription" platform="ios" target="*-Info.plist">
+            <string>Allows to attach images from library to an asset.</string>
+        </config-file>
     </platform>
     <allow-navigation href="http://192.168.1.14:8101" />
     <allow-navigation href="*" />
