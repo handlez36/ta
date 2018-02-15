@@ -3,7 +3,7 @@
     <name>MyApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.1.14:8101" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -96,4 +96,5 @@
         <variable name="ANDROID_PATHPREFIX" value="/cordova/{io.ionic.starter}/callback" />
     </plugin>
     <plugin name="cordova-plugin-media-capture" spec="^3.0.1" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
 </widget>
