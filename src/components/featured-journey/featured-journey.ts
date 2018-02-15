@@ -1,3 +1,5 @@
+import { PostRecordPage } from './../../pages/post-record/post-record';
+import { App } from 'ionic-angular';
 import { UserProvider } from './../../providers/user/user';
 import { Journey } from './../../models/journey';
 import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
@@ -26,8 +28,8 @@ export class FeaturedJourneyComponent {
     private dataService: MocSqliteDataServiceProvider,
     private userService: UserProvider,
     private authService: AuthLockProvider,
-    private ngZone: NgZone
-  ) 
+    private app: App,
+    private ngZone: NgZone) 
   {
   }
 
@@ -42,6 +44,23 @@ export class FeaturedJourneyComponent {
             this.journey = journies[0];
         }
       });
+  }
+
+  gotoPost(postType) {
+    console.log("FeaturedJourney#gotoPost")
+    this.app.getRootNav().setRoot( PostRecordPage );
+
+    switch(postType) {
+      case 'video': {
+        break;
+      }
+      case 'audio': {
+        break;
+      }
+      case 'blog': {
+        break;
+      }
+    }
   }
 
 }

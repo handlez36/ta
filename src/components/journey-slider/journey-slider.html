@@ -8,7 +8,7 @@
           <ion-avatar item-start>
             <ion-img width="40" height="40" [src]="journey.user && journey.user.picture"></ion-img>
           </ion-avatar>
-          <span class="mini-journey-title" item-end>
+          <span class="mini-journey-title" (click)="gotoJourneyDetails(journey.id)" item-end>
             {{ journey.category.name }}
           </span>
         </ion-item>

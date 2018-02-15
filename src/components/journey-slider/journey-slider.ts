@@ -6,6 +6,7 @@ import { CategoryDataServiceProvider } from './../../providers/category-data-ser
 import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Observable } from 'rxjs/Observable'; 
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';;
 
 /**
  * Generated class for the JourneySliderComponent component.
@@ -25,13 +26,20 @@ export class JourneySliderComponent {
 
   constructor(
     private dataService: MocSqliteDataServiceProvider,
-    private userDataService: UserProvider) { }
+    private userDataService: UserProvider,
+    private navCtrl: NavController) { }
 
   ngOnInit() {
     console.log("Journey slider: ngOnInit");
     
     this.dataService.getAll('journey', {}, { force: true, with: ['category', 'user'] })
       .subscribe( journies => {console.log("Journies: ", journies); this.journies = journies || []} )
+  }
+
+  gotoJourneyDetails(id) {
+    console.log( `Click journey ${id}` );
+    
+    this.navCtrl.push( 'JourneyDetailPage', { id: id} )
   }
 
 }

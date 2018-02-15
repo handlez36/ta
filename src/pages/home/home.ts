@@ -1,3 +1,5 @@
+import { PostOptionModalPage } from './../post-option-modal/post-option-modal';
+import { MyJourneyPage } from './../my-journey/my-journey';
 import { Journey } from './../../models/journey';
 import { User } from './../../models/user';
 import { UserProvider } from './../../providers/user/user';
@@ -6,10 +8,12 @@ import { CategoryDataServiceProvider } from '../../providers/category-data-servi
 import { JourneyDataServiceProvider } from '../../providers/journey-data-service/journey-data-service';
 import { CategoriesPage } from './../categories/categories';
 import { Component, NgZone } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, App, ModalController } from 'ionic-angular';
 
 // import Auth0Lock from '@auth0/cordova';
 import Auth0Lock from 'auth0-lock';
+import { JourneySetupStartPage } from '../journey-setup-start/journey-setup-start';
+import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 
 var options = {
   oidcConformant: true,
@@ -47,13 +51,16 @@ export class HomePage {
   profile;
   test;
 
+  private backend_profile: any;
+
   constructor(
     public navCtrl: NavController,
-    private categoryDataService: CategoryDataServiceProvider,
-    private journeyDataService: JourneyDataServiceProvider,
+    private dataService: MocSqliteDataServiceProvider,
     private zone: NgZone,
+    private modalCtrl: ModalController,
     private authService: AuthLockProvider,
-    private userService: UserProvider)
+    private userService: UserProvider,
+    private app: App)
   {
     this.token = null;
     this.profile = null;
@@ -69,9 +76,12 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+
+
     // Check if already logged in...
     if(this.authService.isAuthenticated()) {
       this.profile = this.authService.getCurrentUser();
+      this.setBackendProfile(this.profile);
     }
 
     // Get latest 25 journies...
@@ -99,7 +109,8 @@ export class HomePage {
           
           this.profile = profile;
           this.authService.storeUserCredentials(this.authResult, profile);
-          // this.getCurrentUserJournies();
+
+          this.setBackendProfile(this.profile);
         });
       });
     });
@@ -139,6 +150,12 @@ export class HomePage {
   //   }
   // }
 
+  setBackendProfile(profile) {
+    // Load user object from backend
+    this.dataService.getAll('user', { email: profile.email, user_id: profile.sub }, {})
+      .subscribe( users => this.backend_profile = users[0] )
+  }
+  
   setProfile(profile) {
     this.profile = profile;
   }
@@ -148,6 +165,25 @@ export class HomePage {
   }
 
   toCategories() {
+  }
+
+  gotoStartJourney() {
+    this.app.getRootNav().setRoot( JourneySetupStartPage );
+  }
+
+  gotoMyJournies() {
+    this.app.getRootNav().setRoot( MyJourneyPage );
+  }
+
+  gotoPostModal(user) {
+    let modal = this.modalCtrl.create( PostOptionModalPage, { user: user} );
+
+    modal.present();
+
+    modal.onDidDismiss( options => {
+      // TODO: Dismiss quick add option
+      // TODO: Navigate to post page with journey and post type options
+    })
   }
 
   login() {

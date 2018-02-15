@@ -29,12 +29,27 @@ export class JourneyDetailPage {
     this.journeyId = navParams.get('id') || 0;
   }
 
-  ionViewDidLoad() {
-    this.dataService.get('journey', this.journeyId, { force: true, with: ['category', 'user', 'post'] })
-      .subscribe( journey => this.journey = journey )
+  ionViewWillEnter() {
+    // this.dataService.get('journey', this.journeyId, { force: true, with: ['category', 'user', 'post'] })
+    //   .subscribe( journey => this.journey = journey )
 
+    this.dataService.get('journey', this.journeyId, { force: true, with: ['category', 'post', 'user'] })
+      .subscribe( journey => { this.journey = journey } );
+
+    // this.dataService.getAll('journey', null, { force: true, with: ['category', 'user', 'post'] })
+    //   .subscribe( journies => {
+    //     if(journies && journies.length > 0) {
+    //         this.journey = journies[0];
+    //     }
+    //   });
+
+    console.log("Test");
     // this.dataService.getAll('journey', { force: true, with: ['category', 'user', 'post'] })
     //   .subscribe( journies => { console.log("Returned journies: ", journies) })
+  }
+
+  startRecording() {
+    // this.navCtrl.push()
   }
 
   toJournies() {

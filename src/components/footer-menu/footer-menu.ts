@@ -1,7 +1,9 @@
+import { MyJourneyPage } from './../../pages/my-journey/my-journey';
 import { BaseCategoryPage } from './../../pages/base-category/base-category';
 import { HomePage } from './../../pages/home/home';
 import { App, NavController } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
+import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 
 /**
  * Generated class for the FooterMenuComponent component.
@@ -17,7 +19,13 @@ export class FooterMenuComponent {
 
   text: string;
 
-  constructor(private navCtrl: NavController, private app: App) { }
+  constructor(
+    private navCtrl: NavController, 
+    private app: App,
+    private authService: AuthLockProvider) 
+  { 
+
+  }
 
   toHome() {
     this.app.getRootNav().setRoot(HomePage);
@@ -30,7 +38,12 @@ export class FooterMenuComponent {
   }
 
   toJourney() {
-    this.navCtrl.push('JourneyDetailPage', { id: 24})
+    var id;
+    if( this.authService.isAuthenticated() ) {
+      id = this.authService.userProfile.id
+    }
+    this.app.getRootNav().setRoot( MyJourneyPage, {id: id || 2} );
+    // this.navCtrl.push('JourneyDetailPage', { id: 24})
   }
 
 }

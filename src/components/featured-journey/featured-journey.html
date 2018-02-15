@@ -23,6 +23,15 @@
       <source id="mp4" src="http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4" type="video/mp4" />
     </video>
   </div>
+  <ion-item class="feature-journey-title" no-lines>
+    <ion-icon name="pricetag" item-start></ion-icon>
+    <ion-icon name="videocam" (click)="gotoPost('video')"></ion-icon>
+    <div id="my-journey-options" *ngIf="this.authService.isAuthenticated()" item-end>
+      <ion-icon name="videocam" (click)="gotoPost('video')"></ion-icon>
+      <ion-icon name="recording" (click)="gotoPost('audio')"></ion-icon>
+      <ion-icon name="create" (click)="gotoPost('blog')"></ion-icon>
+    </div>
+  </ion-item>
 </div>
 
 <div class="no-journies" *ngIf="!journey">

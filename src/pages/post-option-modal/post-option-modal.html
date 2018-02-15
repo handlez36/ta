@@ -1,0 +1,44 @@
+<!--
+  Generated template for the PostOptionModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Post Options</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="postOptions" (ngSubmit)="update()">
+    Which journey would you like to post for?
+    <ion-item>
+      <ion-label>Your journies</ion-label>
+      <ion-select interface="popover" formControlName="whichJourney" name="whichJourney">
+        <ion-option *ngFor="let j of journies" [value]="j.id">{{ j.title }}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br /><br />
+    How would you like to post?
+    <ion-item>
+      <ion-label>Post</ion-label>
+      <ion-select interface="popover" formControlName="postType" name="postType">
+        <ion-option *ngFor="let p of POST_TYPES" [value]="p">{{ p }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </form>
+  <ion-footer>
+    <div class="save-and-cancel">
+      <button color="secondary" [disabled]="postOptions.invalid" ion-button (click)="update()">
+        Start post
+      </button>
+      <button color="danger" ion-button (click)="ViewCtrl.dismiss()">
+        Cancel
+      </button>
+    </div>
+  </ion-footer>
+</ion-content>

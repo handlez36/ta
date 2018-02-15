@@ -42,7 +42,6 @@ export class MocSqliteDataServiceProvider {
     this.adapter = new HttpAdapter({
       basePath: "http://localhost:3000/",
       err: function(args) {
-        debugger;
         console.log("Error: ", args);
       },
       beforeFindAll: function(mapper, query, opts, response) {
@@ -57,6 +56,18 @@ export class MocSqliteDataServiceProvider {
         }
 
         Object.assign(opts.params, extraParams);
+      },
+      // beforeFind: function(mapper, id, opts) {
+      //   if(mapper.name == "user") {
+      //     id = id.replace(/\|/, "%7C");
+      //     console.log("ID: ", id);
+      //   }
+      // },
+      beforeGET: function(url, config, opts) {
+        var regexp = new RegExp('\/user');
+        if( regexp.test(url) ) {
+          config.url = config.url.replace(/\|/, "%7C");
+        }
       }
     });
 

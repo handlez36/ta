@@ -21,9 +21,22 @@
   <ion-searchbar 
     placeholder="Find your next journey" (ionInput)="search($event)">
   </ion-searchbar>
-  <br />
 
-  <div *ngIf="false">
+  <ion-item *ngIf="this.authService.isAuthenticated()" no-lines id="new-journey">
+      <button ion-button round color="secondary" (click)="gotoStartJourney()" item-end>
+        New Journey&nbsp;
+        <ion-icon name="megaphone"></ion-icon>
+      </button>
+  </ion-item>
+  <ion-item *ngIf="!this.authService.isAuthenticated()" no-lines id="new-journey">
+      <button ion-button round color="secondary" (click)="gotoSignUp()" item-end>
+        Sign up to start!&nbsp;
+        <ion-icon name="megaphone"></ion-icon>
+      </button>
+  </ion-item>
+  <br /><br />
+
+  <div id="debug" *ngIf="false">
     Loaded Flag: {{ loadedFlag }}<br />
     Featured Jourey: {{ featuredJourney }}<br />
     My Featured Journey: {{ myFeaturedJourney }}<br />
@@ -37,14 +50,14 @@
     <journey-slider></journey-slider>
   </ion-item>
   <br /><br />
-  <ion-fab right bottom>
+  <ion-fab *ngIf="this.authService.isAuthenticated()" right bottom>
     <button ion-fab mini>
       <ion-icon name="add"></ion-icon>
     </button>
     <ion-fab-list side="left">
-      <button ion-fab><ion-icon name="chatbubbles"></ion-icon></button>
-      <button ion-fab><ion-icon name="pulse"></ion-icon></button>
-      <button ion-fab><ion-icon name="videocam"></ion-icon></button>
+      <button ion-fab (click)="gotoStartJourney(this.backend_profile)"><ion-icon name="megaphone"></ion-icon></button>
+      <button ion-fab (click)="gotoMyJournies(this.backend_profile)"><ion-icon name="pulse"></ion-icon></button>
+      <button ion-fab (click)="gotoPostModal(this.backend_profile)"><ion-icon name="create"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
