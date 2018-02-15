@@ -111,7 +111,7 @@ export class MyErrorHandler implements ErrorHandler {
     Camera,
     Device,
     IonicErrorHandler,
-    [{provider: ErrorHandler, useClass: MyErrorHandler}],
+    {provide: ErrorHandler, useClass: MyErrorHandler},
     DataServiceProvider,
     MockJourniesProvider,
     MockCategoriesProvider,
