@@ -37,35 +37,6 @@ import { UserProvider } from '../providers/user/user';
 import { PostOptionModalPage } from '../pages/post-option-modal/post-option-modal';
 import { PostRecordPage } from '../pages/post-record/post-record';
 
-// Ionic Pro Monitoring imports
-import { Pro } from '@ionic/pro';
-import { Injectable, Injector } from '@angular/core';
-
-Pro.init('cb3692c5', {
-  appVersion: '0.0.1'
-})
-
-@Injectable()
-export class MyErrorHandler implements ErrorHandler {
-  ionicErrorHandler: IonicErrorHandler;
-
-  constructor(injector: Injector) {
-    try {
-      this.ionicErrorHandler = injector.get(IonicErrorHandler);
-    } catch(e) {
-      // Unable to get the IonicErrorHandler provider, ensure
-      // IonicErrorHandler has been added to the providers list below
-    }
-  }
-
-  handleError(err: any): void {
-    Pro.monitoring.handleNewError(err);
-    // Remove this if you want to disable Ionic's auto exception handling
-    // in development mode.
-    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
-  }
-}
-
 @NgModule({
   declarations: [
     MyApp,
@@ -110,8 +81,7 @@ export class MyErrorHandler implements ErrorHandler {
     MediaCapture,
     Camera,
     Device,
-    IonicErrorHandler,
-    {provide: ErrorHandler, useClass: MyErrorHandler},
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataServiceProvider,
     MockJourniesProvider,
     MockCategoriesProvider,
