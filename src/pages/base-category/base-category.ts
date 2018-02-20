@@ -28,16 +28,16 @@ import { CategoriesPage } from './../categories/categories';
 })
 export class BaseCategoryPage {
 
-  tab1: any;
-  tab2: any;
+  private tab1: any;
+  private tab2: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private navCtrl: NavController, private navParams: NavParams) {
     this.tab1 = CategoriesPage;
     this.tab2 = JourneyListPage;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad for BaseCategoryPage');
+    console.log('BaseCategoryPage#ionViewDidLoad');
   }
 
 }

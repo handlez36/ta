@@ -1,6 +1,4 @@
 import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
-import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
-import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonicPage, ModalController, NavController, NavParams, List } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -20,10 +18,8 @@ import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 })
 export class CategoriesPage {
 
-  categories = [];
-  journies = [];
-  private journeyCount = {};
-  private isLoggedIn;
+  private categories: any       = [];
+  private isLoggedIn: any;
   @ViewChild(List) list: List;
   
   constructor(
@@ -37,35 +33,30 @@ export class CategoriesPage {
     }
 
   loadCategories() {
-    console.log("Loading categories");
+    console.log("CategoriesPage#loadCategories");
 
     this.dataService.getAll('category', null, { bypassCache: true, with: ['journey'] })
-      .subscribe( categories => {
-        console.log("Categories: ", categories);
-        this.categories = categories || [];
-      });
+      .subscribe( categories => this.categories = categories || [] );
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter for Categories.ts");
+    console.log("CategoriesPage#ionViewWillEnter");
 
     this.loadCategories();
     this.isLoggedIn = this.authService.isAuthenticated();
   }
 
   addCategoryModal() {
-    let modal = this.modalCtrl.create('AddCategoryPage');
+    let modal = this.modalCtrl.create( 'AddCategoryPage' );
 
     modal.present();
 
     modal.onDidDismiss( (newCategory) => {
-      console.log("New Category: ", newCategory);
-
       if(newCategory) {
         this.dataService.add('category', newCategory)
           .subscribe( 
             data => {},
-            error => console.log("Error: ", error),
+            error => console.log("CategoriesPage#addCategoryModal -- Error adding category: ", error),
             () => this.categories = this.dataService.getFromCache('category')
           );
       }
@@ -82,7 +73,7 @@ export class CategoriesPage {
         this.dataService.update(updatedCategory)
           .subscribe(
             data => {},
-            error => console.log("Error: ", error),
+            error => console.log("CategoriesPage#eeditCategoryModal -- Error editing category: ", error),
             () => {
               this.categories = this.dataService.getFromCache('category')
               this.list.closeSlidingItems();
@@ -111,7 +102,7 @@ export class CategoriesPage {
             this.dataService.delete(category)
               .subscribe(
                 data => {},
-                error => console.log("Error: ", error),
+                error => console.log("CategoriesPage#removeCategory -- Error removing category: ", error),
                 () => {
                   this.categories = this.dataService.getFromCache('category');
                   this.list.closeSlidingItems();

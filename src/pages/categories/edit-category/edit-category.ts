@@ -1,4 +1,3 @@
-import { Category } from './../../../models/category';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';

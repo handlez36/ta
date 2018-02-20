@@ -1,37 +1,33 @@
 import { PostOptionModalPage } from './../post-option-modal/post-option-modal';
 import { MyJourneyPage } from './../my-journey/my-journey';
-import { Journey } from './../../models/journey';
-import { User } from './../../models/user';
+// import { Journey } from './../../models/journey';
+// import { User } from './../../models/user';
 import { UserProvider } from './../../providers/user/user';
 import { AuthLockProvider } from './../../providers/auth-lock/auth-lock';
-import { CategoryDataServiceProvider } from '../../providers/category-data-service/category-data-service';
-import { JourneyDataServiceProvider } from '../../providers/journey-data-service/journey-data-service';
 import { CategoriesPage } from './../categories/categories';
 import { Component, NgZone } from '@angular/core';
 import { NavController, App, ModalController } from 'ionic-angular';
 
-// PUT BACK
-// import Auth0Lock from 'auth0-lock';
+import Auth0Lock from 'auth0-lock';
 import { JourneySetupStartPage } from '../journey-setup-start/journey-setup-start';
 import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
 
-// PUT BACK
-// var options = {
-//   oidcConformant: true,
-//   auth: {
-//     params: {
-//       scope: 'openid email profile user_metadata app_metadata'
-//     },
-//     audience: 'https://tag-along.auth0.com/userinfo',
-//   }
-// }
+var options = {
+  oidcConformant: true,
+  auth: {
+    params: {
+      scope: 'openid email profile user_metadata app_metadata'
+    },
+    audience: 'https://tag-along.auth0.com/userinfo',
+  }
+}
 
-// // Initializing our Auth0Lock
-// const authLock = new Auth0Lock(
-//   '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF',
-//   'tag-along.auth0.com',
-//   options
-// );
+// Initializing our Auth0Lock
+const authLock = new Auth0Lock(
+  '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF',
+  'tag-along.auth0.com',
+  options
+);
 
 @Component({
   selector: 'page-home',
@@ -121,15 +117,17 @@ export class HomePage {
 
     // Pull all users
     // TODO: Only pull users for the current journey list
-    this.userService.getAll()
-      .subscribe(users => {
-        if(users) {
-          users.forEach( user => {
-            this.users.push( new User(user.user_id, user.email, user.picture) )
-            this.userService.save(this.users);
-          });
-        }
-      })
+    // COMMENTED ON 2/20/2018
+
+    // this.userService.getAll()
+    //   .subscribe(users => {
+    //     if(users) {
+    //       users.forEach( user => {
+    //         this.users.push( new User(user.user_id, user.email, user.picture) )
+    //         this.userService.save(this.users);
+    //       });
+    //     }
+    //   })
   }
 
   // getCurrentUserJournies() {
@@ -191,7 +189,7 @@ export class HomePage {
   // PUT BACK
   login() {
     // Show Auth0 login screen
-    // authLock.show();
+    authLock.show();
   }
 
 // PUT BACK  
@@ -199,12 +197,9 @@ export class HomePage {
     // Nullify local storage's user credentials and logout
     this.authService.removeUserCredentials();
 
-    // authLock.logout({ 
-    //   returnTo: 'http://localhost:8100/',
-    //   clientID: '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF'
-    // });
+    authLock.logout({ 
+      returnTo: 'http://localhost:8100/',
+      clientID: '0nmSGCze0Amnz2HMdcxoDFH5VgIjsJtF'
+    });
   }
-
-
-
 }

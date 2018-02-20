@@ -1,9 +1,5 @@
 import { MocSqliteDataServiceProvider } from '../../providers/moc-sqlite-data-service/moc-sqlite-data-service';
-import { UserProvider } from './../../providers/user/user';
 import { Input } from '@angular/core';
-import { Journey } from './../../models/journey';
-import { CategoryDataServiceProvider } from './../../providers/category-data-service/category-data-service';
-import { JourneyDataServiceProvider } from './../../providers/journey-data-service/journey-data-service';
 import { Observable } from 'rxjs/Observable'; 
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';;
@@ -20,24 +16,23 @@ import { NavController } from 'ionic-angular';;
 })
 export class JourneySliderComponent {
 
-  journies = [];
-  categories = [];
-  users = [];
+  private journies: any       = [];
+  private categories: any     = [];
+  private users: any          = [];
 
   constructor(
     private dataService: MocSqliteDataServiceProvider,
-    private userDataService: UserProvider,
     private navCtrl: NavController) { }
 
   ngOnInit() {
-    console.log("Journey slider: ngOnInit");
+    console.log("JourneySliderComponent#ngOnInit");
     
     this.dataService.getAll('journey', {}, { force: true, with: ['category', 'user'] })
-      .subscribe( journies => {console.log("Journies: ", journies); this.journies = journies || []} )
+      .subscribe( journies => this.journies = journies || [] )
   }
 
   gotoJourneyDetails(id) {
-    console.log( `Click journey ${id}` );
+    console.log("JourneySliderComponent#gotoJourneyDetails -- clicked on journey " + id );
     
     this.navCtrl.push( 'JourneyDetailPage', { id: id} )
   }

@@ -1,8 +1,6 @@
-import { CategoryDataServiceProvider } from '../../../providers/category-data-service/category-data-service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { Category } from './../../../models/category';
 
 /**
  * Generated class for the AddCategoryPage page.
@@ -18,7 +16,7 @@ import { Category } from './../../../models/category';
 })
 export class AddCategoryPage {
 
-  categoryName = "";
+  private categoryName: string = "";
 
   private categoryForm: FormGroup;
 
@@ -34,8 +32,6 @@ export class AddCategoryPage {
     }
 
   ionViewDidLoad() {
-    // debugger;
-    console.log(this.formControls());
   }
 
   formControls() { return this.categoryForm.controls }

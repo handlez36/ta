@@ -17,7 +17,7 @@ import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 })
 export class FooterMenuComponent {
 
-  text: string;
+  private text: string;
 
   constructor(
     private navCtrl: NavController, 
@@ -32,8 +32,6 @@ export class FooterMenuComponent {
   }
 
   toCategories() {
-    // this.navCtrl.push( CategoriesPage );
-    // this.navCtrl.push(BaseCategoryPage);
     this.app.getRootNav().setRoot(BaseCategoryPage);
   }
 
@@ -43,7 +41,6 @@ export class FooterMenuComponent {
       id = this.authService.userProfile.id
     }
     this.app.getRootNav().setRoot( MyJourneyPage, {id: id || 2} );
-    // this.navCtrl.push('JourneyDetailPage', { id: 24})
   }
 
 }

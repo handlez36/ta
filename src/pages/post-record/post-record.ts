@@ -25,10 +25,13 @@ export class PostRecordPage {
     private app: App,
     private camera: Camera,
     private mediaCapture: MediaCapture) {
+      mediaCapture = new MediaCapture();
   }
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PostRecordPage');
+    debugger;
   }
 
   takePicture() {
@@ -79,7 +82,7 @@ export class PostRecordPage {
   }
 
   takeVideoFromMediaCapture() {
-    alert(this.mediaCapture.supportedVideoModes);
+    // alert(this.mediaCapture.captureVideo().__zone_symbol__value)
     this.mediaCapture.captureVideo({limit: 3})
       .then(
         (data: MediaFile[]) => console.log(data),
