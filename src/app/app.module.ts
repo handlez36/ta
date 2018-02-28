@@ -1,3 +1,5 @@
+import { CreateJourneyDetailsPage } from './../pages/create-journey-details/create-journey-details';
+import { CreateJourneyCategoryPage } from './../pages/create-journey-category/create-journey-category';
 import { JourneyDetailPageModule } from './../pages/journey-detail/journey-detail.module';
 import { HttpModule } from '@angular/http';
 import { JourneyListPage } from './../pages/journey-list/journey-list';
@@ -48,6 +50,8 @@ import { PostRecordPage } from '../pages/post-record/post-record';
     JourneySetupStartPage,
     PostOptionModalPage,
     PostRecordPage,
+    CreateJourneyCategoryPage,
+    CreateJourneyDetailsPage,
     JourneySliderComponent,
     FeaturedJourneyComponent,
     FooterMenuComponent
@@ -73,6 +77,8 @@ import { PostRecordPage } from '../pages/post-record/post-record';
     PostRecordPage,
     MyJourneyPage,
     JourneySetupStartPage,
+    CreateJourneyCategoryPage,
+    CreateJourneyDetailsPage,
     FooterMenuComponent
   ],
   providers: [

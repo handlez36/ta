@@ -1,0 +1,25 @@
+<!--
+  Generated template for the CreateJourneyCategoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create Journey - Choose Category</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="categories">
+    <ion-card *ngFor="let category of categories" (click)="step2()">
+      <!-- <img src="assets/imgs/category_background.jpg"/> -->
+      <img src="{{ category.background }}"/>
+      <div class="card-title">{{ category.name }}</div>
+      <div class="card-subtitle">{{ (category.journies && category.journies.length) || 0  }} journies</div>
+    </ion-card>
+  </div>
+</ion-content>
