@@ -1,3 +1,4 @@
+import { CreateJourneySummaryPage } from './../pages/create-journey-summary/create-journey-summary';
 import { CreateJourneyDetailsPage } from './../pages/create-journey-details/create-journey-details';
 import { CreateJourneyCategoryPage } from './../pages/create-journey-category/create-journey-category';
 import { JourneyDetailPageModule } from './../pages/journey-detail/journey-detail.module';
@@ -52,6 +53,7 @@ import { PostRecordPage } from '../pages/post-record/post-record';
     PostRecordPage,
     CreateJourneyCategoryPage,
     CreateJourneyDetailsPage,
+    CreateJourneySummaryPage,
     JourneySliderComponent,
     FeaturedJourneyComponent,
     FooterMenuComponent
@@ -79,6 +81,7 @@ import { PostRecordPage } from '../pages/post-record/post-record';
     JourneySetupStartPage,
     CreateJourneyCategoryPage,
     CreateJourneyDetailsPage,
+    CreateJourneySummaryPage,
     FooterMenuComponent
   ],
   providers: [

@@ -1,17 +1,4 @@
-page-create-journey-details {
-    .save-and-cancel {
-        display: flex;
-        padding: 0;
-        margin: 0;
-
-        button {
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 50% !important;
-            flex-grow: 1 !important;
-        }
-    }
-
+page-create-journey-summary {
     ion-card {
         position: relative;
         text-align: center;

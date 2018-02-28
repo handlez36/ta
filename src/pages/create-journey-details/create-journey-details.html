@@ -14,80 +14,85 @@
 
 
 <ion-content padding>
+  <ion-card *ngIf="category">
+    <img src="{{ category.background }}"/>
+    <div class="card-title">{{ category.name }}</div>
+  </ion-card>
+
   <form [formGroup]="journeyDetailForm" (ngSubmit)="submit()">
   
-    <!-- Journey Title -->
-  <ion-item>
-      <ion-label>Journey Title</ion-label>
-      <ion-input #title type="text" formControlName="title" name="title"></ion-input>
-  </ion-item>
-  <ion-item no-lines *ngIf="formControls().title.touched && !formControls().title.valid">
-    <div item-start class="validation-error" *ngIf="formControls().title.touched && !formControls().title.valid">
-      <div *ngIf="formControls().title.errors.required">Title required</div>
-      <div *ngIf="formControls().title.errors.minlength">At least 4 characters</div>
-    </div>
-  </ion-item>
-
-  <!-- Journey Description -->
-  <ion-item>
-      <ion-label>Journey Description</ion-label>
-      <ion-input #description type="text" formControlName="description" name="description"></ion-input>
-  </ion-item>
-
-  <!-- Journey Length -->
-  <ion-item>
-      <ion-label>Journey Duration</ion-label>
-      <ion-input #duration type="number" formControlName="duration" name="duration"></ion-input>
-      
-      <ion-select formControlName="durationUnit" placeholder="unit" interface="popover">
-        <ion-option value="d">days</ion-option>
-        <ion-option value="w">weeks</ion-option>
-        <ion-option value="m">months</ion-option>
-        <ion-option value="y">years</ion-option>
-      </ion-select>
-  </ion-item>
-  <ion-item no-lines>
-    <div item-start class="validation-error" *ngIf="formControls().duration.touched && !formControls().duration.valid">
-      <div *ngIf="formControls().duration.errors.required">Duration required</div>
-    </div>
-  </ion-item>
-
-  <!-- Journey Public or Private -->
-  <ion-label>Public or Private</ion-label>
-  <ion-list radio-group formControlName="public">    
+      <!-- Journey Title -->
     <ion-item>
-      <ion-label>Public</ion-label>
-      <ion-radio value=true></ion-radio>
+        <ion-label>Journey Title</ion-label>
+        <ion-input #title type="text" formControlName="title" name="title"></ion-input>
     </ion-item>
-    <ion-item>
-        <ion-label>Private</ion-label>
-      <ion-radio value=false></ion-radio>
+    <ion-item no-lines *ngIf="formControls().title.touched && !formControls().title.valid">
+      <div item-start class="validation-error" *ngIf="formControls().title.touched && !formControls().title.valid">
+        <div *ngIf="formControls().title.errors.required">Title required</div>
+        <div *ngIf="formControls().title.errors.minlength">At least 4 characters</div>
+      </div>
     </ion-item>
-  </ion-list>
 
-  <!-- Allow Comments? -->
-  <ion-label>Allow comments?</ion-label>
-  <ion-list radio-group formControlName="comments">    
+    <!-- Journey Description -->
     <ion-item>
-      <ion-label>Bring it on!</ion-label>
-      <ion-radio value=true></ion-radio>
+        <ion-label>Journey Description</ion-label>
+        <ion-input #description type="text" formControlName="description" name="description"></ion-input>
     </ion-item>
-    <ion-item>
-        <ion-label>No haters!</ion-label>
-      <ion-radio value=false></ion-radio>
-    </ion-item>
-  </ion-list>
-</form>
 
-<ion-footer>
-  <div class="save-and-cancel">
-    <button color="secondary" [disabled]="journeyDetailForm.invalid" ion-button (click)="submit()">
-      Add
+    <!-- Journey Length -->
+    <ion-item>
+        <ion-label>Journey Duration</ion-label>
+        <ion-input #duration type="number" formControlName="duration" name="duration"></ion-input>
+        
+        <ion-select formControlName="durationUnit" placeholder="unit" interface="popover">
+          <ion-option value="d">days</ion-option>
+          <ion-option value="w">weeks</ion-option>
+          <ion-option value="m">months</ion-option>
+          <ion-option value="y">years</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item no-lines>
+      <div item-start class="validation-error" *ngIf="formControls().duration.touched && !formControls().duration.valid">
+        <div *ngIf="formControls().duration.errors.required">Duration required</div>
+      </div>
+    </ion-item>
+
+    <!-- Journey Public or Private -->
+    <ion-label>Public or Private</ion-label>
+    <ion-list radio-group formControlName="public">    
+      <ion-item>
+        <ion-label>Public</ion-label>
+        <ion-radio value=true></ion-radio>
+      </ion-item>
+      <ion-item>
+          <ion-label>Private</ion-label>
+        <ion-radio value=false></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <!-- Allow Comments? -->
+    <ion-label>Allow comments?</ion-label>
+    <ion-list radio-group formControlName="comments">    
+      <ion-item>
+        <ion-label>Bring it on!</ion-label>
+        <ion-radio value=true></ion-radio>
+      </ion-item>
+      <ion-item>
+          <ion-label>No haters!</ion-label>
+        <ion-radio value=false></ion-radio>
+      </ion-item>
+    </ion-list>
+  </form>
+
+  <ion-fab left bottom>
+    <button (click)="toStep1()" ion-fab mini>
+      <ion-icon name="arrow-back"></ion-icon>
     </button>
-    <button color="danger" ion-button (click)="viewCtrl.dismiss()">
-      Cancel
+  </ion-fab>
+  <ion-fab *ngIf="journeyDetailForm.valid" right bottom>
+    <button (click)="toStep3()" ion-fab mini>
+      <ion-icon name="arrow-forward"></ion-icon>
     </button>
-  </div>
-</ion-footer>
+  </ion-fab>
 
 </ion-content>

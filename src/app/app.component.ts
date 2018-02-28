@@ -1,3 +1,4 @@
+import { CreateJourneyCategoryPage } from './../pages/create-journey-category/create-journey-category';
 import { CreateJourneyDetailsPage } from './../pages/create-journey-details/create-journey-details';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
@@ -14,7 +15,7 @@ import Auth0Cordova from '@auth0/cordova';
 })
 export class MyApp {
   // rootPage:any = HomePage;
-  rootPage:any = CreateJourneyDetailsPage;
+  rootPage:any = CreateJourneyCategoryPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

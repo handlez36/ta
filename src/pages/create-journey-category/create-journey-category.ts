@@ -54,7 +54,8 @@ export class CreateJourneyCategoryPage {
   }
 
   step2(category) {
-    this.app.getRootNav().setRoot(CreateJourneyDetailsPage)
+    this.navCtrl.push(CreateJourneyDetailsPage, { category: category })
+    // this.app.getRootNav().setRoot(CreateJourneyDetailsPage)
   }
 
 }

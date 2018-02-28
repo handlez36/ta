@@ -15,7 +15,7 @@
 
 <ion-content padding>
   <div *ngIf="categories">
-    <ion-card *ngFor="let category of categories" (click)="step2()">
+    <ion-card *ngFor="let category of categories" (click)="step2(category)">
       <!-- <img src="assets/imgs/category_background.jpg"/> -->
       <img src="{{ category.background }}"/>
       <div class="card-title">{{ category.name }}</div>
