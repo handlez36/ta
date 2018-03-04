@@ -27,7 +27,8 @@ export class AddCategoryPage {
     private ViewCtrl: ViewController) 
     {
       this.categoryForm = this.formBuilder.group({
-        categoryName: ['', Validators.compose([Validators.minLength(4), Validators.required])]
+        categoryName:         ['', Validators.compose([Validators.minLength(4), Validators.required])],
+        categoryDescription:  ['']
       });
     }
 
@@ -39,7 +40,8 @@ export class AddCategoryPage {
   add(element) {
     let newCategory = 
     {
-      name: this.formControls().categoryName.value
+      name:           this.formControls().categoryName.value,
+      description:    this.formControls().categoryDescription.value
     }
     
     this.ViewCtrl.dismiss(newCategory);

@@ -26,6 +26,10 @@
           <div *ngIf="formControls().categoryName.errors.minlength">At least 4 characters</div>
         </div>
     </ion-item>
+    <ion-item>
+      <ion-label>Category Description</ion-label>
+      <ion-input #categoryDescription type="text" formControlName="categoryDescription" name="categoryDescription"></ion-input>
+    </ion-item>
   </form>
   <ion-footer>
     <div class="save-and-cancel">

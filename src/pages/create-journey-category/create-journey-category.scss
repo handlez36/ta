@@ -2,6 +2,7 @@ page-create-journey-category {
     ion-card {
         position: relative;
         text-align: center;
+        height: 150px;
     }
 
     .card-title {
@@ -15,9 +16,24 @@ page-create-journey-category {
 
     .card-subtitle {
         position: absolute;
+        margin-top: 5px;
         top: 52%;
         font-size: 1.0em;
         width: 100%;
+        font-weight: bold;
+        font-style: italic;
         color: #fff;
+    }
+
+    .card-description {
+        position: absolute;
+        top: 36%;
+        font-size: 0.8em;
+        width: 100%;
+        color: #fff;
+    }
+
+    .newCategoryCard {
+        height: 50px;
     }
 }

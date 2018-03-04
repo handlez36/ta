@@ -27,7 +27,8 @@ export class Category {
             properties: {
               id: { type: 'number' },
               name: { type: 'string' },
-              description: { type: 'string' }
+              description: { type: ['string', 'null'] },
+              bg_image: { type: ['string', 'null'] }
             }
           },
           relations: {

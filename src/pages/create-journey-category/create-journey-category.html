@@ -16,10 +16,23 @@
 <ion-content padding>
   <div *ngIf="categories">
     <ion-card *ngFor="let category of categories" (click)="step2(category)">
-      <!-- <img src="assets/imgs/category_background.jpg"/> -->
-      <img src="{{ category.background }}"/>
-      <div class="card-title">{{ category.name }}</div>
-      <div class="card-subtitle">{{ (category.journies && category.journies.length) || 0  }} journies</div>
+      <ion-slides>
+        <ion-slide>
+          <img src="{{ category.background }}"/>
+          <div class="card-title">{{ category.name }}</div>
+          <div class="card-subtitle">{{ (category.journies && category.journies.length) || 0  }} journies</div>
+        </ion-slide>
+        <ion-slide>
+          <img src="{{ category.background }}"/>
+          <div class="card-description">{{ category.description || "No description" }}</div>
+        </ion-slide>
+      </ion-slides>
+    </ion-card>
+    <ion-card class="newCategoryCard" (click)="addCategoryModal()">
+      <ion-item>
+        <ion-icon name="add"></ion-icon>
+        <span item-end>New Category</span>
+      </ion-item>
     </ion-card>
   </div>
 </ion-content>
