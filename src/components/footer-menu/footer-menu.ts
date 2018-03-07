@@ -2,7 +2,7 @@ import { MyJourneyPage } from './../../pages/my-journey/my-journey';
 import { BaseCategoryPage } from './../../pages/base-category/base-category';
 import { HomePage } from './../../pages/home/home';
 import { App, NavController } from 'ionic-angular';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 
 /**
@@ -16,6 +16,7 @@ import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
   templateUrl: 'footer-menu.html'
 })
 export class FooterMenuComponent {
+  @Input('page') page;
 
   private text: string;
 
@@ -24,7 +25,7 @@ export class FooterMenuComponent {
     private app: App,
     private authService: AuthLockProvider) 
   { 
-
+    this.page = null;
   }
 
   toHome() {

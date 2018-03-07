@@ -2,22 +2,22 @@
   <ion-grid>
     <ion-row class="menu-row">
       <ion-col col-3>
-        <ion-icon class="menu-item" name="home" (click)="toHome()"><br />
+        <ion-icon class="menu-item" [class.active]="page=='home'" name="home" (click)="toHome()"><br />
           <span class="menu-item-text">Home</span>
         </ion-icon>
       </ion-col>
       <ion-col col-3>
-        <ion-icon class="menu-item" name="search" (click)="toCategories()"><br />
+        <ion-icon class="menu-item" [class.active]="page=='search'" name="search" (click)="toCategories()"><br />
           <span class="menu-item-text">Journies</span>
         </ion-icon>
       </ion-col>
       <ion-col col-3>
-        <ion-icon class="menu-item" name="briefcase" (click)="toJourney()"><br />
+        <ion-icon class="menu-item" [class.active]="page=='my_journies'" name="briefcase" (click)="toJourney()"><br />
           <span class="menu-item-text">My Journey</span>
         </ion-icon>
       </ion-col>
       <ion-col col-3>
-        <ion-icon class="menu-item" name="settings"><br />
+        <ion-icon class="menu-item" [class.active]="page=='settings'" name="settings"><br />
           <span class="menu-item-text">Settings</span>
         </ion-icon>
       </ion-col>

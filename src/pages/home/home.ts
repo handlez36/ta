@@ -1,3 +1,5 @@
+import { SearchResultsPage } from './../search-results/search-results';
+import { ProfilePage } from './../profile/profile';
 import { CreateJourneyCategoryPage } from './../create-journey-category/create-journey-category';
 import { PostOptionModalPage } from './../post-option-modal/post-option-modal';
 import { JourneySetupStartPage } from '../journey-setup-start/journey-setup-start';
@@ -35,10 +37,12 @@ const authLock = new Auth0Lock(
 })
 export class HomePage {
 
-  private authResult: any;
-  private token: any;
-  private profile: any;
-  private backend_profile: any;
+  private authResult:       any;
+  private token:            any;
+  private profile:          any;
+  private backend_profile:  any;
+  private page:             any;
+  private searching:        boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -50,6 +54,8 @@ export class HomePage {
   {
     this.token = null;
     this.profile = null;
+    this.page = 'home';
+    this.searching = false;
 
     zone = new NgZone({ enableLongStackTrace: false });
   }
@@ -87,8 +93,15 @@ export class HomePage {
     this.profile = profile;
   }
 
-  search() {
+  search($event) {    
+    this.searching = true;
+    let modal = this.modalCtrl.create( SearchResultsPage );
 
+    modal.present();
+
+    modal.onDidDismiss( data => {
+      console.log("Data: ", data);
+    })
   }
 
   gotoStartJourney() {
@@ -108,6 +121,10 @@ export class HomePage {
       // TODO: Dismiss quick add option
       // TODO: Navigate to post page with journey and post type options
     })
+  }
+
+  gotoUserProfile() {
+    this.app.getRootNav().setRoot( ProfilePage, { user: this.backend_profile })
   }
 
   login() {

@@ -6,7 +6,7 @@
         <div item-end>
           <ion-item no-lines>
             <button item-start ion-button *ngIf="!profile" (click)="login()">Login</button>
-            <ion-avatar *ngIf="profile" item-start>
+            <ion-avatar *ngIf="profile" item-start (click)="gotoUserProfile()">
               <img width="40" height="40" [src]="profile.picture" />
             </ion-avatar>
             <button ion-button item-end *ngIf="profile" (click)="logout()">Logout</button>
@@ -18,8 +18,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar 
-    placeholder="Find your next journey" (ionInput)="search($event)">
+  <ion-searchbar
+    placeholder="Find your next journey"
+    (ionFocus)="search('test')"
+    (ionInput)="search($event)">
   </ion-searchbar>
 
   <ion-item *ngIf="this.authService.isAuthenticated()" no-lines id="new-journey">
@@ -63,5 +65,5 @@
 </ion-content>
 
 <ion-footer>
-  <footer-menu></footer-menu>
+  <footer-menu page={{page}}></footer-menu>
 </ion-footer>

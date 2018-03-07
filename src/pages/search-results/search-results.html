@@ -1,0 +1,36 @@
+<!--
+  Generated template for the SearchResultsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Searching</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-searchbar
+    [(ngModel)]="searchInput"
+    (ionInput)="search($event)">
+  </ion-searchbar>
+
+  <ion-list>
+    <div *ngIf="matchingJournies">
+      <ion-list-header>Journies</ion-list-header>
+      <ion-item *ngFor="let journey of matchingJournies">{{ journey.title }}</ion-item>
+    </div>
+    <div *ngIf="matchingCategories">
+      <ion-list-header>Categories</ion-list-header>
+      <ion-item *ngFor="let category of matchingCategories">{{ category.name }}</ion-item>
+    </div>
+    <div *ngIf="matchingUsers">
+      <ion-list-header>Users</ion-list-header>
+      <ion-item *ngFor="let user of matchingUsers">{{ user.nickname }}</ion-item>
+    </div>
+  </ion-list>
+</ion-content>

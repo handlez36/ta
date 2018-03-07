@@ -18,9 +18,10 @@ import { AuthLockProvider } from '../../providers/auth-lock/auth-lock';
 })
 export class CategoriesPage {
 
-  private categories: any       = [];
-  private isLoggedIn: any;
-  @ViewChild(List) list: List;
+  private categories:           any       = [];
+  private isLoggedIn:           any;
+  private page:                 string;
+  @ViewChild(List) list:        List;
   
   constructor(
     public navCtrl: NavController, 
@@ -29,7 +30,8 @@ export class CategoriesPage {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private authService: AuthLockProvider) 
-    { 
+    {
+      this.page = 'search';
     }
 
   loadCategories() {

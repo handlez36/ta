@@ -22,14 +22,15 @@ import { JourneyDetailPage } from './../../pages/journey-detail/journey-detail';
 })
 export class JourneyListPage {
 
-  journies = [];
-  journeyListener;
-  @ViewChild(List) list: List;
-  private isLoggedIn;
+  journies:                       any = [];
+  journeyListener:                any;
+  @ViewChild(List) list:          List;
+  private isLoggedIn:             any;
+  private page:                   string;
 
-  public testObserver;
-  public testObservable: Observable<any>;
-  public testList = [];
+  public testObserver:            any;
+  public testObservable:          Observable<any>;
+  public testList =               [];
 
   constructor(
     public navCtrl: NavController, 
@@ -38,7 +39,9 @@ export class JourneyListPage {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private dataService: MocSqliteDataServiceProvider,
-    private authService: AuthLockProvider) {
+    private authService: AuthLockProvider) 
+  {
+    this.page = 'search';
   }
 
   ionViewWillEnter() {

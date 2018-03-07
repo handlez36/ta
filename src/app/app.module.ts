@@ -1,3 +1,5 @@
+import { SearchResultsPage } from './../pages/search-results/search-results';
+import { ProfilePageModule } from './../pages/profile/profile.module';
 import { CreateJourneySummaryPage } from './../pages/create-journey-summary/create-journey-summary';
 import { CreateJourneyDetailsPage } from './../pages/create-journey-details/create-journey-details';
 import { CreateJourneyCategoryPage } from './../pages/create-journey-category/create-journey-category';
@@ -39,6 +41,7 @@ import { AuthLockProvider } from '../providers/auth-lock/auth-lock';
 import { UserProvider } from '../providers/user/user';
 import { PostOptionModalPage } from '../pages/post-option-modal/post-option-modal';
 import { PostRecordPage } from '../pages/post-record/post-record';
+import { ProfilePage } from '../pages/profile/profile';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,8 @@ import { PostRecordPage } from '../pages/post-record/post-record';
     CreateJourneyCategoryPage,
     CreateJourneyDetailsPage,
     CreateJourneySummaryPage,
+    ProfilePage,
+    SearchResultsPage,
     JourneySliderComponent,
     FeaturedJourneyComponent,
     FooterMenuComponent
@@ -63,6 +68,7 @@ import { PostRecordPage } from '../pages/post-record/post-record';
     HttpModule,
     JourneyDetailPageModule,
     BaseCategoryPageModule,
+    ProfilePageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
   ],
@@ -82,6 +88,8 @@ import { PostRecordPage } from '../pages/post-record/post-record';
     CreateJourneyCategoryPage,
     CreateJourneyDetailsPage,
     CreateJourneySummaryPage,
+    ProfilePage,
+    SearchResultsPage,
     FooterMenuComponent
   ],
   providers: [
